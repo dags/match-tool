@@ -4,7 +4,7 @@
     </div>
     <div class="panel-body">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 rp-group">
-            <textarea class="form-control" [(ngModel)]="consentJson" rows="10"></textarea>
+            <textarea class="form-control" [(ngModel)]="consentJson" (change)="onConsentJsonChange($event)"  rows="10"></textarea>
         </div>
     </div>
 </div>

@@ -7,7 +7,7 @@ import {Component, Injector, OnInit, ResolvedProvider, bind, Input, Output, Even
 
 export class DarJsonComponent {
 
-    @Input() darJson: string = "{id: \"DAR001\", useRestriction:\" jdjdjdjdjdjd\"}";
+    @Input() darJson: string;
     @Output() darChanged: EventEmitter<Object>;
 
     constructor() {

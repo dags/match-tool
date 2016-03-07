@@ -19,8 +19,6 @@ export class ConsentQComponent {
     constructor(private _formBuilder: FormBuilder) {
         this.orsp = new Orsp();
         this.consentFormReady = new EventEmitter();
-        // this.gender = new Control();
-        // this.gender.registerOnChange(genderChanged());
         
         this.consentForm = this._formBuilder.group({
             generalUse: ['', Validators.compose([Validators.required])],
@@ -45,10 +43,7 @@ export class ConsentQComponent {
     }
 
     setGender(gender: string) {
-        alert("gender: " + gender);
         this.orsp.gender = gender;
-        alert("gender 2: " + this.orsp.gender);
-
     }
 
     clear() {

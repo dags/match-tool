@@ -1,4 +1,4 @@
-import {Component, Injector, OnInit,ResolvedProvider,bind, Input, Output} from 'angular2/core';
+import {Component, EventEmitter, Injector, OnInit, ResolvedProvider, bind, Input, Output} from 'angular2/core';
 import {ConsentService} from '../../services/consent/consent.service';
 
 @Component({
@@ -9,12 +9,20 @@ import {ConsentService} from '../../services/consent/consent.service';
 
 export class ConsentJsonComponent {
 
-    @Input() consentJson: string = "{id: \"CONSENT001\", useRestriction:\" jdjdjdjdjdjd\"}";
-   
+    @Input() consentJson: string;
+    @Output() consentChanged: EventEmitter<Object>;
+
     constructor(private consentService: ConsentService) {
+        this.consentChanged = new EventEmitter();
     }
 
     getJson() {
         return this.consentJson;
     }
+
+    onConsentJsonChange(event) {
+        this.consentJson = event.currentTarget.value;
+        this.consentChanged.emit(this.consentJson);
+    }
+
 }

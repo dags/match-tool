@@ -66,10 +66,7 @@ export class MainComponent {
     }
 
     processConsentForm(evt: Orsp) {
-        // alert("processing DarForm in Main " + evt);
-        let ur = this.orspService.getUseRestriction(evt);
-        this.consentJson = ur;
-        // this.consentJson = JSON.stringify(evt, null, 2);
+       this.darJson = JSON.stringify(evt, null, 2);
     }
 
 }
