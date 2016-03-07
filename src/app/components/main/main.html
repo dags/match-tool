@@ -1,0 +1,71 @@
+<style type='text/css'>
+    ul {
+        margin-top: -40px;
+    }
+    
+    ul li {
+        display: inline;
+    }
+    
+    .title {
+        position: relative;
+        text-align: right;
+        display: block;
+        font-size: 47px;
+        font-weight: bold;
+        opacity: 0.2;
+        z-index: 2;
+    }
+</style>
+<div class="container-fluid">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <img src="/app/assets/images/broad_logo.png">
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <span class='title'>CONSENT MATCH TOOL</span>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <consentq (consentFormReady)="processConsentForm($event)"></consentq>
+                </div>
+                <div class="panel col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <darq (darFormReady)="processDarForm($event)"></darq>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <consentjson [consentJson]="consentJson" (consentChanged)="processConsentJsonChange($event)"></consentjson>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <darjson [darJson]="darJson" (darChanged)="processDarJsonChange($event)"></darjson>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-offset-5 col-sm-2 text-center">
+                    <div class="btn-group" data-toggle="buttons">
+                        <button class="btn btn-primary" type="button" (click)="clear()">
+                            <em class="glyphicon glyphicon-erase"></em> Clear
+                        </button>
+                        <button class="btn btn-primary" type="button" (click)="match(purpose, consent)">
+                            <em class="glyphicon glyphicon-cog"></em> Match
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <results [results]="results"></results>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

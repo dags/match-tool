@@ -1,0 +1,43 @@
+{
+    "name": "match",
+    "version": "0.1.0",
+    "description": "Maipucino base web arch",
+    "homepage": "www.belatrixsf.com",
+    "license": {
+        "type": "MIT OR Apache-2.0"
+    },
+    "scripts":{
+        "postinstall":"npm run typings install",
+        "typings":"typings"
+    },
+    "dependencies": {
+        "angular2": "latest",
+        "systemjs": "latest",
+        "es6-promise":"latest",
+        "rxjs": "latest",
+        "bootstrap": "latest",
+        "jquery":"latest",
+        "font-awesome":"latest",
+        "ng2-bootstrap":"latest",
+        "moment":"latest",
+	"es6-shim":"^0.33.3",
+	"reflect-metadata":"^0.1.3",
+	"zone.js":"^0.6.2"
+    },
+    "devDependencies": {
+        "gulp": "latest",
+        "gulp-less": "latest",
+        "gulp-typescript": "latest",
+        "typings":"latest",
+        "del":"latest",        
+        "gulp-webserver": "latest",
+        "jasmine-core": "latest",                 
+        "karma": "latest",
+        "karma-cli":"latest",                
+        "karma-jasmine": "latest",
+        "karma-chrome-launcher": "latest",
+        "karma-firefox-launcher": "latest",        
+        "karma-htmlfile-reporter":"latest"
+    }
+}
+  

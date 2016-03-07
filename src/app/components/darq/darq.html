@@ -1,0 +1,321 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title"><b>DAR Questions</b></h3>
+    </div>
+    <div class="panel-body">
+        <form class="ui form" [ngFormModel]="darForm" (change)="submitDarForm()" (submit)="submitDarForm()">
+            <div class="form-group">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <label class="control-label">2.4 Type of Research
+                        <span>Select all applicable options.</span>
+                    </label>
+                </div>
+
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="checkbox">
+                        <input [(ngModel)]="dar.diseases" id="checkDiseases" ngControl="diseases" #diseases type="checkbox" class="checkbox-inline"
+                        name="checkDiseases">
+                        <label class="regular-checkbox" for="checkDiseases"><span>2.4.1 Disease-related studies: </span> The primary purpose of the research is to learn more
+                            about a particular disease or disorder (e.g., type 2 diabetes), a trait (e.g., blood pressure),
+                            or a set of related conditions (e.g., autoimmune diseases, psychiatric disorders).
+                        </label>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="checkbox">
+                        <input [(ngModel)]="dar.methods" id="checkMethods" ngControl="methods" #methods type="checkbox" class="checkbox-inline" name="checkMethods">
+                        <label class="regular-checkbox" for="checkMethods">
+                            <span>2.4.2 Methods development and validation studies: </span> The primary purpose of the research
+                            is to develop and/or validate new methods for analyzing or interpreting data (e.g., developing
+                            more powerful methods to detect epistatic, gene-environment, or other types of complex interactions
+                            in genome-wide association studies). Data will be used for developing and/or validating new methods.
+                        </label>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="checkbox">
+                        <input [(ngModel)]="dar.controls" id="checkControls" ngControl="controls" #controls type="checkbox" class="checkbox-inline"
+                        name="checkControls">
+                        <label class="regular-checkbox" for="checkControls">
+                            <span>2.4.3 Controls: </span> The reason for this request is to increase the number of controls
+                            available for a comparison group (e.g., a case-control study).
+                        </label>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="checkbox">
+                        <input [(ngModel)]="dar.population" id="checkPopulation" ngControl="population" #population type="checkbox" class="checkbox-inline rp-checkbox"
+                        name="checkPopulation">
+                        <label class="regular-checkbox" for="checkPopulation">
+                            <span>2.4.4 Population structure or normal variation studies: </span> The primary purpose of
+                            the research is to understand variation in the general population (e.g., genetic substructure
+                            of a population).
+                        </label>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="checkbox">
+                        <input [(ngModel)]="dar.other" id="checkOther" ngControl="other" #other type="checkbox" class="checkbox-inline" name="checkOther">
+                        <label class="regular-checkbox" for="checkOther"><span>2.4.5 Other:</span></label>
+                    </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <input [(ngModel)]="dar.othertext" ngControl="othertext" #othertext type="text" name="inputOther" id="inputOther" placeholder="Please specify if selected">
+                </div>
+
+                <span class="cancel-color required-field-error-span">
+                    <span>* All fields are required</span>
+                </span>
+
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <label class="control-label">3.1.1 Will this data be used exclusively or partially for a commercial purpose?</label>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="radio-inline">
+                        <input ngControl="forProfit" type="radio" value="true" name="forProfit" [ngModel]="{checked: dar.forProfit === true ? '' : null}"
+                        (change)="dar.forProfit=$event.target.value" class="regular-radio" id="exclusiveYes" required>
+                        <label for="exclusiveYes"></label>
+                        <label for="exclusiveYes" class="radio-button-text">Yes</label>
+                    </div>
+                    <div class="radio-inline">
+                        <input ngControl="forProfit" type="radio" value="false" name="forProfit" [ngModel]="{checked: dar.forProfit === false ? '' : null}"
+                        (change)="dar.forProfit=$event.target.value" class="regular-radio" id="exclusiveNo" required>
+                        <label for="exclusiveNo"></label>
+                        <label for="exclusiveNo" class="radio-button-text">No</label>
+                    </div>
+                </div>
+
+            </div>
+            <div class="form-group">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <label class="control-label">3.1.2 Please indicate if this study is limited to one gender?
+                    </label>
+                </div>
+                <div class="radio-inline">
+                    <input ngControl="onegender" #onegender value="true" type="radio" 
+                    [ngModel]="{checked: dar.onegender === 'true' ? '' : null}"
+                    (change)="dar.onegender=$event.target.value" class="regular-radio" id="oneGenderYes" name="onegender"
+                    required>
+                    <label for="oneGenderYes"></label>
+                    <label for="oneGenderYes" class="radio-button-text">Yes</label>
+                </div>
+                <div class="radio-inline">
+                    <input ngControl="onegender" #onegender value="false" type="radio" 
+                    [ngModel]="{checked: dar.onegender === 'false' ? '' : null}"
+                    (change)="dar.onegender=$event.target.value" class="regular-radio" id="oneGenderNo" name="onegender"
+                    required>
+                    <label for="oneGenderNo"></label>
+                    <label for="oneGenderNo" class="radio-button-text">No</label>
+                </div>
+                {{dar.onegender}}
+
+                <div class="multi-step-fields">
+                    <span>Please specify</span>
+                    <div class="radio-inline">
+                        <input ngControl="gender" [ngModel]="{checked: dar.gender === 'F' ? '' : null}" 
+                        (change)="dar.gender=$event.target.value"
+                        value="F" type="radio" class="regular-radio" id="genderFemale" name="gender">
+                        <label for="genderFemale"></label>
+                        <label for="genderFemale" class="radio-button-text">Female</label>
+                    </div>
+                    <div class="radio-inline">
+                        <input ngControl="gender" [ngModel]="{checked: dar.gender === 'M' ? '' : null}"
+                        (change)="dar.gender=$event.target.value"
+                        value="M" type="radio" class="regular-radio" id="genderMale" name="gender">
+                        <label for="genderMale"></label>
+                        <label for="genderMale" class="radio-button-text">Male</label>
+                    </div>
+                </div>
+                {{dar.gender}}
+            </div>
+            <div class="form-group">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <label class="control-label">3.1.3 Please indicate if this study is restricted to a pediatric population (under the age of 18)?</label>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="radio-inline">
+                        <input ngControl="pediatric" [ngModel]="{checked: dar.pediatric === true ? '' : null}" (change)="dar.pediatric=$event.target.value"
+                        value=true type="radio" class="regular-radio" id="pediatricYes" name="pediatric" required>
+                        <label for="pediatricYes"></label>
+                        <label for="pediatricYes" class="radio-button-text">Yes</label>
+                    </div>
+                    <div class="radio-inline">
+                        <input ngControl="pediatric" [ngModel]="{checked: dar.pediatric === false ? '' : null}" (change)="dar.pediatric=$event.target.value"
+                        value=false type="radio" class="regular-radio" id="pediatricNo" name="pediatric" required>
+                        <label for="pediatricNo"></label>
+                        <label for="pediatricNo" class="radio-button-text">No</label>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <label class="control-label">3.1.4 Does the research aim involve the study of illegal behaviors (violence, domestic abuse, prostitution,
+                        sexual victimization)?
+                    </label>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="radio-inline">
+                        <input value=true ngControl="illegalbehave" [ngModel]="{checked: dar.illegalbehave === true} ? '' : null" (change)="dar.illegalbehave=$event.target.value"
+                        value=true type="radio" class="regular-radio" id="illegalBehaveYes" name="illegalBehave" required>
+                        <label for="illegalBehaveYes"></label>
+                        <label for="illegalBehaveYes" class="radio-button-text">Yes</label>
+                    </div>
+                    <div class="radio-inline">
+                        <input value=false ngControl="illegalbehave" [ngModel]="{checked: dar.illegalbehave === false ? '' : null}" (change)="dar.illegalbehave=$event.target.value"
+                        value=false type="radio" class="regular-radio" id="illegalBehaveNo" name="illegalBehave" required>
+                        <label for="illegalBehaveNo"></label>
+                        <label for="illegalBehaveNo" class="radio-button-text">No</label>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <label class="control-label">3.1.5 Does the research aim involve the study of alcohol or drug abuse, or abuse of other addictive products?
+                    </label>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="radio-inline">
+                        <input ngControl="addiction" [ngModel]="{checked: dar.addiction === true ? '' : null}" (change)="dar.addiction=$event.target.value"
+                        value=true type="radio" class="regular-radio" id="addictionYes" name="addiction" required>
+                        <label for="addictionYes"></label>
+                        <label for="addictionYes" class="radio-button-text">Yes</label>
+                    </div>
+                    <div class="radio-inline">
+                        <input ngControl="addiction" [ngModel]="{checked: dar.addiction === false ? '' : null}" (change)="dar.addiction=$event.target.value"
+                        value=false type="radio" class="regular-radio" id="addictionNo" name="addiction" required>
+                        <label for="addictionNo"></label>
+                        <label for="addictionNo" class="radio-button-text">No</label>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <label class="control-label">3.1.6 Does the research aim involve the study of sexual preferences or sexually transmitted diseases?</label>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="radio-inline">
+                        <input ngControl="sexualdiseases" [ngModel]="{checked: dar.sexualdiseases === true ? '' : null}" (change)="dar.sexualdiseases=$event.target.value"
+                        value=true type="radio" class="regular-radio" id="sexualDiseasesYes" name="sexualdiseases" required>
+                        <label for="sexualDiseasesYes"></label>
+                        <label for="sexualDiseasesYes" class="radio-button-text">Yes</label>
+                    </div>
+                    <div class="radio-inline">
+                        <input ngControl="sexualdiseases" [ngModel]="{checked: dar.sexualdiseases === false ? '' : null}" (change)="dar.sexualdiseases=$event.target.value"
+                        value=false type="radio" class="regular-radio" id="sexualDiseasesNo" name="sexualdiseases" required>
+                        <label for="sexualDiseasesNo"></label>
+                        <label for="sexualDiseasesNo" class="radio-button-text">No</label>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <label class="control-label rp-choice-questions">3.1.7 Does the research aim involve the study of any stigmatizing illnesses?</label>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="radio-inline">
+                        <input ngControl="stigmatizediseases" [ngModel]="{checked: dar.stigmatizediseases === true ? '' : null}" (change)="dar.stigmatizediseases=$event.target.value"
+                        value=true type="radio" class="regular-radio" id="stigmatizeDiseasesYes" name="stigmatizediseases"
+                        required>
+                        <label for="stigmatizeDiseasesYes"></label>
+                        <label for="stigmatizeDiseasesYes" class="radio-button-text">Yes</label>
+                    </div>
+                    <div class="radio-inline">
+                        <input ngControl="stigmatizediseases" [ngModel]="{checked: dar.stigmatizediseases === false ? '' : null}" (change)="dar.stigmatizediseases=$event.target.value"
+                        value=false type="radio" class="regular-radio" id="stigmatizeDiseasesNo" name="stigmatizediseases"
+                        required>
+                        <label for="stigmatizeDiseasesNo"></label>
+                        <label for="stigmatizeDiseasesNo" class="radio-button-text">No</label>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <label class="control-label rp-choice-questions">3.1.8 Does the study target a vulnerable population as defined in 456 CFR (children, prisoners, pregnant
+                        women, mentally disabled persons, or [SIGNIFICANTLY] economically or educationally disadvantaged
+                        persons)?
+                    </label>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="radio-inline">
+                        <input ngControl="vulnerablepop" [ngModel]="{checked: dar.vulnerablepop === true ? '' : null}" (change)="dar.vulnerablepop=$event.target.value"
+                        value=true type="radio" class="regular-radio" id="vulnerablePopYes" name="vulnerablepop" required>
+                        <label for="vulnerablePopYes"></label>
+                        <label for="vulnerablePopYes" class="radio-button-text">Yes</label>
+                    </div>
+                    <div class="radio-inline">
+                        <input ngControl="vulnerablepop" [ngModel]="{checked: dar.vulnerablepop === false ? '' : null}" (change)="dar.vulnerablepop=$event.target.value"
+                        value=false type="radio" class="regular-radio" id="vulnerablePopNo" name="vulnerablepop" required>
+                        <label for="vulnerablePopNo"></label>
+                        <label for="vulnerablePopNo" class="radio-button-text">No</label>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <label class="control-label rp-choice-questions">3.1.9 Does the research aim involve the study of Population Origins/Migration patterns?</label>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="radio-inline">
+                        <input ngControl="popmigration" [ngModel]="{checked: dar.popmigration === true ? '' : null}" (change)="dar.popmigration=$event.target.value"
+                        value=true type="radio" class="regular-radio" id="popMigrationYes" name="popmigration" required>
+                        <label for="popMigrationYes"></label>
+                        <label for="popMigrationYes" class="radio-button-text">Yes</label>
+                    </div>
+                    <div class="radio-inline">
+                        <input ngControl="popmigration" [ngModel]="{checked: dar.popmigration === false ? '' : null}" (change)="dar.popmigration=$event.target.value"
+                        value=false type="radio" class="regular-radio" id="popMigrationNo" name="popmigration" required>
+                        <label for="popMigrationNo"></label>
+                        <label for="popMigrationNo" class="radio-button-text">No</label>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <label class="control-label rp-choice-questions">3.1.10 Does the research aim involve the study of psychological traits, including intelligence, attention,
+                        emotion?
+                    </label>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="radio-inline">
+                        <input ngControl="psychtraits" [ngModel]="{checked: dar.psychtraits === true ? '' : null}" (change)="dar.psychtraits=$event.target.value"
+                        value=true type="radio" class="regular-radio" id="psychTraitsYes" name="psychtraits" required>
+                        <label for="psychTraitsYes"></label>
+                        <label for="psychTraitsYes" class="radio-button-text">Yes</label>
+                    </div>
+                    <div class="radio-inline">
+                        <input ngControl="psychtraits" [ngModel]="{checked: dar.psychtraits === false ? '' : null}" (change)="dar.psychtraits=$event.target.value"
+                        value=false type="radio" class="regular-radio" id="psychTraitsNo" name="psychtraits" required>
+                        <label for="psychTraitsNo"></label>
+                        <label for="psychTraitsNo" class="radio-button-text">No</label>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <label class="control-label rp-choice-questions">3.1.11 Does the research correlate ethnicity, race, or gender with genotypic or other phenotypic variables,
+                        for purposes beyond biomedical or health-related research, or in ways that are not easily related
+                        to Health? </label>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="radio-inline">
+                        <input ngControl="nothealth" [ngModel]="{checked: dar.nothealth === true ? '' : null}" (change)="dar.nothealth=$event.target.value"
+                        value=true type="radio" class="regular-radio" id="notHealthYes" name="nothealth" required>
+                        <label for="notHealthYes"></label>
+                        <label for="notHealthYes" class="radio-button-text">Yes</label>
+                    </div>
+                    <div class="radio-inline">
+                        <input ngControl="nothealth" [ngModel]="{checked: dar.nothealth === false ? '' : null}" (change)="dar.nothealth=$event.target.value"
+                        value=false type="radio" class="regular-radio" id="notHealthNo" name="nothealth" required>
+                        <label for="notHealthNo"></label>
+                        <label for="notHealthNo" class="radio-button-text">No</label>
+                    </div>
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn btn-primary" type="button" (click)="clear()">
+                        <em class="glyphicon glyphicon-erase"></em> Clear
+                    </button>
+                    <button class="btn btn-primary" type="submit">
+                        <em class="glyphicon glyphicon-ok-sign"></em> Submit
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
