@@ -76,13 +76,13 @@
                 </div>
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="radio-inline">
-                        <input ngControl="forProfit" type="radio" value="true" name="forProfit" [ngModel]="{checked: dar.forProfit === true ? '' : null}"
+                        <input ngControl="forProfit" type="radio" value=true name="forProfit" [ngModel]="{checked: dar.forProfit === true ? '' : null}"
                         (change)="dar.forProfit=$event.target.value" class="regular-radio" id="exclusiveYes" required>
                         <label for="exclusiveYes"></label>
                         <label for="exclusiveYes" class="radio-button-text">Yes</label>
                     </div>
                     <div class="radio-inline">
-                        <input ngControl="forProfit" type="radio" value="false" name="forProfit" [ngModel]="{checked: dar.forProfit === false ? '' : null}"
+                        <input ngControl="forProfit" type="radio" value=false name="forProfit" [ngModel]="{checked: dar.forProfit === false ? '' : null}"
                         (change)="dar.forProfit=$event.target.value" class="regular-radio" id="exclusiveNo" required>
                         <label for="exclusiveNo"></label>
                         <label for="exclusiveNo" class="radio-button-text">No</label>
@@ -111,8 +111,6 @@
                     <label for="oneGenderNo"></label>
                     <label for="oneGenderNo" class="radio-button-text">No</label>
                 </div>
-                {{dar.onegender}}
-
                 <div class="multi-step-fields">
                     <span>Please specify</span>
                     <div class="radio-inline">
@@ -130,7 +128,6 @@
                         <label for="genderMale" class="radio-button-text">Male</label>
                     </div>
                 </div>
-                {{dar.gender}}
             </div>
             <div class="form-group">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">

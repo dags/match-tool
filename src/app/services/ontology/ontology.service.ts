@@ -12,18 +12,13 @@ export class OntologyService {
 
 
     match(matchObject: string):  Observable<Response> {
-        let headers = new Headers();
-        var response : Object;
-        headers.append('Content-Type', 'application/json');
+       let headers = new Headers();
+       headers.append('Content-Type', 'application/json');
        return this.http.post(AppSettings.ONTOLOGY_MATCH_ENDPOINT, matchObject, {
             headers: headers
         });
       
     }
 
-    getUseRestriction(questions: ORSPQuestions): Observable<Response> {
-     //   return this.http.get(AppSettings.PROCESSES_API_ENDPOINT + 'processes-api/process');
-     return ;
-    }
 
 }

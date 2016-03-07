@@ -18,30 +18,6 @@ export class DarQComponent {
     public darService: DARService;
     darForm: any;
     dar: DARQuestions;
-    
-    // 
-    //     dar = {
-    //         methods: Boolean = null,
-    //         diseases: Boolean = null,
-    //         controls: Boolean = null,
-    //         population: Boolean = null,
-    //         other: Boolean = null,
-    //         othertext: String = null,
-    //         ontologies: String = null,
-    //         forProfit: Boolean = null,
-    //         onegender: String = null,
-    //         gender: Boolean = null,
-    //         pediatric: Boolean = null,
-    //         illegalbehave: Boolean = null,
-    //         addiction: Boolean = null,
-    //         sexualdiseases: Boolean = null,
-    //         stigmatizediseases: Boolean = null,
-    //         vulnerablepop: Boolean = null,
-    //         popmigration: Boolean = null,
-    //         psychtraits: Boolean = null,
-    //         nothealth: Boolean = null
-    // 
-    //     };
 
     constructor(private builder: FormBuilder, darService: DARService, darQuestions: DARQuestions) {
         this.darService = darService;
@@ -72,17 +48,16 @@ export class DarQComponent {
     }
 
     submitDarForm() {
-        // alert(this.dar);
-        
-        // this.darService.getUseRestriction(this.darForm.value)
-        //     .subscribe(
-        //     data => {
-        //         this.darFormReady.emit(data.text());
-        //     },
-        //     err => {
-        //         this.darFormReady.emit(err._body);
-        //     }
-        //     );
+   
+         this.darService.getUseRestriction(JSON.stringify(this.dar))
+         .subscribe(
+            data => {
+                this.darFormReady.emit(data.json());
+             },
+             err => {
+                 this.darFormReady.emit(err._body);
+             }
+             );
             
         this.darFormReady.emit(this.dar);
     }

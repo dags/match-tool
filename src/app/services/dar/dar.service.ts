@@ -14,7 +14,7 @@ export class DARService {
     getUseRestriction(questions: string): Observable<Response> {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
-        return this.http.post(AppSettings.DAR_USERESTRICTION_ENDPOINT, questions, {
+        return this.http.put(AppSettings.DAR_USERESTRICTION_ENDPOINT, questions, {
             headers: headers
         });
     }
