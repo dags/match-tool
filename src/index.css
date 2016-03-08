@@ -2818,3 +2818,7 @@ tags-input .tags .tag-item{
 .tooltip.tooltip-class .tooltip-arrow {
     display: none;
 }
+
+.data-restrictions-qs{
+    font-size: 14px!important;
+}
