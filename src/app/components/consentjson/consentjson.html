@@ -1,19 +1,7 @@
-<<<<<<< HEAD
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">Structured Consent</h3>
-    </div>
-    <div class="panel-body">
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 rp-group">
-            <textarea class="form-control" [(ngModel)]="consentJson" (change)="onConsentJsonChange($event)"  rows="10"></textarea>
-        </div>
-    </div>
-</div>
-=======
 <div class="panel-heading cm-boxhead dul-color">
     <h4 class="panel-title dul-color"><b>Structured DUL Restrictions</b></h4>
 </div>
 <div class="panel-body cm-boxbody no-margin">
-    <textarea class="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12" [(ngModel)]="consentJson" rows="5"></textarea>
+    <textarea class="form-control col-lg-12 col-md-12 col-sm-12 col-xs-12" [(ngModel)]="consentJson" (change)="onConsentJsonChange($event)"  rows="5"></textarea>
 </div>
->>>>>>> 0090c64... UI Improvements
+

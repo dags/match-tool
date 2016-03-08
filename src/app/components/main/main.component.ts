@@ -34,6 +34,7 @@ export class MainComponent {
     }
 
     match() {
+        this.results = "";
         var matchRequest = '{"purpose":' + this.darJson + ', "consent":' + this.consentJson + '}';
         this.ontologyService.match(matchRequest).subscribe(
             data => {
@@ -66,7 +67,8 @@ export class MainComponent {
     }
 
     processConsentForm(evt: Orsp) {
-       this.darJson = JSON.stringify(evt, null, 2);
+        let ur = this.orspService.getUseRestriction(evt);
+        this.consentJson = ur;
     }
 
 }
