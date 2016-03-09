@@ -6,7 +6,7 @@ export class DARQuestions {
     population: Boolean = false;
     other: Boolean = false;
     othertext: String = null;
-    ontologies: String = null;
+    ontologies: Array<string> = null;
     forProfit: Boolean = false;
     onegender: boolean = false;
     gender: String = null;
@@ -22,6 +22,7 @@ export class DARQuestions {
 
     constructor() {
         this.onegender = false;
+        this.ontologies = [];
     }
 
 }
