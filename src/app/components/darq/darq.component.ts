@@ -22,12 +22,12 @@ export class DarQComponent {
     dar: DARQuestions;
     ontologyService: OntologyService;
     asyncSelected: string = '';
+    prevSelected: string = '';
     typeaheadLoading: boolean = false;
     typeaheadNoResults: boolean = false;
     ontologies: Array<string> = [];
     ontologyMap: any = new Object();
     _cache: any;
-    _prevContext: any;
     ontologiesSelectedLabels: Array<string> = [];
 
     constructor(private builder: FormBuilder, darService: DARService, darQuestions: DARQuestions, ontologyService: OntologyService) {
@@ -58,35 +58,35 @@ export class DarQComponent {
         });
     }
 
-    private getAsyncData(context: any) {
+    getAsyncData(context: any) {
         if (!this.isEmpty(context.asyncSelected)) {
-            if (this._prevContext === context) {
+            if (this.prevSelected === context.asyncSelected) {
                 return this.ontologies;
             }
-                  this._prevContext = context;
+            this.prevSelected = context.asyncSelected;
 
-                this.ontologyService.autocomplete(context.asyncSelected).subscribe(
-                    (data) => {
-                        this.ontologies = data.json();
-                        return this.ontologies;
-                    },
-                    err => {
-                        this.ontologies = err._body;
-                        return this.ontologies;
-                    }
-                );
+            this.ontologyService.autocomplete(context.asyncSelected).subscribe(
+                (data) => {
+                    this.ontologies = data.json();
+                    return this.ontologies;
+                },
+                err => {
+                    this.ontologies = err._body;
+                    return this.ontologies;
+                }
+            );
         }
     }
 
-    private changeTypeaheadLoading(e: boolean) {
+    changeTypeaheadLoading(e: boolean) {
         this.typeaheadLoading = e;
     }
 
-    private changeTypeaheadNoResults(e: boolean) {
+    changeTypeaheadNoResults(e: boolean) {
         this.typeaheadNoResults = e;
     }
 
-    private typeaheadOnSelect(e: any) {
+    typeaheadOnSelect(e: any) {
         if (this.ontologyMap[e.item.id] == null) {
             this.ontologyMap[e.item.id] = e.item.label;
             this.dar.ontologies.push(e.item);
@@ -96,32 +96,40 @@ export class DarQComponent {
         this.asyncSelected = "";
     }
 
-    private clearOntologies() {
+    clearOntologies() {
         this.ontologyMap = new Object();
         this.ontologiesSelectedLabels = [];
-        this.dar.ontologies =  [];
+        this.dar.ontologies = [];
         this.submitDarForm();
     }
 
-    private getOntologyFromMap(k) {
+    getOntologyFromMap(k) {
         return this.ontologyMap[k];
     }
 
-    private getContext() {
+    getContext() {
         return this;
     }
 
-    private clear() {
+    clear() {
         this.dar = new DARQuestions();
         this.submitDarForm();
 
     }
 
-    private getValues() {
+    getValues() {
         return this.darForm.value;
     }
 
-    private submitDarForm() {
+    submitDarForm() {
+        if(this.dar.gender !== 'NG'){
+            this.dar.onegender = true;
+        }
+        if(!this.isEmpty(this.dar.othertext)){
+            this.dar.other = true;
+        }else{
+            this.dar.other = false;
+        }
         this.darService.getUseRestriction(JSON.stringify(this.dar))
             .subscribe(
             data => {
@@ -135,8 +143,9 @@ export class DarQComponent {
         this.darFormReady.emit(this.dar);
     }
 
-    private isEmpty(val) {
-        return (val === undefined || val == null || val.length <= 0) ? true : false;
+
+    isEmpty(val) {
+        return (val === undefined || val == null || val.length <= 0 || val.trim().length === 0) ? true : false;
     }
 
 }

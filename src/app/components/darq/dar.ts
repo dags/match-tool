@@ -22,6 +22,7 @@ export class DARQuestions {
 
     constructor() {
         this.onegender = false;
+        this.gender = 'NG'
         this.ontologies = [];
     }
 

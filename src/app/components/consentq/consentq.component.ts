@@ -26,7 +26,8 @@ export class ConsentQComponent {
     _cache: any;
     _prevContext: any;
     ontologiesSelectedLabels: Array<string> = [];
-
+    prevSelected: string = '';
+    
     constructor(private _formBuilder: FormBuilder, ontologyService: OntologyService) {
         this.orsp = new Orsp();
         this.consentFormReady = new EventEmitter();
@@ -62,12 +63,11 @@ export class ConsentQComponent {
         this.consentForm.marskAsTouched();
     }
     private getAsyncData(context: any) {
-        if (!this.isEmpty(context.asyncSelected)) {
-            if (this._prevContext === context) {
+       if (!this.isEmpty(context.asyncSelected)) {
+            if (this.prevSelected === context.asyncSelected) {
                 return this.ontologies;
             }
-            this._prevContext = context;
-
+            this.prevSelected = context.asyncSelected;
             this.ontologyService.autocomplete(context.asyncSelected).subscribe(
                 (data) => {
                     this.ontologies = data.json();

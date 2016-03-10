@@ -25,15 +25,6 @@ export class OntologyService {
          return this.http.get(AppSettings.ONTOLOGY_ENDPOINT + "/autocomplete?q="+partialRequest,  {
             headers: headers});
     }
-    // autocomplete2(partialRequest: string):Promise<Object>  {
-    //       let headers = new Headers();
-    //     headers.append('Content-Type', 'application/json');
-    //      return this.http
-    //        .get(AppSettings.ONTOLOGY_ENDPOINT + "/autocomplete?q="+partialRequest,
-    //        {headers:headers})
-    //        .map((response) => {
-    //          return response.json()
-    //        }).toPromise();
-    //  }
+
     
 }

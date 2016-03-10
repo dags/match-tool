@@ -55,12 +55,13 @@
                 </div>
             </div>
 
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+  <!--          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="checkbox">
-                    <input [(ngModel)]="dar.other" id="checkOther" ngControl="other" #other type="checkbox" class="checkbox-inline" name="checkOther">
+                    <input [(ngModel)]="dar.other" id="checkOther" ngControl="other" (change)="submitDarForm()" type="checkbox" class="checkbox-inline" name="checkOther">
                     <label class="regular-checkbox" for="checkOther"><b>2.4.5 Other:</b></label>
                 </div>
-            </div>
+            </div> -->
+            <b>2.4.5 Other:</b>
             <input [(ngModel)]="dar.othertext" ngControl="othertext" #othertext type="text" name="inputOther" class="form-control vote-input"
             id="inputOther" placeholder="If selected, please specify.">
              
@@ -79,8 +80,8 @@
                         (typeaheadOnSelect)="typeaheadOnSelect($event)"
                         (typeaheadLoading)="changeTypeaheadLoading($event)"
                         (typeaheadNoResults)="changeTypeaheadNoResults($event)"
-                        (typeaheadMinLength)="3" 
-                        [typeaheadWaitMs]="400" placeholder="Choose any number of Disease Ontology or none."
+                        [typeaheadOptionsLimit]="100"
+                        placeholder="Choose any number of Disease Ontology or none."
                         class="form-control">
                 </div>
                 <button type="button" (click)="clearOntologies()" class="col-lg-3 col-md-3 col-sm-12 col-xs-12 btn" style="background-color: #cccccc; color: #666666;">
@@ -119,27 +120,21 @@
                 <label class="control-label rp-choice-questions">3.1.2 Please indicate if this study is limited to one gender?
                 </label>
             </div>
+
             <div class="radio-inline">
-                <input ngControl="onegender" #onegender value="true" type="radio" [ngModel]="{checked: dar.onegender === 'true' ? '' : null}"
-                (change)="dar.onegender=$event.target.value" class="regular-radio" id="oneGenderYes" name="onegender" required>
-                <label for="oneGenderYes"></label>
-                <label for="oneGenderYes" class="radio-button-text">Yes</label>
-            </div>
-            <div class="radio-inline">
-                <input ngControl="onegender" #onegender value="false" type="radio" [ngModel]="{checked: dar.onegender === 'false' ? '' : null}"
-                (change)="dar.onegender=$event.target.value" class="regular-radio" id="oneGenderNo" name="onegender" required>
-                <label for="oneGenderNo"></label>
-                <label for="oneGenderNo" class="radio-button-text">No</label>
+                <input ngControl="gender"  [ngModel]="{checked: dar.gender === 'NG' ? '' : null}" (change)="dar.gender=$event.target.value"
+                value="NG" type="radio" class="regular-radio" id="notGender" name="gender">
+                <label for="notGender"></label>
+                <label for="notGender" class="radio-button-text">No</label>
             </div>
             <div class="multi-step-fields">
-                <span>Please specify</span>
                 <div class="radio-inline">
-                    <input ngControl="gender" [ngModel]="{checked: dar.gender === 'F' ? '' : null}" (change)="dar.gender=$event.target.value"
+                    <input  ngControl="gender" [ngModel]="{checked: (dar.gender === 'F') ? '' : null}" (change)="dar.gender=$event.target.value"
                     value="F" type="radio" class="regular-radio" id="genderFemale" name="gender">
                     <label for="genderFemale"></label>
                     <label for="genderFemale" class="radio-button-text">Female</label>
                 </div>
-                <div class="radio-inline">
+                <div class="radio-inline"> 
                     <input ngControl="gender" [ngModel]="{checked: dar.gender === 'M' ? '' : null}" (change)="dar.gender=$event.target.value"
                     value="M" type="radio" class="regular-radio" id="genderMale" name="gender">
                     <label for="genderMale"></label>
