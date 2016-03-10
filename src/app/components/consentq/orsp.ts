@@ -1,6 +1,6 @@
 export class Orsp {
     public generalUse: Boolean;
-    public diseaseRestrictions: String[];
+    public diseaseRestrictions: string[];
     public commercialUseExcluded: Boolean;
     public methodsResearchExcluded: Boolean;
     public aggregateResearchExcluded: Boolean;
@@ -12,7 +12,7 @@ export class Orsp {
 
     constructor() {
         this.generalUse = false;
-        this.diseaseRestrictions = null;
+        this.diseaseRestrictions = [];
         this.commercialUseExcluded = false;
         this.methodsResearchExcluded = false;
         this.aggregateResearchExcluded = false;

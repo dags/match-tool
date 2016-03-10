@@ -30,9 +30,6 @@ export class OrspService {
 
     process(questions: Orsp): UseRestriction {
         let useRestriction: UseRestriction = null;
-
-        console.log(JSON.stringify(questions));
-
         let categoryRestrictions: UseRestriction[] = [];
 
         if (questions.generalUse == true) {
@@ -41,7 +38,7 @@ export class OrspService {
         }
 
         if (questions.diseaseRestrictions) {
-            // categoryRestrictions.add(buildRestriction(diseaseRestrictions))
+             categoryRestrictions.push(this.buildRestriction(questions.diseaseRestrictions));
         }
 
         if (questions.populationRestrictions) {
@@ -103,7 +100,21 @@ export class OrspService {
         if (questions.controlSetExcluded == true) {
             useRestriction = new Or([useRestriction, new And([useRestriction, new Named(this.CONTROL)])])
         }
-        console.log(JSON.stringify(useRestriction, null, 2));
         return useRestriction;
+    }
+
+    buildRestriction(ontologies: string[]): UseRestriction {
+        var useRestrictions: UseRestriction [] = [];      
+        if (typeof ontologies != "undefined" && ontologies != null && ontologies.length > 0) {
+            if (ontologies.length == 1) {
+               return new Named(ontologies[0]);
+            } else {
+                ontologies.forEach(function(ontology) {
+                   useRestrictions.push(new Named(ontology));
+                });
+                return new Or(useRestrictions);
+            }
+        }
+        return null;
     }
 }
