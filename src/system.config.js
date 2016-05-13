@@ -19,10 +19,11 @@ System.import('app/bootstrap').then(null, console.error.bind(console));
 
   // map tells the System loader where to look for things
   var map = {
-    'app':                        'app', // 'dist',
-    'rxjs':                       'node_modules/rxjs',
-    'angular2-in-memory-web-api': 'node_modules/angular2-in-memory-web-api',
-    '@angular':'vendor/angular2'
+    'app':                        '/app', // 'dist',
+    'rxjs':                       'vendor/rxjs/',
+    '@angular':'vendor/angular2',
+    'moment':'vendor/moment/moment.js',
+    'angular2-in-memory-web-api': 'vendor/angular2-in-memory-web-api',    
   };
 
   // packages tells the System loader how to load when no filename and/or no extension
