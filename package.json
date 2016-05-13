@@ -11,7 +11,16 @@
         "typings":"typings"
     },
     "dependencies": {
-        "angular2": "latest",
+        "@angular/common":"latest",
+        "@angular/compiler":"latest",
+        "@angular/core":"latest",
+        "@angular/http":"latest",
+        "@angular/platform-browser":"latest",
+        "@angular/platform-browser-dynamic":"latest",
+        "@angular/router":"latest",
+        "@angular/router-deprecated":"latest",
+        "@angular/testing":"latest",
+        "@angular/upgrade":"latest",
         "systemjs": "latest",
         "es6-promise":"latest",
         "rxjs": "latest",
@@ -20,9 +29,9 @@
         "font-awesome":"latest",
         "ng2-bootstrap":"latest",
         "moment":"latest",
-	"es6-shim":"latest",
-	"reflect-metadata":"latest",
-	"zone.js":"latest"
+    	"es6-shim":"latest",
+	    "reflect-metadata":"latest",
+	    "zone.js":"latest"
     },
     "devDependencies": {
         "gulp": "latest",

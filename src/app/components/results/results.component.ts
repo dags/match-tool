@@ -1,4 +1,4 @@
-import {Component, Injector, OnInit, bind, Input} from 'angular2/core';
+import {Component, Injector, OnInit, bind, Input} from '@angular/core';
 
 @Component({
     selector: 'results',

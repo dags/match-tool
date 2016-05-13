@@ -1,10 +1,10 @@
-import {provide} from 'angular2/core';
-import {bootstrap} from 'angular2/platform/browser';
-import {HTTP_PROVIDERS} from 'angular2/http';
-import {ROUTER_PROVIDERS} from 'angular2/router';
-import {HashLocationStrategy,LocationStrategy} from 'angular2/platform/common';
+import {provide} from '@angular/core';
+import {bootstrap} from '@angular/platform-browser-dynamic';
+import {HTTP_PROVIDERS} from '@angular/http';
+import {ROUTER_PROVIDERS} from '@angular/router';
+import {HashLocationStrategy, LocationStrategy} from '@angular/common';
 import {MainComponent} from './components/main/main.component';
-import {enableProdMode} from 'angular2/core';
+import {enableProdMode} from '@angular/core';
 
 enableProdMode();
 

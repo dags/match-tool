@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Injector, OnInit, bind, Input, Output} from 'angular2/core';
+import {Component, EventEmitter, Injector, OnInit, bind, Input, Output} from '@angular/core';
 import {ConsentService} from '../../services/consent/consent.service';
 
 @Component({

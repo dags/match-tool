@@ -42,25 +42,15 @@ gulp.task('typescript', function () {
 });
 
 gulp.task('cli-lib',function(){
-    gulp.src('./node_modules/es6-shim/es6-shim.min.js').pipe(gulp.dest('./dist/vendor/es6-shim'));    
-    gulp.src('./node_modules/angular2/bundles/angular2-polyfills.js').pipe(gulp.dest('./dist/vendor/angular2/'));
-    gulp.src('./node_modules/angular2/bundles/angular2.dev.js').pipe(gulp.dest('./dist/vendor/angular2/'));
-    gulp.src('./node_modules/angular2/bundles/http.js').pipe(gulp.dest('./dist/vendor/angular2/'));
-    gulp.src('./node_modules/angular2/bundles/router.js').pipe(gulp.dest('./dist/vendor/angular2/'));
-    gulp.src('./node_modules/angular2/bundles/testing.dev.js').pipe(gulp.dest('./dist/vendor/angular2/'));
-    gulp.src('./node_modules/angular2/bundles/upgrade.js').pipe(gulp.dest('./dist/vendor/angular2/'));
-    gulp.src('./node_modules/systemjs/dist/system.src.js').pipe(gulp.dest('./dist/vendor/systemjs/'));
-    gulp.src('./node_modules/systemjs/dist/system-polyfills.js').pipe(gulp.dest('./dist/vendor/systemjs/'));
-    gulp.src('./node_modules/rxjs/bundles/Rx.js').pipe(gulp.dest('./dist/vendor/rxjs/'));
-    gulp.src('./node_modules/ng2-bootstrap/bundles/ng2-bootstrap.min.js').pipe(gulp.dest('./dist/vendor/ng2-bootstrap/'));
-    gulp.src('./node_modules/moment/moment.js').pipe(gulp.dest('./dist/vendor/moment/'));
-    gulp.src('./node_modules/bootstrap/dist/css/bootstrap.min.css').pipe(gulp.dest('./dist/vendor/bootstrap/css'));
-    gulp.src('./node_modules/bootstrap/dist/css/bootstrap-theme.min.css').pipe(gulp.dest('./dist/vendor/bootstrap/css'));
-    gulp.src('./node_modules/bootstrap/dist/js/bootstrap.min.js').pipe(gulp.dest('./dist/vendor/bootstrap/js'));
-    gulp.src('./node_modules/bootstrap/dist/fonts/*.*').pipe(gulp.dest('./dist/vendor/bootstrap/fonts'));
-    gulp.src('./node_modules/jquery/dist/jquery.min.js').pipe(gulp.dest('./dist/vendor/jquery'));    
-    gulp.src('./node_modules/font-awesome/css/font-awesome.min.css').pipe(gulp.dest('./dist/vendor/font-awesome/css'));
-    gulp.src('./node_modules/font-awesome/fonts/*.*').pipe(gulp.dest('./dist/vendor/font-awesome/fonts'));
+    gulp.src('./node_modules/es6-shim/**/*.*').pipe(gulp.dest('./dist/vendor/es6-shim'));    
+    gulp.src('./node_modules/@angular/**/*.*').pipe(gulp.dest('./dist/vendor/angular2/'));
+    gulp.src('./node_modules/systemjs/**/*.*').pipe(gulp.dest('./dist/vendor/systemjs/'));
+    gulp.src('./node_modules/rxjs/**/*.*').pipe(gulp.dest('./dist/vendor/rxjs/'));
+    gulp.src('./node_modules/ng2-bootstrap/**/*.*').pipe(gulp.dest('./dist/vendor/ng2-bootstrap/'));
+    gulp.src('./node_modules/moment/**/*.*').pipe(gulp.dest('./dist/vendor/moment/'));
+    gulp.src('./node_modules/bootstrap/**/*.*').pipe(gulp.dest('./dist/vendor/bootstrap'));
+    gulp.src('./node_modules/jquery/**/*.*').pipe(gulp.dest('./dist/vendor/jquery'));    
+    gulp.src('./node_modules/font-awesome/**/*.*').pipe(gulp.dest('./dist/vendor/font-awesome'));
 });
 
 gulp.task('watch', function () {

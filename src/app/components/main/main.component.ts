@@ -1,6 +1,6 @@
-import {Component, OnInit, NgZone} from 'angular2/core';
-import {RouteConfig, RouterOutlet, RouterLink, Router, AsyncRoute} from 'angular2/router';
-import {Location} from 'angular2/platform/common';
+import {Component, OnInit, NgZone} from '@angular/core';
+import {ROUTER_DIRECTIVES, ROUTER_PROVIDERS} from '@angular/router';
+import {Location} from '@angular/common';
 import {ConsentJsonComponent} from '../consentjson/consentjson.component';
 import {ConsentQComponent} from '../consentq/consentq.component';
 import {DarJsonComponent} from '../darjson/darjson.component';

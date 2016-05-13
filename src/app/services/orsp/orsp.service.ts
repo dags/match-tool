@@ -1,4 +1,4 @@
-import {Injectable} from 'angular2/core';
+import {Injectable} from '@angular/core';
 import {AppSettings} from '../config/app.settings';
 import {Orsp} from '../../components/consentq/orsp';
 import {And} from './and';
