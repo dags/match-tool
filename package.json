@@ -20,9 +20,9 @@
         "font-awesome":"latest",
         "ng2-bootstrap":"latest",
         "moment":"latest",
-	"es6-shim":"^0.33.3",
-	"reflect-metadata":"^0.1.3",
-	"zone.js":"^0.6.2"
+	"es6-shim":"latest",
+	"reflect-metadata":"latest",
+	"zone.js":"latest"
     },
     "devDependencies": {
         "gulp": "latest",

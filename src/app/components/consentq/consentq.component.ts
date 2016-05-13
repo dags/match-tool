@@ -1,4 +1,4 @@
-import {Component, Injector, OnInit, ResolvedProvider, bind, Input, Output, EventEmitter} from 'angular2/core';
+import {Component, Injector, OnInit, bind, Input, Output, EventEmitter} from 'angular2/core';
 import {FORM_DIRECTIVES, FormBuilder, Validators, Control } from 'angular2/common';
 import {TYPEAHEAD_DIRECTIVES} from 'ng2-bootstrap/ng2-bootstrap';
 import {Orsp} from './orsp';

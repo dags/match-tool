@@ -1,4 +1,4 @@
-import {Component, Injector, OnInit, ResolvedProvider, bind, Input, Output, EventEmitter} from 'angular2/core';
+import {Component, Injector, OnInit, bind, Input, Output, EventEmitter} from 'angular2/core';
 
 @Component({
     selector: 'darjson',
