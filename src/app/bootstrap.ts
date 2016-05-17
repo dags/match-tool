@@ -8,4 +8,4 @@ import {enableProdMode} from '@angular/core';
 
 enableProdMode();
 
-bootstrap(MainComponent,[HTTP_PROVIDERS,ROUTER_PROVIDERS, provide(LocationStrategy, {useClass: HashLocationStrategy})]);
+bootstrap(MainComponent, [HTTP_PROVIDERS, ROUTER_PROVIDERS, provide(LocationStrategy, { useClass: HashLocationStrategy })]);
