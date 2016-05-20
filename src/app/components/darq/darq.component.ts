@@ -6,6 +6,7 @@ import {DARQuestions} from '../darq/dar';
 import {OntologyService} from '../../services/ontology/ontology.service';
 
 
+
 @Component({
     selector: 'darq',
     templateUrl: 'app/components/darq/darq.html',
@@ -18,10 +19,10 @@ export class DarQComponent {
 
     @Output() darFormReady: EventEmitter<Object>;
     public darService: DARService;
+    public asyncSelected:string = '';
     darForm: any;
     dar: DARQuestions;
     ontologyService: OntologyService;
-    asyncSelected: string = '';
     prevSelected: string = '';
     typeaheadLoading: boolean = false;
     typeaheadNoResults: boolean = false;
@@ -29,7 +30,8 @@ export class DarQComponent {
     ontologyMap: any = new Object();
     _cache: any;
     ontologiesSelectedLabels: Array<string> = [];
-
+    
+      
     constructor(private builder: FormBuilder, darService: DARService, darQuestions: DARQuestions, ontologyService: OntologyService) {
         this.darService = darService;
         this.dar = new DARQuestions();
@@ -54,11 +56,11 @@ export class DarQComponent {
             vulnerablepop: ["", Validators.required],
             popmigration: ["", Validators.required],
             psychtraits: ["", Validators.required],
-            nothealth: ["", Validators.required]
-        });
+            nothealth: ["", Validators.required],
+          });
     }
 
-    getAsyncData(context: any) {
+    getAsyncData(context:any) {
         if (!this.isEmpty(context.asyncSelected)) {
             if (this.prevSelected === context.asyncSelected) {
                 return this.ontologies;
@@ -101,8 +103,13 @@ export class DarQComponent {
         this.ontologiesSelectedLabels = [];
         this.dar.ontologies = [];
         this.submitDarForm();
+        this.asyncSelected = '';
     }
 
+    clearAsyncSelected() {
+        this.asyncSelected = '';
+    }
+    
     getOntologyFromMap(k) {
         return this.ontologyMap[k];
     }
@@ -132,12 +139,12 @@ export class DarQComponent {
         }
         this.darService.getUseRestriction(JSON.stringify(this.dar))
             .subscribe(
-            data => {
-                this.darFormReady.emit(data.json());
-            },
-            err => {
-                this.darFormReady.emit(err._body);
-            }
+                data => {
+                    this.darFormReady.emit(data.json());
+                },
+                err => {
+                    this.darFormReady.emit(err._body);
+                }
             );
 
         this.darFormReady.emit(this.dar);

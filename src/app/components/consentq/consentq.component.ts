@@ -104,6 +104,7 @@ export class ConsentQComponent {
         this.ontologiesSelectedLabels = [];
         this.orsp.diseaseRestrictions = [];
         this.submitConsentForm();
+        this.asyncSelected = "";
     }
 
     getOntologyFromMap(k) {
@@ -117,4 +118,9 @@ export class ConsentQComponent {
     getContext() {
         return this;
     }
+    
+    clearAsyncSelected() {
+        this.asyncSelected = '';
+    }
+    
 }

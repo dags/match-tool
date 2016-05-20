@@ -68,13 +68,16 @@
           
             <div class="row">               
                 <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
-                    <input [(ngModel)]="asyncSelected"
+                    <input type="text"  [(ngModel)]="asyncSelected" (click)="clearAsyncSelected()"
                         [typeahead]="getAsyncData(getContext())" 
                         [typeaheadOptionField]="'label'" 
                         (typeaheadOnSelect)="typeaheadOnSelect($event)"
                         (typeaheadLoading)="changeTypeaheadLoading($event)"
                         (typeaheadNoResults)="changeTypeaheadNoResults($event)"
                         [typeaheadOptionsLimit]="100"
+                        [typeaheadAsync]="true"
+                        [typeaheadMinLength]="3"
+                        [typeaheadWaitMs]="400"
                         placeholder="Choose any number of Disease Ontology or none."
                         class="form-control">
                 </div>
