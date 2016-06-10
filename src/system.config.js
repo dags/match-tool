@@ -13,7 +13,8 @@
     'angular2-in-memory-web-api': 'vendor/angular2-in-memory-web-api',
     '@angular': 'vendor/angular2',
     'zone.js': 'vendor/zone.js',
-    'moment': 'vendor/moment/moment.js'
+    'moment': 'vendor/moment/moment.js',
+    'primeng':'vendor/primeng'
   };
 
   // packages tells the System loader how to load when no filename and/or no extension
@@ -21,6 +22,7 @@
     'app': { main: 'bootstrap', defaultExtension: 'js' },
     'rxjs': { defaultExtension: 'js' },
     'angular2-in-memory-web-api': { defaultExtension: 'js' },
+    'primeng': {defaultExtension: 'js'}
   };
 
   var packageNames = [

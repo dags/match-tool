@@ -52,6 +52,8 @@ gulp.task('cli-lib', function () {
     gulp.src('./node_modules/zone.js/**/*.*').pipe(gulp.dest('./dist/vendor/zone.js'));
     gulp.src('./node_modules/jquery/dist/**/*.*').pipe(gulp.dest('./dist/vendor/jquery'));
     gulp.src('./node_modules/font-awesome/**/*.*').pipe(gulp.dest('./dist/vendor/font-awesome'));
+    gulp.src('./node_modules/primeng/**/*.js').pipe(gulp.dest('./dist/vendor/primeng'));
+    gulp.src('./node_modules/primeui/**/*.*').pipe(gulp.dest('./dist/vendor/primeui'));
 });
 
 gulp.task('watch', function () {

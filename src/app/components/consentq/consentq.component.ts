@@ -3,11 +3,12 @@ import {FORM_DIRECTIVES, FormBuilder, Validators, Control } from '@angular/commo
 import {TYPEAHEAD_DIRECTIVES} from 'ng2-bootstrap/ng2-bootstrap';
 import {Orsp} from './orsp';
 import {OntologyService} from '../../services/ontology/ontology.service';
+import {AutoComplete} from 'primeng/primeng';
 
 @Component({
     selector: 'consentq',
     templateUrl: 'app/components/consentq/consentq.html',
-    directives: [FORM_DIRECTIVES, TYPEAHEAD_DIRECTIVES],
+    directives: [FORM_DIRECTIVES, TYPEAHEAD_DIRECTIVES, AutoComplete],
     providers: [OntologyService],
 })
 
@@ -25,9 +26,12 @@ export class ConsentQComponent {
     ontologyMap: any = new Object();
     _cache: any;
     _prevContext: any;
+
     ontologiesSelectedLabels: Array<string> = [];
+    filteredOntologiesMultiple: any[];
+
     prevSelected: string = '';
-    
+
     constructor(private _formBuilder: FormBuilder, ontologyService: OntologyService) {
         this.orsp = new Orsp();
         this.consentFormReady = new EventEmitter();
@@ -62,8 +66,9 @@ export class ConsentQComponent {
         this.orsp = new Orsp();
         this.consentForm.marskAsTouched();
     }
+
     private getAsyncData(context: any) {
-       if (!this.isEmpty(context.asyncSelected)) {
+        if (!this.isEmpty(context.asyncSelected)) {
             if (this.prevSelected === context.asyncSelected) {
                 return this.ontologies;
             }
@@ -118,9 +123,26 @@ export class ConsentQComponent {
     getContext() {
         return this;
     }
-    
+
     clearAsyncSelected() {
         this.asyncSelected = '';
     }
-    
+
+    private getFilteredOntologies(event) {
+        let query = event.query;
+        console.log("query: " + query);
+        this.ontologyService.autocomplete(query).subscribe(
+            (data) => {
+                this.ontologies = data.json();
+                console.log(JSON.stringify(this.ontologies));
+                return this.ontologies;
+            },
+            err => {
+                this.ontologies = err._body;
+                console.log(JSON.stringify(this.ontologies));
+                return this.ontologies;
+            }
+        );
+    }
+
 }

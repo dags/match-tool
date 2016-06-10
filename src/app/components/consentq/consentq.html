@@ -8,7 +8,7 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="checkbox">
                         <input [(ngModel)]="orsp.generalUse" id="generalUse" ngControl="generalUse" #generalUse type="checkbox" class="checkbox-inline"
-                        name="generalUse">
+                            name="generalUse">
                         <label class="regular-checkbox" for="generalUse">
                             <span>Data is available for future general research use</span>
                         </label>
@@ -20,26 +20,23 @@
                 </label>
             </div>
             <pre>Ontologies: {{ontologiesSelectedLabels | json}}</pre>
-            <div class="row">               
+
+            <div class="row">
                 <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
-                    <input [(ngModel)]="asyncSelected" (click)="clearAsyncSelected()"
-                        [typeahead]="getAsyncData(getContext())" 
-                        [typeaheadOptionField]="'label'" 
-                        (typeaheadOnSelect)="typeaheadOnSelect($event)"
-                        (typeaheadLoading)="changeTypeaheadLoading($event)"
-                        (typeaheadNoResults)="changeTypeaheadNoResults($event)"
-                        [typeaheadOptionsLimit]="100"
-                        [typeaheadAsync]="true"
-                        [typeaheadMinLength]="3"
-                        [typeaheadWaitMs]="400"
-                        placeholder="Choose any number of Disease Ontology or none."
-                        class="form-control">
+                    <p-autoComplete [(ngModel)]="ontologiesSelectedLabels" 
+                    [suggestions]="ontologies" 
+                    (completeMethod)="getFilteredOntologies($event)"
+                    styleClass="wid100" [minLength]="3" 
+                    placeholder="Choose any number of Disease Ontology or none." field="label"
+                    [delay]="500"
+                    [multiple]="true">
+                    </p-autoComplete>
                 </div>
                 <button type="button" (click)="clearOntologies()" class="col-lg-3 col-md-3 col-sm-12 col-xs-12 btn" style="background-color: #cccccc; color: #666666;">
                     Clear ontologies
                 </button>
             </div>
-  
+
             <div [hidden]="typeaheadLoading!==true">
                 <i class="glyphicon glyphicon-refresh ng-hide" style=""></i>
             </div>
@@ -50,7 +47,7 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="checkbox">
                         <input id="commercialUseExcluded" name="commercialUseExcluded" type="checkbox" [(ngModel)]="orsp.commercialUseExcluded" ngControl="commercialUseExcluded"
-                        class="checkbox-inline">
+                            class="checkbox-inline">
                         <label class="regular-checkbox" for="commercialUseExcluded">
                             <span>Future use by for-profit entities is prohibited</span>
                         </label>
@@ -60,7 +57,7 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="checkbox">
                         <input id="methodsResearchExcluded" name="methodsResearchExcluded" type="checkbox" [(ngModel)]="orsp.methodsResearchExcluded"
-                        ngControl="methodsResearchExcluded" class="checkbox-inline">
+                            ngControl="methodsResearchExcluded" class="checkbox-inline">
                         <label class="regular-checkbox" for="methodsResearchExcluded">
                             <span>Future use for methods research (analytic/software/technology development) is prohibited</span>
                         </label>
@@ -70,7 +67,7 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="checkbox">
                         <input id="aggregateResearchExcluded" name="aggregateResearchExcluded" type="checkbox" [(ngModel)]="orsp.aggregateResearchExcluded"
-                        ngControl="aggregateResearchExcluded" class="checkbox-inline">
+                            ngControl="aggregateResearchExcluded" class="checkbox-inline">
                         <label class="regular-checkbox" for="aggregateResearchExcluded">
                             <span>Future use of aggregate-level data for general research purposes is prohibited</span>
                         </label>
@@ -85,22 +82,22 @@
                 </div>
 
                 <div class="radio-inline">
-                    <input id="gender_none" type="radio" ngControl="gender" name="gender" #gender_none class="regular-radio" value="no restrictions" [ngModel]="{checked: orsp.gender === 'no restrictions' ? '' : null}"
-                    (change)="orsp.gender = gender_none.value">
+                    <input id="gender_none" type="radio" ngControl="gender" name="gender" #gender_none class="regular-radio" value="no restrictions"
+                        [ngModel]="{checked: orsp.gender === 'no restrictions' ? '' : null}" (change)="orsp.gender = gender_none.value">
                     <label for="gender_none"></label>
                     <label for="gender_none" class="radio-button-text">No</label>
                 </div>
 
                 <div class="radio-inline">
                     <input id="gender_male" type="radio" ngControl="gender" name="gender" #gender_male class="regular-radio" value="male" [ngModel]="{checked: orsp.gender === 'male' ? '' : null}"
-                    (change)="orsp.gender = gender_male.value">
+                        (change)="orsp.gender = gender_male.value">
                     <label for="gender_male"></label>
                     <label for="gender_male" class="radio-button-text">Male</label>
                 </div>
 
                 <div class="radio-inline">
-                    <input id="gender_female" type="radio" ngControl="gender" name="gender" #gender_female class="regular-radio" value="female" [ngModel]="{checked: orsp.gender === 'female' ? '' : null}"
-                    (change)="orsp.gender = gender_female.value">
+                    <input id="gender_female" type="radio" ngControl="gender" name="gender" #gender_female class="regular-radio" value="female"
+                        [ngModel]="{checked: orsp.gender === 'female' ? '' : null}" (change)="orsp.gender = gender_female.value">
                     <label for="gender_female"></label>
                     <label for="gender_female" class="radio-button-text">Female</label>
                 </div>
@@ -110,7 +107,7 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="checkbox">
                         <input id="controlSetExcluded" name="controlSetExcluded" type="checkbox" [(ngModel)]="orsp.controlSetExcluded" ngControl="controlSetExcluded"
-                        class="checkbox-inline">
+                            class="checkbox-inline">
                         <label class="regular-checkbox" for="controlSetExcluded">
                             <span>Future as a control set for diseases other than those specified is prohibited</span>
                         </label>
@@ -120,7 +117,7 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="checkbox">
                         <input id="pediatricLimited" name="pediatricLimited" type="checkbox" [(ngModel)]="orsp.pediatricLimited" ngControl="pediatricLimited"
-                        class="checkbox-inline">
+                            class="checkbox-inline">
                         <label class="regular-checkbox" for="pediatricLimited">
                             <span>Future use is limited to pediatric research</span>
                         </label>
