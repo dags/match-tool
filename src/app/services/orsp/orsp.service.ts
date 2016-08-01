@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {AppSettings} from '../config/app.settings';
-import {Orsp} from '../../components/consentq/orsp';
+import {Orsp} from '../../dul-qs/orsp';
 import {And} from './and';
 import {Or} from './or';
 import {Not} from './not';
@@ -38,7 +38,7 @@ export class OrspService {
         }
 
         if (questions.diseaseRestrictions) {
-             categoryRestrictions.push(this.buildRestriction(questions.diseaseRestrictions));
+            categoryRestrictions.push(this.buildRestriction(questions.diseaseRestrictions));
         }
 
         if (questions.populationRestrictions) {
@@ -104,13 +104,13 @@ export class OrspService {
     }
 
     buildRestriction(ontologies: string[]): UseRestriction {
-        var useRestrictions: UseRestriction [] = [];      
+        var useRestrictions: UseRestriction[] = [];
         if (typeof ontologies != "undefined" && ontologies != null && ontologies.length > 0) {
             if (ontologies.length == 1) {
-               return new Named(ontologies[0]);
+                return new Named(ontologies[0]);
             } else {
-                ontologies.forEach(function(ontology) {
-                   useRestrictions.push(new Named(ontology));
+                ontologies.forEach(function (ontology) {
+                    useRestrictions.push(new Named(ontology));
                 });
                 return new Or(useRestrictions);
             }

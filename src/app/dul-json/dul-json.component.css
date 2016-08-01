@@ -1,0 +1,8 @@
+.ui-panel-title {
+    color: #C16B0C !important;   
+    font-size: 22px;
+    padding: 10px 10px 0 10px;
+    margin-top: 10px !important;
+    font-weight: 500;
+    display: inline-block;
+}

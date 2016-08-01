@@ -1,61 +1,57 @@
+<!doctype html>
 <html>
 
 <head>
-    <base href="." />
+  <meta charset="utf-8">
+  <title>Testapp</title>
+  <base href="/">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="./vendor/primeui/themes/bootstrap/theme.css"></link>
+  <link rel="stylesheet" type="text/css" href="./vendor/primeui/primeui-ng-all.min.css"></link>
 
-    <!-- 1. Load libraries -->
-    <script src="./vendor/es6-shim/es6-shim.js"></script>
-    <script src="./vendor/reflect-metadata/Reflect.js"></script>
-    <script src="./vendor/systemjs/dist/system.src.js"></script>
-    <script src="./vendor/zone.js/dist/zone.js"></script>
-
-    <!--script src="./vendor/angular2/angular2-polyfills.js"></script>
-    <script src="./vendor/angular2/angular2.dev.js"></script>
-    <script src="./vendor/angular2/http.js"></script>
-    <script src="./vendor/angular2/router.js"></script-->
-
-    <script src="./vendor/jquery/jquery.min.js"></script>
-    <script src="./vendor/bootstrap/js/bootstrap.min.js"></script>
-    <script src="./vendor/ng2-bootstrap/ng2-bootstrap.min.js"></script>
-
-    <link rel="stylesheet" type="text/css" href="./vendor/primeui/themes/omega/theme.css"></link>
-    <link rel="stylesheet" type="text/css" href="./vendor/primeui/primeui-ng-all.min.css"></link>
-
-    <link rel="stylesheet" href="./vendor/bootstrap/css/bootstrap.min.css"></link>
-    <link rel="stylesheet" href="./vendor/bootstrap/css/bootstrap-theme.min.css"></link>
-    <link rel="stylesheet" href="./vendor/font-awesome/css/font-awesome.min.css"></link>
-    <link rel="stylesheet" href="./app/assets/css/style.css"></link>
-    <link rel="stylesheet" href="./index.css"></link>
-
-    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="app/assets/images/favicon/apple-touch-icon-57x57.png" />
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="app/assets/images/favicon/apple-touch-icon-114x114.png" />
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="app/assets/images/favicon/apple-touch-icon-72x72.png" />
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="app/assets/images/favicon/apple-touch-icon-144x144.png" />
-    <link rel="apple-touch-icon-precomposed" sizes="60x60" href="app/assets/images/favicon/apple-touch-icon-60x60.png" />
-    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="app/assets/images/favicon/apple-touch-icon-120x120.png" />
-    <link rel="apple-touch-icon-precomposed" sizes="76x76" href="app/assets/images/favicon/apple-touch-icon-76x76.png" />
-    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="app/assets/images/favicon/apple-touch-icon-152x152.png" />
-    <link rel="icon" type="image/png" href="app/assets/images/favicon/favicon-196x196.png" sizes="196x196" />
-    <link rel="icon" type="image/png" href="app/assets/images/favicon/favicon-96x96.png" sizes="96x96" />
-    <link rel="icon" type="image/png" href="app/assets/images/favicon/favicon-32x32.png" sizes="32x32" />
-    <link rel="icon" type="image/png" href="app/assets/images/favicon/favicon-16x16.png" sizes="16x16" />
-    <link rel="icon" type="image/png" href="app/assets/images/favicon/favicon-128.png" sizes="128x128" />
-
-    <!-- 2. Configure SystemJS -->
-    <!--script src="./system.config.js"></script-->
-
-    <script src="./system.config.js"></script>
-    
-    <script>
-        System.import('app/bootstrap.js').catch(function(err){ console.error(err); });
-    </script>
+  {{#unless environment.production}}
+  <script src="/ember-cli-live-reload.js" type="text/javascript"></script>
+  {{/unless}}
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
 
 <body>
-    <main></main>
+  <app-root>Loading...</app-root>
+
+  <!-- 1. Load libraries -->
+  <script src="./vendor/jquery/dist/jquery.min.js"></script>
+  <script src="./vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="./vendor/ng2-bootstrap/bundles/ng2-bootstrap.min.js"></script>
+
+  <link rel="stylesheet" href="./vendor/bootstrap/dist/css/bootstrap.min.css"></link>
+  <link rel="stylesheet" href="./vendor/bootstrap/dist/css/bootstrap-theme.min.css"></link>
+  <link rel="stylesheet" href="./vendor/font-awesome/css/font-awesome.min.css"></link>
+  <link rel="stylesheet" href="./app/shared/assets/css/style.css"></link>
+  <link rel="stylesheet" href="./index.css"></link>
+
+  <link rel="apple-touch-icon-precomposed" sizes="57x57" href="app/shared/assets/images/favicon/apple-touch-icon-57x57.png"/>
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="app/shared/assets/images/favicon/apple-touch-icon-114x114.png"/>
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="app/shared/assets/images/favicon/apple-touch-icon-72x72.png"/>
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="app/shared/assets/images/favicon/apple-touch-icon-144x144.png"/>
+  <link rel="apple-touch-icon-precomposed" sizes="60x60" href="app/shared/assets/images/favicon/apple-touch-icon-60x60.png"/>
+  <link rel="apple-touch-icon-precomposed" sizes="120x120" href="app/shared/assets/images/favicon/apple-touch-icon-120x120.png"/>
+  <link rel="apple-touch-icon-precomposed" sizes="76x76" href="app/shared/assets/images/favicon/apple-touch-icon-76x76.png"/>
+  <link rel="apple-touch-icon-precomposed" sizes="152x152" href="app/shared/assets/images/favicon/apple-touch-icon-152x152.png"/>
+  <link rel="icon" type="image/png" href="app/shared/assets/images/favicon/favicon-196x196.png" sizes="196x196" />
+  <link rel="icon" type="image/png" href="app/shared/assets/images/favicon/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/png" href="app/shared/assets/images/favicon/favicon-32x32.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="app/shared/assets/images/favicon/favicon-16x16.png" sizes="16x16" />
+  <link rel="icon" type="image/png" href="app/shared/assets/images/favicon/favicon-128.png" sizes="128x128" />
+  
+    {{#each scripts.polyfills}}
+    <script src="{{.}}"></script>
+    {{/each}}
+    <script>
+      System.import('system-config.js').then(function () {
+        System.import('main');
+      }).catch(console.error.bind(console));
+    </script>
+  
 </body>
-
 </html>
-

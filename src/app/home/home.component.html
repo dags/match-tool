@@ -1,0 +1,57 @@
+<div class="container-fluid">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+          <img src="/app/shared/assets/images/broad_logo.png" class="BroadLogo">
+        </div>
+        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+          <h3 class="MainTitle common-color">Data Use Restrictions | Match Tool</h3>
+        </div>
+      </div>
+    </div>
+    
+    <div class="panel-body" style="background-color: #f2f2f2; ">
+      <div class="row fsi-row-lg-level fsi-row-md-level">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+          <app-dul-qs (consentFormReady)="processConsentForm($event)"></app-dul-qs>
+        </div>
+        
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+          <app-dar-qs (darFormReady)="processDarForm($event)"></app-dar-qs>
+        </div>
+      </div>
+
+      <div class="row fsi-row-lg-level fsi-row-md-level">
+        <!--div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 panel panel-primary cm-boxes"-->
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+          <app-dul-json [consentJson]="consentJson" (consentChanged)="processConsentJsonChange($event)" class="dul-color">
+          </app-dul-json>
+        </div>
+        <!--div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 panel panel-primary cm-boxes"-->
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+          <app-dar-json [darJson]="darJson" (darChanged)="processDarJsonChange($event)" class="dar-color">
+          </app-dar-json>
+        </div>
+      </div>
+
+      <div class="row">
+        <!--button class="col-lg-2 col-lg-offset-5 col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-12 btn btn-primary common-background"
+          style="padding-top: 10px; padding-bottom: 10px; font-size: 18px; margin-bottom: 15px;" type="button" (click)="match(purpose, consent)">
+            Match
+         </button-->
+         <button pButton type="button" icon="fa-check" iconPos="left" label="Match"
+            style="padding-top: 10px; padding-bottom: 10px; font-size: 18px; margin-bottom: 15px;"
+            (click)="match(purpose, consent)"
+            class="col-lg-2 col-lg-offset-5 col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-12"> 
+         </button>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-12 col-xs-12">
+          <app-results [results]="results"></app-results>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

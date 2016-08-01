@@ -1,7 +1,17 @@
-import {ConsentService} from './consent.service';
+import {
+  beforeEachProviders,
+  it,
+  describe,
+  expect,
+  inject
+} from '@angular/core/testing';
+import { ConsentService } from './consent.service';
 
-describe('ConsentService', () => {
-    it('must not be null', () => {
-        expect(new ConsentService(null)).not.toBe(null);
-    });
+describe('Consent Service', () => {
+  beforeEachProviders(() => [ConsentService]);
+
+  it('should ...',
+      inject([ConsentService], (service: ConsentService) => {
+    expect(service).toBeTruthy();
+  }));
 });
