@@ -1,11 +1,11 @@
 export class AppSettings {
 
     public static get ONTOLOGY_ENDPOINT(): string {
-        return 'https://consent-ontology.dsde-consent-dev.broadinstitute.org';
+        return 'https://consent-ontology.dsde-dev.broadinstitute.org';
     }
 
     public static get DAR_USERESTRICTION_ENDPOINT(): string {
-        return 'https://consent.dsde-consent-dev.broadinstitute.org/dar/restriction';
+        return 'https://consent.dsde-dev.broadinstitute.org/dar/restriction';
     }
 
     public static get PASSWORD(): string {

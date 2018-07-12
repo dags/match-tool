@@ -20,7 +20,7 @@ export class DarInfoComponent implements OnInit {
 
   onDarInfoChange(event) {
     this.darInfo = event.currentTarget.value;
-    this.darChanged.emit(this.darInfo);
+    this.darChanged.emit(JSON.parse(this.darInfo));
   }
 
   ngOnInit() {

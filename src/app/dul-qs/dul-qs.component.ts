@@ -3,7 +3,7 @@ import { FormControl, FormBuilder, Validators } from '@angular/forms';
 import { OntologyService } from '../services/ontology.service';
 import { Orsp } from '../models/orsp';
 import { Observable } from 'rxjs';
-import { startWith, map } from 'rxjs/operators'
+import { startWith, map } from 'rxjs/operators';
 import { MatAutocompleteSelectedEvent, MatChipInputEvent } from '@angular/material';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 
@@ -61,21 +61,55 @@ export class DulQsComponent implements OnInit {
     this.dulForm = this._formBuilder.group({
       generalUse: ['', Validators.compose([Validators.required])],
       diseaseRestrictions: ['', Validators.compose([Validators.required])],
-      commercialUseExcluded: ['', Validators.compose([Validators.required])],
-      methodsResearchExcluded: ['', Validators.compose([Validators.required])],
-      aggregateResearchExcluded: ['', Validators.compose([Validators.required])],
+      commercialUse: ['', Validators.compose([Validators.required])],
+      methodsResearch: ['', Validators.compose([Validators.required])],
+      aggregateResearch: ['', Validators.compose([Validators.required])],
       gender: ['', Validators.compose([Validators.required])],
-      controlSetExcluded: ['', Validators.compose([Validators.required])],
+      controlSetOption: ['', Validators.compose([Validators.required])],
       populationRestrictions: ['', Validators.compose([Validators.required])],
-      pediatricLimited: ['', Validators.compose([Validators.required])],
+      pediatric: ['', Validators.compose([Validators.required])],
       dateRestriction: ['', Validators.compose([Validators.required])],
-      ontologiesSelectedLabels: []
+      ontologiesSelectedLabels: [],
+      hmbResearch: ['', Validators.compose([Validators.required])],
     });
 
+    /*
+    class DataUseDTO {
+      Boolean generalUse
+      Boolean hmbResearch
+      List<String> diseaseRestrictions
+      Boolean populationOriginsAncestry
+      Boolean populationStructure
+      Boolean commercialUse
+      Boolean methodsResearch
+      String aggregateResearch
+      String controlSetOption
+      String gender
+      Boolean pediatric
+      List<String> populationRestrictions
+      Boolean otherRestrictions
+      String dateRestriction
+      Boolean recontactingDataSubjects
+      String recontactMay
+      String recontactMust
+      String genomicPhenotypicData
+      String cloudStorage
+      Boolean ethicsApprovalRequired
+      String geographicalRestrictions
+      String other
+      Boolean illegalBehavior
+      Boolean addiction
+      Boolean sexualDiseases
+      Boolean stigmatizeDiseases
+      Boolean vulnerablePopulations
+      Boolean psychologicalTraits
+      Boolean nonBiomedical
+  }
+*/
     this.dulForm.valueChanges
     .subscribe(data => {
       this.consentFormReady.emit(this.dulForm.value);
-    })
+    });
   }
 
   submitConsentForm() {

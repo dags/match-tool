@@ -21,7 +21,7 @@
         <app-dul-qs (consentFormReady)="processConsentForm($event)"></app-dul-qs>
       </div>
       <div>
-        <app-dul-info [dulInfo]="dulInfo" (darChanged)="processDulInfoChange($event)"></app-dul-info>
+        <app-dul-info [dulInfo]="dulInfo" (dulChanged)="processDulInfoChange($event)"></app-dul-info>
       </div>
       <div>
         <app-dul-json [consentJson]="consentJson" (consentChanged)="processConsentJsonChange($event)"></app-dul-json>
@@ -43,7 +43,7 @@
   </div>
 
   <div fxFlex="100%" fxLayout="column" fxLayoutAlign="end">
-    <button mat-raised-button color="primary" (click)="match(purpose, consent)">Match !</button>
+    <button mat-raised-button color="primary" (click)="match()">Match !</button>
     <app-results [results]="results"></app-results>
   </div>
 

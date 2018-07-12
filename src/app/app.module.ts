@@ -63,7 +63,7 @@ import { DarInfoComponent } from './dar-info/dar-info.component';
     MatIconModule,
     MatFormFieldModule,
     MatInputModule,
-    
+
     AutoCompleteModule,
     PanelModule
   ],

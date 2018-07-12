@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { OntologyService } from '../services/ontology.service';
 import { ConsentService } from '../services/consent.service';
 import { OrspService } from '../services/orsp.service';
@@ -15,9 +15,6 @@ export class HomeComponent implements OnInit {
   public darJson: any = '';
   public consentJson: any = '';
   public results: any = '';
-  public ontologyService: OntologyService;
-  public consentService: ConsentService;
-  public orspService: OrspService;
 
   consent: string;
   purpose: string;
@@ -25,29 +22,11 @@ export class HomeComponent implements OnInit {
   dulInfo = '';
   darInfo = '';
 
-  constructor(ontologyService: OntologyService, consentService: ConsentService, orspService: OrspService) {
-    this.orspService = orspService;
-    this.ontologyService = ontologyService;
-    this.consentService = consentService;
+  constructor(private ontologyService: OntologyService,
+    private zone: NgZone) {
   }
-
 
   ngOnInit() {
-  }
-
-  match() {
-    console.log('MATCH .....');
-    this.results = '';
-    const matchRequest = { purpose: this.darJson, consent: this.consentJson };
-
-    this.ontologyService.match(JSON.stringify(matchRequest)).subscribe(
-      data => {
-        this.results = data.text();
-      },
-      err => {
-        this.results = err._body;
-      }
-    );
   }
 
   clear() {
@@ -56,33 +35,76 @@ export class HomeComponent implements OnInit {
     this.results = '';
   }
 
-  processDarForm(evt) {
-    // llamar al servicio que genera el JSON
-    // this.darJson = JSON.stringify(evt, null, 2);
-    this.darInfo = JSON.stringify(evt, null, 2);
-    this.darJson = this.orspService.getUseRestriction(evt);
-  }
 
   processDarInfoChange(evt) {
-
-  }
-
-  processDarJsonChange(evt) {
-    // process dar
-    this.darJson = evt;
+    this.zone.run(() => {
+      this.darInfo = JSON.stringify(evt, null, 2);
+      this.translate_dar();
+    });
   }
 
   processDulInfoChange(evt) {
+    this.zone.run(() => {
+    this.dulInfo = JSON.stringify(evt, null, 2);
+    this.translate_dul();
+    });
+  }
 
+  processDarJsonChange(evt) {
+    this.darJson = evt;
   }
 
   processConsentJsonChange(evt: Event) {
     this.consentJson = evt;
+  }
 
+  processDarForm(evt) {
+    this.darInfo = JSON.stringify(evt, null, 2);
+    this.translate_dar();
   }
 
   processConsentForm(evt: Orsp) {
     this.dulInfo = JSON.stringify(evt, null, 2);
-    this.consentJson = this.orspService.getUseRestriction(evt);
+    this.translate_dul();
   }
+
+  translate_dar() {
+    this.ontologyService.translate_dar(this.darInfo)
+      .subscribe(
+        result => {
+          this.darJson = JSON.stringify(result, null, 2);
+        },
+        error => {
+          this.darJson = JSON.stringify(error);
+        });
+  }
+
+  translate_dul() {
+    this.ontologyService.translate_dul(this.dulInfo)
+      .subscribe(
+        result => {
+          this.consentJson = JSON.stringify(result, null, 2);
+        },
+        error => {
+          this.consentJson = JSON.stringify(error);
+        });
+  }
+
+  match() {
+    console.log('MATCH .....');
+    this.results = '';
+
+    const matchRequest = { purpose: JSON.parse(this.darJson), consent: JSON.parse(this.consentJson) };
+
+    this.ontologyService.match(JSON.stringify(matchRequest))
+      .subscribe(
+        data => {
+          this.results = JSON.stringify(data, null, 2);
+        },
+        error => {
+          this.results = JSON.stringify(error);
+        }
+      );
+  }
+
 }

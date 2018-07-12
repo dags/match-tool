@@ -1,3 +1,16 @@
-<p>
-  {{results | json}}
-</p>
+<mat-accordion>
+  <mat-expansion-panel expanded="true">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Match Results
+      </mat-panel-title>
+      <mat-panel-description>
+        Response from Match service
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <textarea style="width: 100%" [(ngModel)]="results" rows="10"></textarea>
+
+  </mat-expansion-panel>
+
+</mat-accordion>

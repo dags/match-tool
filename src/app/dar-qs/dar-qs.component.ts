@@ -1,8 +1,11 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { DARQuestions } from '../models/dar';
 import { OntologyService } from '../services/ontology.service';
 import { DarService } from '../services/dar.service';
-import { Validators, FormBuilder } from '@angular/forms';
+import { Validators, FormBuilder, FormControl } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { MatAutocompleteSelectedEvent, MatChipInputEvent } from '@angular/material';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
 
 @Component({
   selector: 'app-dar-qs',
@@ -10,6 +13,17 @@ import { Validators, FormBuilder } from '@angular/forms';
   styleUrls: ['./dar-qs.component.css']
 })
 export class DarQsComponent implements OnInit {
+  visible = true;
+  selectable = true;
+  removable = true;
+  addOnBlur = false;
+  separatorKeysCodes: number[] = [ENTER, COMMA];
+  fruitCtrl = new FormControl();
+  filteredFruits: Observable<string[]>;
+  fruits: string[] = ['Lemon'];
+  allFruits: string[] = ['Apple', 'Lemon', 'Lime', 'Orange', 'Strawberry'];
+
+  @ViewChild('fruitInput') fruitInput: ElementRef;
 
   @Output() darFormReady: EventEmitter<Object>;
   public darService: DarService;
@@ -59,9 +73,9 @@ export class DarQsComponent implements OnInit {
     });
 
     this.darForm.valueChanges
-    .subscribe(data => {
-      this.darFormReady.emit(this.darForm.value);
-    });
+      .subscribe(data => {
+        this.darFormReady.emit(this.darForm.value);
+      });
   }
 
   // getAsyncData(context: any) {
@@ -181,6 +195,43 @@ export class DarQsComponent implements OnInit {
     this.dar = new DARQuestions();
     this.dar.forProfit = true;
     this.dar.pediatric = true;
+  }
+
+  add(event: MatChipInputEvent): void {
+    const input = event.input;
+    const value = event.value;
+
+    // Add our fruit
+    if ((value || '').trim()) {
+      this.fruits.push(value.trim());
+    }
+
+    // Reset the input value
+    if (input) {
+      input.value = '';
+    }
+
+    this.fruitCtrl.setValue(null);
+  }
+
+  remove(fruit: string): void {
+    const index = this.fruits.indexOf(fruit);
+
+    if (index >= 0) {
+      this.fruits.splice(index, 1);
+    }
+  }
+
+  selected(event: MatAutocompleteSelectedEvent): void {
+    this.fruits.push(event.option.viewValue);
+    this.fruitInput.nativeElement.value = '';
+    this.fruitCtrl.setValue(null);
+  }
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    return this.allFruits.filter(fruit => fruit.toLowerCase().indexOf(filterValue) === 0);
   }
 
 }

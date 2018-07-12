@@ -20,7 +20,7 @@ export class DulInfoComponent implements OnInit {
 
   onDulInfoChange(event) {
     this.dulInfo = event.currentTarget.value;
-    this.dulChanged.emit(this.dulInfo);
+    this.dulChanged.emit(JSON.parse(this.dulInfo));
   }
 
   ngOnInit() {

@@ -5,7 +5,7 @@
                 DUL | Use Restrictions Questions
             </mat-panel-title>
             <mat-panel-description>
-                DUL Form to grant or reject permissions 
+                DUL Form to grant or reject permissions
             </mat-panel-description>
         </mat-expansion-panel-header>
 
@@ -13,98 +13,160 @@
 
             <div fxFlex fxLayout="column wrap" fxLayoutGap="1em">
 
-                <mat-checkbox formControlName="generalUse">
-                    Data is available for future general research use
-                </mat-checkbox>
-
-                <div>
-                    <label class="control-label rp-choice-questions">Future use is limited to research involving the following disease area(s):
-                    </label>
-                </div>
-                <pre>Ontologies: {{ontologiesSelectedLabels | json}}</pre>
-
-                <div >
-                    <div >
-                        <p-autoComplete formControlName="ontologiesSelectedLabels" name="ontologiesSelectedLabels" [suggestions]="ontologies" (completeMethod)="getFilteredOntologies($event)"
-                            (onSelect)="typeaheadOnSelect($event)" styleClass="wid100" [minLength]="3" placeholder="Choose any number of Disease Ontology or none."
-                            field="label" [delay]="500" [multiple]="true">
-                        </p-autoComplete>
-                    </div>
-                    <button mat-raised-button color="primary" type="button" (click)="clearOntologies()">
-                        Clear ontologies
-                    </button>
-                </div>
-
-                <mat-form-field class="example-chip-list">
-                    <mat-chip-list #chipList>
-                        <mat-chip *ngFor="let fruit of fruits" [selectable]="selectable" [removable]="removable" (removed)="remove(fruit)">
-                            {{fruit}}
-                            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
-                        </mat-chip>
-                        <input placeholder="New fruit..." #fruitInput [formControl]="fruitCtrl" [matAutocomplete]="auto" [matChipInputFor]="chipList"
-                            [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)">
-                    </mat-chip-list>
-                    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="typeaheadOnSelect($event)">
-                        <mat-option *ngFor="let fruit of filteredFruits | async" [value]="fruit">
-                            {{fruit}}
-                        </mat-option>
-                    </mat-autocomplete>
-                </mat-form-field>
-
-                <div [hidden]="typeaheadLoading!==true">
-                    <i class="glyphicon glyphicon-refresh ng-hide" style=""></i>
-                </div>
-
-                <div [hidden]="typeaheadNoResults!==true" class="" style="">
-                    <i class="glyphicon glyphicon-remove"></i> No Results Found
-                </div>
-
-                <div fxLayout="column" fxLayoutGap="0.5em">
-
-                    <mat-checkbox formControlName="commercialUseExcluded">
-                        Future use by for-profit entities is prohibited
-                    </mat-checkbox>
-
-                    <mat-checkbox formControlName="methodsResearchExcluded">
-                        Future use for methods research (analytic/software/technology development) is prohibited
-                    </mat-checkbox>
-
-                    <mat-checkbox formControlName="aggregateResearchExcluded">
-                        Future use of aggregate-level data for general research purposes is prohibited
-                    </mat-checkbox>
-
-                </div>
-
-                <div >
-
-                    <div>
-                        <label>Future use is limited to research involving a particular gender</label>
-                    </div>
-
-                    <mat-radio-group formControlName="gender">
-                        <mat-radio-button value="norestrictions">
-                            No
-                        </mat-radio-button>
-                        <mat-radio-button value="male">
-                            Male
-                        </mat-radio-button>
-                        <mat-radio-button value="female">
-                            Female
-                        </mat-radio-button>
+                <div class="orsp-box">
+                    <label>Data is available for future general research use [GRU]</label>
+                    <div fxFlex></div>
+                    <mat-radio-group fxLayout="row" formControlName="generalUse">
+                        <mat-radio-button value=true>Yes</mat-radio-button>
+                        <mat-radio-button value=false>No</mat-radio-button>
                     </mat-radio-group>
+                </div>
 
+                <div class="orsp-box">
+                    <label>Data is limited for health/medical/biomedical research [HMB]</label>
+                    <div fxFlex></div>
+                    <mat-radio-group fxLayout="row" formControlName="hmbResearch">
+                        <mat-radio-button value=true>Yes</mat-radio-button>
+                        <mat-radio-button value=false>No</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+
+                <div class="orsp-box">
+                    <div>
+                        <label class="control-label rp-choice-questions">
+                            Future use is limited to research involving the following disease area(s) [DS]
+                        </label>
+                    </div>
+
+                    <!-- <div>
+                        <div>
+                            <p-autoComplete formControlName="ontologiesSelectedLabels" name="ontologiesSelectedLabels" [suggestions]="ontologies" (completeMethod)="getFilteredOntologies($event)"
+                                (onSelect)="typeaheadOnSelect($event)" styleClass="wid100" [minLength]="3" placeholder="Choose any number of Disease Ontology or none."
+                                field="label" [delay]="500" [multiple]="true">
+                            </p-autoComplete>
+                        </div>
+                        <button mat-raised-button color="primary" type="button" (click)="clearOntologies()">
+                            Clear ontologies
+                        </button>
+                    </div> -->
+
+                    <mat-form-field class="example-chip-list">
+                        <mat-chip-list #chipList>
+                            <mat-chip *ngFor="let fruit of fruits" [selectable]="selectable" [removable]="removable" (removed)="remove(fruit)">
+                                {{fruit}}
+                                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                            </mat-chip>
+                            <input placeholder="New fruit..." #fruitInput [formControl]="fruitCtrl" [matAutocomplete]="auto" [matChipInputFor]="chipList"
+                                [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)">
+                        </mat-chip-list>
+                        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="typeaheadOnSelect($event)">
+                            <mat-option *ngFor="let fruit of filteredFruits | async" [value]="fruit">
+                                {{fruit}}
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+
+                    <!-- <div [hidden]="typeaheadLoading!==true">
+                        <i class="glyphicon glyphicon-refresh ng-hide" style=""></i>
+                    </div>
+
+                    <div [hidden]="typeaheadNoResults!==true" class="" style="">
+                        <i class="glyphicon glyphicon-remove"></i> No Results Found
+                    </div> -->
                 </div>
 
                 <div fxLayout="column" fxLayoutGap="0.5em">
-                    <mat-checkbox formControlName="controlSetExcluded">
-                        Future as a control set for diseases other than those specified is prohibited
-                    </mat-checkbox>
 
-                    <mat-checkbox formControlName="pediatricLimited">
-                        Future use is limited to pediatric research
-                    </mat-checkbox>
+                    <div class="orsp-box">
+                        <label>Future use of population origins or ancestry is prohibited [POA]</label>
+                        <div fxFlex></div>
+                        <mat-radio-group fxLayout="row" formControlName="populationRestrictions">
+                            <mat-radio-button value=true>Yes</mat-radio-button>
+                            <mat-radio-button value=false>No</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+
+                    <div class="orsp-box">
+                        <label>Future commercial use is prohibited [NCU]</label>
+                        <div fxFlex></div>
+                        <mat-radio-group fxLayout="row" formControlName="commercialUse">
+                            <mat-radio-button value=true>Yes</mat-radio-button>
+                            <mat-radio-button value=false>No</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+
+                    <div class="orsp-box">
+                        <label>Future use for methods research (analytic/software/technology development) is prohibited [NMDS]</label>
+                        <div fxFlex></div>
+                        <mat-radio-group fxLayout="row" formControlName="methodsResearch">
+                            <mat-radio-button value=true>Yes</mat-radio-button>
+                            <mat-radio-button value=false>No</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+
+                    <div class="orsp-box">
+                        <label>Future use of aggregate-level data for general research purposes is prohibited [NAGR]</label>
+                        <div fxFlex></div>
+                        <mat-radio-group fxLayout="row" formControlName="aggregateResearch">
+                            <mat-radio-button value=true>Yes</mat-radio-button>
+                            <mat-radio-button value=false>No</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+
+                    <div class="orsp-box">
+                        <label>Future as a control set for diseases other than those specified is prohibited [CTRL]</label>
+                        <div fxFlex></div>
+                        <mat-radio-group fxLayout="row" formControlName="controlSetOption">
+                            <mat-radio-button value=true>Yes</mat-radio-button>
+                            <mat-radio-button value=false>No</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+
+                    <div class="orsp-box">
+                        <label>Future use is limited to research involving a particular gender [RS-M] / [RS-FM]</label>
+                        <div fxFlex></div>
+                        <mat-radio-group fxLayout="row" formControlName="gender">
+                            <mat-radio-button value="Male">Male</mat-radio-button>
+                            <mat-radio-button value="Female">Female</mat-radio-button>
+                            <mat-radio-button value="NA">N/A</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+
+                    <div class="orsp-box">
+                        <label>Future use is limited to pediatric research [RS-PD]</label>
+                        <div fxFlex></div>
+                        <mat-radio-group fxLayout="row" formControlName="pediatric">
+                            <mat-radio-button value=true>Yes</mat-radio-button>
+                            <mat-radio-button value=false>No</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+
+                    <!-- <div class="orsp-box">
+                        <div>
+                            <label>
+                                Future use is limited to research involving a specific population [RS-POP]
+                            </label>
+                        </div>
+
+                        <mat-form-field class="example-chip-list">
+                            <mat-chip-list #chipList>
+                                <mat-chip *ngFor="let fruit of fruits" [selectable]="selectable" [removable]="removable" (removed)="remove(fruit)">
+                                    {{fruit}}
+                                    <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                                </mat-chip>
+                                <input placeholder="New fruit..." #fruitInput [formControl]="fruitCtrl" [matAutocomplete]="auto" [matChipInputFor]="chipList"
+                                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+                                    (matChipInputTokenEnd)="add($event)">
+                            </mat-chip-list>
+                            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="typeaheadOnSelect($event)">
+                                <mat-option *ngFor="let fruit of filteredFruits | async" [value]="fruit">
+                                    {{fruit}}
+                                </mat-option>
+                            </mat-autocomplete>
+                        </mat-form-field>
+                    </div> -->
+
                 </div>
-
             </div>
         </form>
 
