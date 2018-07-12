@@ -1,20 +1,12 @@
-<div class="row">
-  <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
-    <p-autoComplete 
-      [(ngModel)]="ontologiesSelectedLabels" 
-      [suggestions]="ontologies" 
-      (completeMethod)="getFilteredOntologies($event)"
-      styleClass="wid100" 
-      [minLength]="3" 
-      placeholder="Choose any number of Disease Ontology or none." 
-      field="label" [delay]="500"
-      [multiple]="true">
+<div class='row'>
+  <div class='col-lg-9 col-md-9 col-sm-12 col-xs-12'>
+    <p-autoComplete [(ngModel)]='ontologiesSelectedLabels' [suggestions]='ontologies' (completeMethod)='getFilteredOntologies($event)'
+      styleClass='wid100' [minLength]='3' placeholder='Choose any number of Disease Ontology or none.' field='label' [delay]='500'
+      [multiple]='true'>
     </p-autoComplete>
   </div>
-  
-  <button type="button" (click)="clearOntologies()" 
-    class="col-lg-3 col-md-3 col-sm-12 col-xs-12 btn" 
-    style="background-color: #cccccc; color: #666666;">
-     Clear ontologies
+
+  <button type='button' (click)='clearOntologies()' class='col-lg-3 col-md-3 col-sm-12 col-xs-12 btn' style='background-color: #cccccc; color: #666666;'>
+    Clear ontologies
   </button>
 </div>

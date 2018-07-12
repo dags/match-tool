@@ -1,46 +1,25 @@
-import {
-  beforeEach,
-  beforeEachProviders,
-  describe,
-  expect,
-  it,
-  inject,
-} from '@angular/core/testing';
-import { ComponentFixture, TestComponentBuilder } from '@angular/compiler/testing';
-import { Component } from '@angular/core';
-import { By } from '@angular/platform-browser';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+
 import { DarJsonComponent } from './dar-json.component';
 
-describe('Component: DarJson', () => {
-  let builder: TestComponentBuilder;
+describe('DarJsonComponent', () => {
+  let component: DarJsonComponent;
+  let fixture: ComponentFixture<DarJsonComponent>;
 
-  beforeEachProviders(() => [DarJsonComponent]);
-  beforeEach(inject([TestComponentBuilder], function (tcb: TestComponentBuilder) {
-    builder = tcb;
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [ DarJsonComponent ]
+    })
+    .compileComponents();
   }));
 
-  it('should inject the component', inject([DarJsonComponent],
-      (component: DarJsonComponent) => {
+  beforeEach(() => {
+    fixture = TestBed.createComponent(DarJsonComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
     expect(component).toBeTruthy();
-  }));
-
-  it('should create the component', inject([], () => {
-    return builder.createAsync(DarJsonComponentTestController)
-      .then((fixture: ComponentFixture<any>) => {
-        let query = fixture.debugElement.query(By.directive(DarJsonComponent));
-        expect(query).toBeTruthy();
-        expect(query.componentInstance).toBeTruthy();
-      });
-  }));
+  });
 });
-
-@Component({
-  selector: 'test',
-  template: `
-    <app-dar-json></app-dar-json>
-  `,
-  directives: [DarJsonComponent]
-})
-class DarJsonComponentTestController {
-}
-

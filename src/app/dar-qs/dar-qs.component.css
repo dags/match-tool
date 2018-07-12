@@ -1,0 +1,13 @@
+.mat-radio-button {
+    margin-right: 0.5em;
+    padding-right: 0.5em;
+}
+
+.mat-checkbox-label {
+    display: flex;
+    flex-wrap: wrap; 
+}
+
+label .mat-checkbox-layout {
+    flex-wrap: wrap;
+}

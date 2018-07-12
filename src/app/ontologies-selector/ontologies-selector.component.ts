@@ -1,20 +1,25 @@
 import { Component, OnInit } from '@angular/core';
-import {OntologyService} from '../services/ontology/ontology.service';
-import {AutoComplete} from 'primeng/primeng';
 
 @Component({
-  moduleId: module.id,
   selector: 'app-ontologies-selector',
-  templateUrl: 'ontologies-selector.component.html',
-  styleUrls: ['ontologies-selector.component.css'],
-  directives: [AutoComplete],
-  providers: [OntologyService],
+  templateUrl: './ontologies-selector.component.html',
+  styleUrls: ['./ontologies-selector.component.css']
 })
 export class OntologiesSelectorComponent implements OnInit {
+
+  ontologiesSelectedLabels = [];
+  ontologies = [];
 
   constructor() { }
 
   ngOnInit() {
   }
 
+  clearOntologies() {
+
+  }
+
+  getFilteredOntologies(evt) {
+
+  }
 }

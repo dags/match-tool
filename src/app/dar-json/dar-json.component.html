@@ -1,3 +1,16 @@
-<p-panel header="Structured DAR Restrictions" [toggleable]="true">
+<mat-accordion>
+  <mat-expansion-panel expanded="true">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Structured DAR Restrictions
+      </mat-panel-title>
+      <mat-panel-description>
+        Ontology level JSON to be used in Match process
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
     <textarea style="width: 100%" [(ngModel)]="darJson" (change)="onDarJsonChange($event)" rows="10"></textarea>
-</p-panel>
+
+  </mat-expansion-panel>
+
+</mat-accordion>

@@ -1,134 +1,113 @@
-<p-panel header="DUL | Use Restrictions Questions" [toggleable]="true" class="dul-color">
+<mat-accordion>
+    <mat-expansion-panel expanded="true">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                DUL | Use Restrictions Questions
+            </mat-panel-title>
+            <mat-panel-description>
+                DUL Form to grant or reject permissions 
+            </mat-panel-description>
+        </mat-expansion-panel-header>
 
-    <form class="ui form" (submit)="submitConsentForm()" (change)="submitConsentForm()">
-        <fieldset>
-            <div class=" form-group ">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="checkbox">
-                        <input [(ngModel)]="orsp.generalUse" id="generalUse" #generalUse type="checkbox" class="checkbox-inline"
-                            name="generalUse">
-                        <label class="regular-checkbox" for="generalUse">
-                            <span>Data is available for future general research use</span>
-                        </label>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <label class="control-label rp-choice-questions">Future use is limited to research involving the following disease area(s):
-                </label>
-            </div>
-            <pre>Ontologies: {{ontologiesSelectedLabels | json}}</pre>
+        <form [formGroup]="dulForm" (submit)="submitConsentForm()" (change)="submitConsentForm()">
 
-            <div class="row">
-                <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
-                    <p-autoComplete 
-                        [(ngModel)]="ontologiesSelectedLabels" 
-                        name="ontologiesSelectedLabels" 
-                        [suggestions]="ontologies" 
-                        (completeMethod)="getFilteredOntologies($event)"
-                        (onSelect)="typeaheadOnSelect($event)"
-                        styleClass="wid100" 
-                        [minLength]="3" 
-                        placeholder="Choose any number of Disease Ontology or none." 
-                        field="label"
-                        [delay]="500" 
-                        [multiple]="true">
-                    </p-autoComplete>
-                </div>
-                <button type="button" (click)="clearOntologies()" 
-                    class="col-lg-3 col-md-3 col-sm-12 col-xs-12 btn" 
-                    style="background-color: #cccccc; color: #666666;">
-                    Clear ontologies
-                </button>
-            </div>
+            <div fxFlex fxLayout="column wrap" fxLayoutGap="1em">
 
-            <div [hidden]="typeaheadLoading!==true">
-                <i class="glyphicon glyphicon-refresh ng-hide" style=""></i>
-            </div>
-            <div [hidden]="typeaheadNoResults!==true" class="" style="">
-                <i class="glyphicon glyphicon-remove"></i> No Results Found
-            </div>
-            <div class="form-group">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="checkbox">
-                        <input id="commercialUseExcluded" name="commercialUseExcluded" type="checkbox" [(ngModel)]="orsp.commercialUseExcluded" 
-                            class="checkbox-inline">
-                        <label class="regular-checkbox" for="commercialUseExcluded">
-                            <span>Future use by for-profit entities is prohibited</span>
-                        </label>
-                    </div>
-                </div>
+                <mat-checkbox formControlName="generalUse">
+                    Data is available for future general research use
+                </mat-checkbox>
 
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="checkbox">
-                        <input id="methodsResearchExcluded" name="methodsResearchExcluded" type="checkbox" [(ngModel)]="orsp.methodsResearchExcluded"
-                            class="checkbox-inline">
-                        <label class="regular-checkbox" for="methodsResearchExcluded">
-                            <span>Future use for methods research (analytic/software/technology development) is prohibited</span>
-                        </label>
-                    </div>
-                </div>
-
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="checkbox">
-                        <input id="aggregateResearchExcluded" name="aggregateResearchExcluded" type="checkbox" [(ngModel)]="orsp.aggregateResearchExcluded"
-                            class="checkbox-inline">
-                        <label class="regular-checkbox" for="aggregateResearchExcluded">
-                            <span>Future use of aggregate-level data for general research purposes is prohibited</span>
-                        </label>
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <label class="control-label rp-choice-questions">Future use is limited to research involving a particular gender
+                <div>
+                    <label class="control-label rp-choice-questions">Future use is limited to research involving the following disease area(s):
                     </label>
                 </div>
+                <pre>Ontologies: {{ontologiesSelectedLabels | json}}</pre>
 
-                <div class="radio-inline">
-                    <input id="gender_none" type="radio" name="gender" #gender_none class="regular-radio" value="no restrictions"
-                        [ngModel]="{checked: orsp.gender === 'no restrictions' ? '' : null}" (change)="orsp.gender = gender_none.value">
-                    <label for="gender_none"></label>
-                    <label for="gender_none" class="radio-button-text">No</label>
-                </div>
-
-                <div class="radio-inline">
-                    <input id="gender_male" type="radio" name="gender" #gender_male class="regular-radio" value="male" [ngModel]="{checked: orsp.gender === 'male' ? '' : null}"
-                        (change)="orsp.gender = gender_male.value">
-                    <label for="gender_male"></label>
-                    <label for="gender_male" class="radio-button-text">Male</label>
-                </div>
-
-                <div class="radio-inline">
-                    <input id="gender_female" type="radio" name="gender" #gender_female class="regular-radio" value="female"
-                        [ngModel]="{checked: orsp.gender === 'female' ? '' : null}" (change)="orsp.gender = gender_female.value">
-                    <label for="gender_female"></label>
-                    <label for="gender_female" class="radio-button-text">Female</label>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="checkbox">
-                        <input id="controlSetExcluded" name="controlSetExcluded" type="checkbox" [(ngModel)]="orsp.controlSetExcluded"
-                            class="checkbox-inline">
-                        <label class="regular-checkbox" for="controlSetExcluded">
-                            <span>Future as a control set for diseases other than those specified is prohibited</span>
-                        </label>
+                <div >
+                    <div >
+                        <p-autoComplete formControlName="ontologiesSelectedLabels" name="ontologiesSelectedLabels" [suggestions]="ontologies" (completeMethod)="getFilteredOntologies($event)"
+                            (onSelect)="typeaheadOnSelect($event)" styleClass="wid100" [minLength]="3" placeholder="Choose any number of Disease Ontology or none."
+                            field="label" [delay]="500" [multiple]="true">
+                        </p-autoComplete>
                     </div>
+                    <button mat-raised-button color="primary" type="button" (click)="clearOntologies()">
+                        Clear ontologies
+                    </button>
                 </div>
 
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="checkbox">
-                        <input id="pediatricLimited" name="pediatricLimited" type="checkbox" [(ngModel)]="orsp.pediatricLimited"
-                            class="checkbox-inline">
-                        <label class="regular-checkbox" for="pediatricLimited">
-                            <span>Future use is limited to pediatric research</span>
-                        </label>
-                    </div>
+                <mat-form-field class="example-chip-list">
+                    <mat-chip-list #chipList>
+                        <mat-chip *ngFor="let fruit of fruits" [selectable]="selectable" [removable]="removable" (removed)="remove(fruit)">
+                            {{fruit}}
+                            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                        </mat-chip>
+                        <input placeholder="New fruit..." #fruitInput [formControl]="fruitCtrl" [matAutocomplete]="auto" [matChipInputFor]="chipList"
+                            [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)">
+                    </mat-chip-list>
+                    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="typeaheadOnSelect($event)">
+                        <mat-option *ngFor="let fruit of filteredFruits | async" [value]="fruit">
+                            {{fruit}}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+
+                <div [hidden]="typeaheadLoading!==true">
+                    <i class="glyphicon glyphicon-refresh ng-hide" style=""></i>
                 </div>
+
+                <div [hidden]="typeaheadNoResults!==true" class="" style="">
+                    <i class="glyphicon glyphicon-remove"></i> No Results Found
+                </div>
+
+                <div fxLayout="column" fxLayoutGap="0.5em">
+
+                    <mat-checkbox formControlName="commercialUseExcluded">
+                        Future use by for-profit entities is prohibited
+                    </mat-checkbox>
+
+                    <mat-checkbox formControlName="methodsResearchExcluded">
+                        Future use for methods research (analytic/software/technology development) is prohibited
+                    </mat-checkbox>
+
+                    <mat-checkbox formControlName="aggregateResearchExcluded">
+                        Future use of aggregate-level data for general research purposes is prohibited
+                    </mat-checkbox>
+
+                </div>
+
+                <div >
+
+                    <div>
+                        <label>Future use is limited to research involving a particular gender</label>
+                    </div>
+
+                    <mat-radio-group formControlName="gender">
+                        <mat-radio-button value="norestrictions">
+                            No
+                        </mat-radio-button>
+                        <mat-radio-button value="male">
+                            Male
+                        </mat-radio-button>
+                        <mat-radio-button value="female">
+                            Female
+                        </mat-radio-button>
+                    </mat-radio-group>
+
+                </div>
+
+                <div fxLayout="column" fxLayoutGap="0.5em">
+                    <mat-checkbox formControlName="controlSetExcluded">
+                        Future as a control set for diseases other than those specified is prohibited
+                    </mat-checkbox>
+
+                    <mat-checkbox formControlName="pediatricLimited">
+                        Future use is limited to pediatric research
+                    </mat-checkbox>
+                </div>
+
             </div>
-        </fieldset>
-    </form>
-</p-panel>
+        </form>
+
+    </mat-expansion-panel>
+
+</mat-accordion>

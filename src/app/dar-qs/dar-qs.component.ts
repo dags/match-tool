@@ -1,67 +1,67 @@
-import {Component, Injector, OnInit, bind, Input, Output, EventEmitter} from '@angular/core';
-import {CORE_DIRECTIVES} from '@angular/common';
-import {TYPEAHEAD_DIRECTIVES} from 'ng2-bootstrap/ng2-bootstrap';
-import {REACTIVE_FORM_DIRECTIVES, FORM_DIRECTIVES, FORM_PROVIDERS, NgControl} from '@angular/forms';
-import {DARService} from '../services/dar/dar.service';
-import {DARQuestions} from '../dar-qs/dar';
-import {OntologyService} from '../services/ontology/ontology.service';
-import {AutoComplete} from 'primeng/primeng';
-import {Panel} from 'primeng/primeng';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { DARQuestions } from '../models/dar';
+import { OntologyService } from '../services/ontology.service';
+import { DarService } from '../services/dar.service';
+import { Validators, FormBuilder } from '@angular/forms';
 
 @Component({
-  moduleId: module.id,
   selector: 'app-dar-qs',
-  templateUrl: 'dar-qs.component.html',
-  styleUrls: ['dar-qs.component.css'],
-  directives: [REACTIVE_FORM_DIRECTIVES, FORM_DIRECTIVES, CORE_DIRECTIVES, TYPEAHEAD_DIRECTIVES, AutoComplete, Panel],
-  providers: [DARService, DARQuestions, FORM_PROVIDERS, OntologyService],
-
+  templateUrl: './dar-qs.component.html',
+  styleUrls: ['./dar-qs.component.css']
 })
 export class DarQsComponent implements OnInit {
 
   @Output() darFormReady: EventEmitter<Object>;
-  public darService: DARService;
-  public asyncSelected: string = '';
+  public darService: DarService;
+  public asyncSelected = '';
   darForm: any;
   dar: DARQuestions;
   ontologyService: OntologyService;
-  prevSelected: string = '';
-  typeaheadLoading: boolean = false;
-  typeaheadNoResults: boolean = false;
+  prevSelected = '';
+  typeaheadLoading = false;
+  typeaheadNoResults = false;
   ontologies: Array<string> = [];
   ontologyMap: any = new Object();
   _cache: any;
   ontologiesSelectedLabels: Array<string> = [];
 
 
-  constructor(/*private builder: FormBuilder, */ darService: DARService, darQuestions: DARQuestions, ontologyService: OntologyService) {
+  constructor(private builder: FormBuilder, darService: DarService, ontologyService: OntologyService) {
     this.darService = darService;
     this.dar = new DARQuestions();
     this.ontologyService = ontologyService;
     this.darFormReady = new EventEmitter();
-    /*
+
+
     this.darForm = builder.group({
-      methods: ["", Validators.required],
-      diseases: ["", Validators.required],
-      controls: ["", Validators.required],
-      population: ["", Validators.required],
-      other: ["", Validators.required],
-      othertext: ["", Validators.required],
-      ontologies: ["", Validators.required],
-      forProfit: ["", Validators.required],
+      methods: ['', Validators.required],
+      diseases: ['', Validators.required],
+      controls: ['', Validators.required],
+      population: ['', Validators.required],
+      hmb: ['', Validators.required],
+      poa: ['', Validators.required],
+      other: ['', Validators.required],
+      othertext: ['', Validators.required],
+      ontologies: ['', Validators.required],
+      forProfit: ['', Validators.required],
       onegender: [this.dar.onegender, Validators.required],
-      gender: ["", Validators.required],
-      pediatric: ["", Validators.required],
-      illegalbehave: ["", Validators.required],
-      addiction: ["", Validators.required],
-      sexualdiseases: ["", Validators.required],
-      stigmatizediseases: ["", Validators.required],
-      vulnerablepop: ["", Validators.required],
-      popmigration: ["", Validators.required],
-      psychtraits: ["", Validators.required],
-      nothealth: ["", Validators.required],
+      gender: ['', Validators.required],
+      pediatric: ['', Validators.required],
+      illegalbehave: ['', Validators.required],
+      addiction: ['', Validators.required],
+      sexualdiseases: ['', Validators.required],
+      stigmatizediseases: ['', Validators.required],
+      vulnerablepop: ['', Validators.required],
+      popmigration: ['', Validators.required],
+      psychtraits: ['', Validators.required],
+      nothealth: ['', Validators.required],
+      ontologiesSelectedLabels: []
     });
-    */
+
+    this.darForm.valueChanges
+    .subscribe(data => {
+      this.darFormReady.emit(this.darForm.value);
+    });
   }
 
   // getAsyncData(context: any) {
@@ -99,7 +99,7 @@ export class DarQsComponent implements OnInit {
       this.ontologiesSelectedLabels.push(e.item.label);
       this.submitDarForm();
     }
-    this.asyncSelected = "";
+    this.asyncSelected = '';
   }
 
   clearOntologies() {
@@ -143,12 +143,12 @@ export class DarQsComponent implements OnInit {
     }
     this.darService.getUseRestriction(JSON.stringify(this.dar))
       .subscribe(
-      data => {
-        this.darFormReady.emit(data.json());
-      },
-      err => {
-        this.darFormReady.emit(err._body);
-      }
+        data => {
+          this.darFormReady.emit(data.json());
+        },
+        err => {
+          this.darFormReady.emit(err._body);
+        }
       );
 
     this.darFormReady.emit(this.dar);
@@ -160,8 +160,8 @@ export class DarQsComponent implements OnInit {
 
   private getFilteredOntologies(event) {
 
-    let query = event.query;
-    console.log("query: " + query);
+    const query = event.query;
+    console.log('query: ' + query);
     this.ontologyService.autocomplete(query).subscribe(
       (data) => {
         this.ontologies = data.json();

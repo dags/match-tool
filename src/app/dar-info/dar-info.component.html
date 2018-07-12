@@ -1,0 +1,16 @@
+<mat-accordion>
+  <mat-expansion-panel expanded="true">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        DAR Info
+      </mat-panel-title>
+      <mat-panel-description>
+        DAR JSON Before translation
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <textarea style="width: 100%" [(ngModel)]="darInfo" (change)="onDarInfoChange($event)" rows="10"></textarea>
+
+  </mat-expansion-panel>
+
+</mat-accordion>

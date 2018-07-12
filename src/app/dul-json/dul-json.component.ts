@@ -1,14 +1,10 @@
-import {Component, EventEmitter, Injector, OnInit, bind, Input, Output, ViewEncapsulation} from '@angular/core';
-import {ConsentService} from '../services/consent/consent.service';
-import {Panel} from 'primeng/primeng';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { ConsentService } from '../services/consent.service';
 
 @Component({
-  moduleId: module.id,
   selector: 'app-dul-json',
-  templateUrl: 'dul-json.component.html',
-  styleUrls: ['dul-json.component.css'],
-  directives: [Panel],
-  //encapsulation: ViewEncapsulation.Native
+  templateUrl: './dul-json.component.html',
+  styleUrls: ['./dul-json.component.css']
 })
 export class DulJsonComponent implements OnInit {
 

@@ -1,46 +1,25 @@
-import {
-  beforeEach,
-  beforeEachProviders,
-  describe,
-  expect,
-  it,
-  inject,
-} from '@angular/core/testing';
-import { ComponentFixture, TestComponentBuilder } from '@angular/compiler/testing';
-import { Component } from '@angular/core';
-import { By } from '@angular/platform-browser';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+
 import { DarQsComponent } from './dar-qs.component';
 
-describe('Component: DarQs', () => {
-  let builder: TestComponentBuilder;
+describe('DarQsComponent', () => {
+  let component: DarQsComponent;
+  let fixture: ComponentFixture<DarQsComponent>;
 
-  beforeEachProviders(() => [DarQsComponent]);
-  beforeEach(inject([TestComponentBuilder], function (tcb: TestComponentBuilder) {
-    builder = tcb;
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [ DarQsComponent ]
+    })
+    .compileComponents();
   }));
 
-  it('should inject the component', inject([DarQsComponent],
-      (component: DarQsComponent) => {
+  beforeEach(() => {
+    fixture = TestBed.createComponent(DarQsComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
     expect(component).toBeTruthy();
-  }));
-
-  it('should create the component', inject([], () => {
-    return builder.createAsync(DarQsComponentTestController)
-      .then((fixture: ComponentFixture<any>) => {
-        let query = fixture.debugElement.query(By.directive(DarQsComponent));
-        expect(query).toBeTruthy();
-        expect(query.componentInstance).toBeTruthy();
-      });
-  }));
+  });
 });
-
-@Component({
-  selector: 'test',
-  template: `
-    <app-dar-qs></app-dar-qs>
-  `,
-  directives: [DarQsComponent]
-})
-class DarQsComponentTestController {
-}
-

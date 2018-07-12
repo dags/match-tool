@@ -1,13 +1,9 @@
-import {Component, Injector, OnInit, bind, Input, Output, EventEmitter, ViewEncapsulation} from '@angular/core';
-import {Panel} from 'primeng/primeng';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 
 @Component({
-  moduleId: module.id,
   selector: 'app-dar-json',
-  templateUrl: 'dar-json.component.html',
-  styleUrls: ['dar-json.component.css'],
-  directives: [Panel],
-  encapsulation: ViewEncapsulation.Emulated
+  templateUrl: './dar-json.component.html',
+  styleUrls: ['./dar-json.component.css']
 })
 export class DarJsonComponent implements OnInit {
 

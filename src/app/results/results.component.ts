@@ -1,15 +1,13 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import {Panel} from 'primeng/primeng';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
-  moduleId: module.id,
   selector: 'app-results',
-  templateUrl: 'results.component.html',
-  styleUrls: ['results.component.css'],
-  directives: [Panel],
-  //encapsulation: ViewEncapsulation.None
+  templateUrl: './results.component.html',
+  styleUrls: ['./results.component.css']
 })
 export class ResultsComponent implements OnInit {
+
+  @Input('results') results;
 
   constructor() { }
 

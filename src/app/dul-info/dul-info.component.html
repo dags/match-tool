@@ -1,0 +1,16 @@
+<mat-accordion>
+  <mat-expansion-panel expanded="true">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        DUL Info
+      </mat-panel-title>
+      <mat-panel-description>
+        DUL JSON Before translation
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <textarea style="width: 100%" [(ngModel)]="dulInfo" (change)="onDulInfoChange($event)" rows="10"></textarea>
+
+  </mat-expansion-panel>
+
+</mat-accordion>

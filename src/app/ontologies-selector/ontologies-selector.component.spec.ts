@@ -1,46 +1,25 @@
-import {
-  beforeEach,
-  beforeEachProviders,
-  describe,
-  expect,
-  it,
-  inject,
-} from '@angular/core/testing';
-import { ComponentFixture, TestComponentBuilder } from '@angular/compiler/testing';
-import { Component } from '@angular/core';
-import { By } from '@angular/platform-browser';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+
 import { OntologiesSelectorComponent } from './ontologies-selector.component';
 
-describe('Component: OntologiesSelector', () => {
-  let builder: TestComponentBuilder;
+describe('OntologiesSelectorComponent', () => {
+  let component: OntologiesSelectorComponent;
+  let fixture: ComponentFixture<OntologiesSelectorComponent>;
 
-  beforeEachProviders(() => [OntologiesSelectorComponent]);
-  beforeEach(inject([TestComponentBuilder], function (tcb: TestComponentBuilder) {
-    builder = tcb;
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [ OntologiesSelectorComponent ]
+    })
+    .compileComponents();
   }));
 
-  it('should inject the component', inject([OntologiesSelectorComponent],
-      (component: OntologiesSelectorComponent) => {
+  beforeEach(() => {
+    fixture = TestBed.createComponent(OntologiesSelectorComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
     expect(component).toBeTruthy();
-  }));
-
-  it('should create the component', inject([], () => {
-    return builder.createAsync(OntologiesSelectorComponentTestController)
-      .then((fixture: ComponentFixture<any>) => {
-        let query = fixture.debugElement.query(By.directive(OntologiesSelectorComponent));
-        expect(query).toBeTruthy();
-        expect(query.componentInstance).toBeTruthy();
-      });
-  }));
+  });
 });
-
-@Component({
-  selector: 'test',
-  template: `
-    <app-ontologies-selector></app-ontologies-selector>
-  `,
-  directives: [OntologiesSelectorComponent]
-})
-class OntologiesSelectorComponentTestController {
-}
-

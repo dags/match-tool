@@ -1,21 +1,10 @@
-import {Component, OnInit, NgZone} from '@angular/core';
-import {Location} from '@angular/common';
-import {HomeComponent} from './home';
+import { Component } from '@angular/core';
 
 @Component({
-  moduleId: module.id,
   selector: 'app-root',
-  templateUrl: 'app.component.html',
-  styleUrls: ['app.component.css'],
-  directives: [HomeComponent],
-  providers:[]
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  
-  title = 'match-tool works!';
-
-  constructor() {
-
-  }
-
+  title = 'app';
 }

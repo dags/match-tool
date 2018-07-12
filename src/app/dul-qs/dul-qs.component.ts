@@ -1,45 +1,64 @@
-import {Component, Injector, OnInit, bind, Input, Output, EventEmitter} from '@angular/core';
-import {REACTIVE_FORM_DIRECTIVES, FORM_DIRECTIVES, FORM_PROVIDERS, NgControl, FormControl, Validators} from '@angular/forms';
-import {TYPEAHEAD_DIRECTIVES} from 'ng2-bootstrap/ng2-bootstrap';
-import {OntologyService} from '../services/ontology/ontology.service';
-import {AutoComplete} from 'primeng/primeng';
-import {Panel} from 'primeng/primeng';
-import {Orsp} from './orsp';
+import { Component, OnInit, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
+import { FormControl, FormBuilder, Validators } from '@angular/forms';
+import { OntologyService } from '../services/ontology.service';
+import { Orsp } from '../models/orsp';
+import { Observable } from 'rxjs';
+import { startWith, map } from 'rxjs/operators'
+import { MatAutocompleteSelectedEvent, MatChipInputEvent } from '@angular/material';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
 
 @Component({
-  moduleId: module.id,
   selector: 'app-dul-qs',
-  templateUrl: 'dul-qs.component.html',
-  styleUrls: ['dul-qs.component.css'],
-  directives: [FORM_DIRECTIVES, REACTIVE_FORM_DIRECTIVES, TYPEAHEAD_DIRECTIVES, AutoComplete, Panel],
-  providers: [OntologyService, FORM_PROVIDERS],
+  templateUrl: './dul-qs.component.html',
+  styleUrls: ['./dul-qs.component.css']
 })
 export class DulQsComponent implements OnInit {
 
+  visible = true;
+  selectable = true;
+  removable = true;
+  addOnBlur = false;
+  separatorKeysCodes: number[] = [ENTER, COMMA];
+  fruitCtrl = new FormControl();
+  filteredFruits: Observable<string[]>;
+  fruits: string[] = ['Lemon'];
+  allFruits: string[] = ['Apple', 'Lemon', 'Lime', 'Orange', 'Strawberry'];
+
+  @ViewChild('fruitInput') fruitInput: ElementRef;
+
   @Output() consentFormReady: EventEmitter<Object>;
-  consentForm: any;
+  dulForm: any;
   orsp: Orsp;
   gender: FormControl;
   ontologyService: OntologyService;
-  asyncSelected: string = '';
-  typeaheadLoading: boolean = false;
-  typeaheadNoResults: boolean = false;
+  asyncSelected = '';
+  typeaheadLoading = false;
+  typeaheadNoResults = false;
   ontologies: Array<string> = [];
   ontologyMap: any = new Object();
   _cache: any;
   _prevContext: any;
+  orsp_gender: string;
 
   ontologiesSelectedLabels: Array<string> = [];
   filteredOntologiesMultiple: any[];
 
-  prevSelected: string = '';
+  prevSelected = '';
 
-  constructor(/*private _formBuilder: FormBuilder, */ ontologyService: OntologyService) {
+  constructor(private _formBuilder: FormBuilder, ontologyService: OntologyService) {
+
+    this.filteredFruits = this.fruitCtrl.valueChanges
+      .pipe(
+        startWith(null),
+        map((fruit: string | null) => fruit ? this._filter(fruit) : this.allFruits.slice()
+        )
+      );
+
     this.orsp = new Orsp();
     this.consentFormReady = new EventEmitter();
     this.ontologyService = ontologyService;
-    /*
-    this.consentForm = this._formBuilder.group({
+
+    this.dulForm = this._formBuilder.group({
       generalUse: ['', Validators.compose([Validators.required])],
       diseaseRestrictions: ['', Validators.compose([Validators.required])],
       commercialUseExcluded: ['', Validators.compose([Validators.required])],
@@ -49,17 +68,22 @@ export class DulQsComponent implements OnInit {
       controlSetExcluded: ['', Validators.compose([Validators.required])],
       populationRestrictions: ['', Validators.compose([Validators.required])],
       pediatricLimited: ['', Validators.compose([Validators.required])],
-      dateRestriction: ['', Validators.compose([Validators.required])]
+      dateRestriction: ['', Validators.compose([Validators.required])],
+      ontologiesSelectedLabels: []
     });
-    */
+
+    this.dulForm.valueChanges
+    .subscribe(data => {
+      this.consentFormReady.emit(this.dulForm.value);
+    })
   }
 
   submitConsentForm() {
-    this.consentFormReady.emit(this.orsp);
+    this.consentFormReady.emit(this.dulForm.value);
   }
 
   genderChanged() {
-    alert("Changed");
+    alert('Changed');
   }
 
   setGender(gender: string) {
@@ -68,7 +92,7 @@ export class DulQsComponent implements OnInit {
 
   clear() {
     this.orsp = new Orsp();
-    this.consentForm.marskAsTouched();
+    this.dulForm.marskAsTouched();
   }
 
   private getAsyncData(context: any) {
@@ -108,7 +132,7 @@ export class DulQsComponent implements OnInit {
       this.ontologiesSelectedLabels.push(e.label);
       this.submitConsentForm();
     }
-    this.asyncSelected = "";
+    this.asyncSelected = '';
   }
 
   clearOntologies() {
@@ -116,7 +140,7 @@ export class DulQsComponent implements OnInit {
     this.ontologiesSelectedLabels = [];
     this.orsp.diseaseRestrictions = [];
     this.submitConsentForm();
-    this.asyncSelected = "";
+    this.asyncSelected = '';
   }
 
   getOntologyFromMap(k) {
@@ -137,12 +161,12 @@ export class DulQsComponent implements OnInit {
 
   private getFilteredOntologies(event) {
 
-    let query = event.query;
-    //console.log("query: " + query);
+    const query = event.query;
+    // console.log('query: ' + query);
     this.ontologyService.autocomplete(query).subscribe(
       (data) => {
         this.ontologies = data.json();
-        //console.log(JSON.stringify(this.ontologies));
+        // console.log(JSON.stringify(this.ontologies));
         return this.ontologies;
       },
       err => {
@@ -154,8 +178,45 @@ export class DulQsComponent implements OnInit {
 
   }
 
-
   ngOnInit() {
   }
 
+  add(event: MatChipInputEvent): void {
+    const input = event.input;
+    const value = event.value;
+
+    // Add our fruit
+    if ((value || '').trim()) {
+      this.fruits.push(value.trim());
+    }
+
+    // Reset the input value
+    if (input) {
+      input.value = '';
+    }
+
+    this.fruitCtrl.setValue(null);
+  }
+
+  remove(fruit: string): void {
+    const index = this.fruits.indexOf(fruit);
+
+    if (index >= 0) {
+      this.fruits.splice(index, 1);
+    }
+  }
+
+  selected(event: MatAutocompleteSelectedEvent): void {
+    this.fruits.push(event.option.viewValue);
+    this.fruitInput.nativeElement.value = '';
+    this.fruitCtrl.setValue(null);
+  }
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    return this.allFruits.filter(fruit => fruit.toLowerCase().indexOf(filterValue) === 0);
+  }
+
 }
+

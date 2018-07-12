@@ -1,35 +1,29 @@
-import {Component, OnInit, NgZone} from '@angular/core';
-import {Location} from '@angular/common';
-import {DulJsonComponent} from '../dul-json';
-import {DulQsComponent} from '../dul-qs';
-import {DarJsonComponent} from '../dar-json';
-import {DarQsComponent} from '../dar-qs'
-import {ResultsComponent} from '../results'
-import {ConsentService} from '../services/consent/consent.service';
-import {OntologyService} from '../services/ontology/ontology.service';
-import {UseRestriction} from '../services/orsp/userestriction';
-import {OrspService} from '../services/orsp/orsp.service';
-import {Button} from 'primeng/primeng';
-import {Orsp} from '../dul-qs/orsp';
-import { ROUTER_DIRECTIVES, Router, ActivatedRoute } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { OntologyService } from '../services/ontology.service';
+import { ConsentService } from '../services/consent.service';
+import { OrspService } from '../services/orsp.service';
+import { Orsp } from '../models/orsp';
 
 @Component({
-  moduleId: module.id,
   selector: 'app-home',
-  templateUrl: 'home.component.html',
-  styleUrls: ['home.component.css'],
-  directives: [DulJsonComponent, DarJsonComponent, DulQsComponent, DarQsComponent, ResultsComponent, Button],
-  providers: [ConsentService, OntologyService, OrspService]
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.css']
 })
-export class HomeComponent {
-  
+export class HomeComponent implements OnInit {
+
   title = 'match-tool works!';
-  public darJson: any = "";
-  public consentJson: any = "";
-  public results: any = "";
+  public darJson: any = '';
+  public consentJson: any = '';
+  public results: any = '';
   public ontologyService: OntologyService;
   public consentService: ConsentService;
   public orspService: OrspService;
+
+  consent: string;
+  purpose: string;
+
+  dulInfo = '';
+  darInfo = '';
 
   constructor(ontologyService: OntologyService, consentService: ConsentService, orspService: OrspService) {
     this.orspService = orspService;
@@ -37,11 +31,16 @@ export class HomeComponent {
     this.consentService = consentService;
   }
 
+
+  ngOnInit() {
+  }
+
   match() {
-    console.log("MATCH .....");
-    this.results = "";
-    var matchRequest = '{"purpose":' + this.darJson + ', "consent":' + this.consentJson + '}';
-    this.ontologyService.match(matchRequest).subscribe(
+    console.log('MATCH .....');
+    this.results = '';
+    const matchRequest = { purpose: this.darJson, consent: this.consentJson };
+
+    this.ontologyService.match(JSON.stringify(matchRequest)).subscribe(
       data => {
         this.results = data.text();
       },
@@ -52,27 +51,38 @@ export class HomeComponent {
   }
 
   clear() {
-    this.darJson = "";
-    this.consentJson = "";
-    this.results = "";
+    this.darJson = '';
+    this.consentJson = '';
+    this.results = '';
   }
 
-  processDarForm(evt: Event) {
-    //llamar al servicio que genera el JSON
-    this.darJson = JSON.stringify(evt, null, 2);
+  processDarForm(evt) {
+    // llamar al servicio que genera el JSON
+    // this.darJson = JSON.stringify(evt, null, 2);
+    this.darInfo = JSON.stringify(evt, null, 2);
+    this.darJson = this.orspService.getUseRestriction(evt);
   }
 
-  processDarJsonChange(evt: Event) {
-    //process dar
+  processDarInfoChange(evt) {
+
+  }
+
+  processDarJsonChange(evt) {
+    // process dar
     this.darJson = evt;
+  }
+
+  processDulInfoChange(evt) {
+
   }
 
   processConsentJsonChange(evt: Event) {
     this.consentJson = evt;
+
   }
 
   processConsentForm(evt: Orsp) {
-    let ur = this.orspService.getUseRestriction(evt);
-    this.consentJson = ur;
+    this.dulInfo = JSON.stringify(evt, null, 2);
+    this.consentJson = this.orspService.getUseRestriction(evt);
   }
 }
