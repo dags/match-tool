@@ -3,7 +3,7 @@
   <div fxFlex="100%" fxLayout="row">
 
     <div fxFlex fxLayoutAlign="start">
-      <img src="/assets/images/broad_logo.png" />
+      <img src="../../assets/images/broad_logo.png" />
     </div>
 
     <div fxFlex></div>
@@ -18,7 +18,7 @@
 
     <div fxFlex="50" fxLayout="column" style="width: 50%" fxLayoutGap="0.5em">
       <div>
-        <app-dul-qs (consentFormReady)="processConsentForm($event)"></app-dul-qs>
+        <app-dul-qs (dulFormReady)="processConsentForm($event)"></app-dul-qs>
       </div>
       <div>
         <app-dul-info [dulInfo]="dulInfo" (dulChanged)="processDulInfoChange($event)"></app-dul-info>

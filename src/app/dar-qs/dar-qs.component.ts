@@ -74,7 +74,7 @@ export class DarQsComponent implements OnInit {
 
     this.darForm.valueChanges
       .subscribe(data => {
-        this.darFormReady.emit(this.darForm.value);
+        this.processForm();
       });
   }
 
@@ -234,4 +234,74 @@ export class DarQsComponent implements OnInit {
     return this.allFruits.filter(fruit => fruit.toLowerCase().indexOf(filterValue) === 0);
   }
 
+  processForm() {
+    const answers = this.darForm.value;
+    const info = {};
+
+    if (answers.methods === true) {
+      info['methodsResearch'] = true;
+    }
+
+    if (answers.controls === true) {
+      info['controlSetOption'] = true;
+    }
+
+    // methods: ['', Validators.required],
+    // diseases: ['', Validators.required],
+    // controls: ['', Validators.required],
+    // population: ['', Validators.required],
+    // hmb: ['', Validators.required],
+    // poa: ['', Validators.required],
+    // other: ['', Validators.required],
+    // othertext: ['', Validators.required],
+    // ontologies: ['', Validators.required],
+    // forProfit: ['', Validators.required],
+    // onegender: [this.dar.onegender, Validators.required],
+    // gender: ['', Validators.required],
+    // pediatric: ['', Validators.required],
+    // illegalbehave: ['', Validators.required],
+    // addiction: ['', Validators.required],
+    // sexualdiseases: ['', Validators.required],
+    // stigmatizediseases: ['', Validators.required],
+    // vulnerablepop: ['', Validators.required],
+    // popmigration: ['', Validators.required],
+    // psychtraits: ['', Validators.required],
+    // nothealth: ['', Validators.required],
+    // ontologiesSelectedLabels: []
+
+    this.darFormReady.emit(info);
+
+  }
+
 }
+
+
+// "gender",
+//   "ethicsApprovalRequired",
+//   "diseaseRestrictions",
+//   "cloudStorage",
+//   "stigmatizeDiseases",
+//   "addiction",
+//   "other",
+//   "sexualDiseases",
+//   "populationRestrictions",
+//   "populationOriginsAncestry",
+//   "recontactMay",
+//   "controlSetOption",
+//   "commercialUse",
+//   "vulnerablePopulations",
+//   "populationStructure",
+//   "illegalBehavior",
+//   "genomicPhenotypicData",
+//   "methodsResearch",
+//   "recontactMust",
+//   "hmbResearch",
+//   "aggregateResearch",
+//   "dateRestriction",
+//   "generalUse",
+//   "otherRestrictions",
+//   "recontactingDataSubjects",
+//   "geographicalRestrictions",
+//   "nonBiomedical",
+//   "psychologicalTraits",
+//   "pediatric"

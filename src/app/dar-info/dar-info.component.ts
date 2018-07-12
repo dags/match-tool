@@ -23,6 +23,10 @@ export class DarInfoComponent implements OnInit {
     this.darChanged.emit(JSON.parse(this.darInfo));
   }
 
+  applyChanges() {
+    this.darChanged.emit(JSON.parse(this.darInfo));
+  }
+
   ngOnInit() {
   }
 

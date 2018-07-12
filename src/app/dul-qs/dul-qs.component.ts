@@ -26,7 +26,7 @@ export class DulQsComponent implements OnInit {
 
   @ViewChild('fruitInput') fruitInput: ElementRef;
 
-  @Output() consentFormReady: EventEmitter<Object>;
+  @Output() dulFormReady: EventEmitter<Object>;
   dulForm: any;
   orsp: Orsp;
   gender: FormControl;
@@ -55,7 +55,7 @@ export class DulQsComponent implements OnInit {
       );
 
     this.orsp = new Orsp();
-    this.consentFormReady = new EventEmitter();
+    this.dulFormReady = new EventEmitter();
     this.ontologyService = ontologyService;
 
     this.dulForm = this._formBuilder.group({
@@ -73,47 +73,14 @@ export class DulQsComponent implements OnInit {
       hmbResearch: ['', Validators.compose([Validators.required])],
     });
 
-    /*
-    class DataUseDTO {
-      Boolean generalUse
-      Boolean hmbResearch
-      List<String> diseaseRestrictions
-      Boolean populationOriginsAncestry
-      Boolean populationStructure
-      Boolean commercialUse
-      Boolean methodsResearch
-      String aggregateResearch
-      String controlSetOption
-      String gender
-      Boolean pediatric
-      List<String> populationRestrictions
-      Boolean otherRestrictions
-      String dateRestriction
-      Boolean recontactingDataSubjects
-      String recontactMay
-      String recontactMust
-      String genomicPhenotypicData
-      String cloudStorage
-      Boolean ethicsApprovalRequired
-      String geographicalRestrictions
-      String other
-      Boolean illegalBehavior
-      Boolean addiction
-      Boolean sexualDiseases
-      Boolean stigmatizeDiseases
-      Boolean vulnerablePopulations
-      Boolean psychologicalTraits
-      Boolean nonBiomedical
-  }
-*/
     this.dulForm.valueChanges
-    .subscribe(data => {
-      this.consentFormReady.emit(this.dulForm.value);
-    });
+      .subscribe(data => {
+        this.processForm();
+      });
   }
 
   submitConsentForm() {
-    this.consentFormReady.emit(this.dulForm.value);
+    this.dulFormReady.emit(this.dulForm.value);
   }
 
   genderChanged() {
@@ -252,5 +219,70 @@ export class DulQsComponent implements OnInit {
     return this.allFruits.filter(fruit => fruit.toLowerCase().indexOf(filterValue) === 0);
   }
 
+  processForm() {
+    const answers = this.dulForm.value;
+    const info = {};
+
+    if (answers.generalUse === 'true') {
+      info['generalUse'] = true;
+    }
+
+    if (answers.methodsResearch === 'true') {
+      info['methodsResearch'] = true;
+    }
+
+    if (answers.controlSetOption === 'true') {
+      info['controlSetOption'] = true;
+    }
+
+    // generalUse: ['', Validators.compose([Validators.required])],
+    // diseaseRestrictions: ['', Validators.compose([Validators.required])],
+    // commercialUse: ['', Validators.compose([Validators.required])],
+    // methodsResearch: ['', Validators.compose([Validators.required])],
+    // aggregateResearch: ['', Validators.compose([Validators.required])],
+    // gender: ['', Validators.compose([Validators.required])],
+    // controlSetOption: ['', Validators.compose([Validators.required])],
+    // populationRestrictions: ['', Validators.compose([Validators.required])],
+    // pediatric: ['', Validators.compose([Validators.required])],
+    // dateRestriction: ['', Validators.compose([Validators.required])],
+    // ontologiesSelectedLabels: [],
+    // hmbResearch: ['', Validators.compose([Validators.required])],
+    console.log(answers);
+    console.log(info);
+    this.dulFormReady.emit(info);
+
+  }
+
 }
+
+// "gender",
+// "ethicsApprovalRequired",
+// "diseaseRestrictions",
+// "cloudStorage",
+// "stigmatizeDiseases",
+// "addiction",
+// "other",
+// "sexualDiseases",
+// "populationRestrictions",
+// "populationOriginsAncestry",
+// "recontactMay",
+// "controlSetOption",
+// "commercialUse",
+// "vulnerablePopulations",
+// "populationStructure",
+// "illegalBehavior",
+// "genomicPhenotypicData",
+// "methodsResearch",
+// "recontactMust",
+// "hmbResearch",
+// "aggregateResearch",
+// "dateRestriction",
+// "generalUse",
+// "otherRestrictions",
+// "recontactingDataSubjects",
+// "geographicalRestrictions",
+// "nonBiomedical",
+// "psychologicalTraits",
+// "pediatric"
+
 

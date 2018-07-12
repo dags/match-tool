@@ -75,7 +75,7 @@ export class HomeComponent implements OnInit {
           this.darJson = JSON.stringify(result, null, 2);
         },
         error => {
-          this.darJson = JSON.stringify(error);
+          this.darJson = JSON.stringify(error, null, 2);
         });
   }
 
@@ -86,7 +86,7 @@ export class HomeComponent implements OnInit {
           this.consentJson = JSON.stringify(result, null, 2);
         },
         error => {
-          this.consentJson = JSON.stringify(error);
+          this.consentJson = JSON.stringify(error, null, 2);
         });
   }
 
@@ -102,7 +102,7 @@ export class HomeComponent implements OnInit {
           this.results = JSON.stringify(data, null, 2);
         },
         error => {
-          this.results = JSON.stringify(error);
+          this.results = JSON.stringify(error, null, 2);
         }
       );
   }

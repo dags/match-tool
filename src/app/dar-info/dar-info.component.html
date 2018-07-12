@@ -9,8 +9,9 @@
       </mat-panel-description>
     </mat-expansion-panel-header>
 
-    <textarea style="width: 100%" [(ngModel)]="darInfo" (change)="onDarInfoChange($event)" rows="10"></textarea>
-
+    <!-- <textarea style="width: 100%" [(ngModel)]="darInfo" (change)="onDarInfoChange($event)" rows="10"></textarea> -->
+    <textarea style="width: 100%" [(ngModel)]="darInfo" rows="10"></textarea>
+    <button mat-raised-button color="primary" (click)="applyChanges()">Apply Changes</button>
   </mat-expansion-panel>
 
 </mat-accordion>

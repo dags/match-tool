@@ -23,6 +23,10 @@ export class DulInfoComponent implements OnInit {
     this.dulChanged.emit(JSON.parse(this.dulInfo));
   }
 
+  applyChanges() {
+    this.dulChanged.emit(JSON.parse(this.dulInfo));
+  }
+
   ngOnInit() {
   }
 
