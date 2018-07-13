@@ -20,34 +20,39 @@ export class DarQsComponent implements OnInit {
   removable = true;
   addOnBlur = false;
   separatorKeysCodes: number[] = [ENTER, COMMA];
-  fruitCtrl = new FormControl();
-  filteredFruits: Observable<string[]>;
-  fruits: string[] = ['Lemon'];
-  allFruits: string[] = ['Apple', 'Lemon', 'Lime', 'Orange', 'Strawberry'];
+  diseasesCtrl = new FormControl();
+  filteredDiseases: any[];
+  diseases: any[] = [];
 
   @ViewChild('fruitInput') fruitInput: ElementRef;
 
   @Output() darFormReady: EventEmitter<Object>;
-  // public darService: DarService;
-  // public asyncSelected = '';
   darForm: any;
-  // dar: DARQuestions;
-
-  // prevSelected = '';
-  // typeaheadLoading = false;
-  // typeaheadNoResults = false;
   ontologies: Array<string> = [];
   ontologyMap: any = new Object();
-  // _cache: any;
   ontologiesSelectedLabels: Array<string> = [];
 
   constructor(private builder: FormBuilder, private ontologyService: OntologyService, private zone: NgZone) {
 
-    this.filteredFruits = this.fruitCtrl.valueChanges
-      .pipe(
-        startWith(null),
-        map((fruit: string | null) => fruit ? this._filter(fruit) : this.allFruits.slice()
-        )
+    this.diseasesCtrl.valueChanges
+      .subscribe(
+        (value) => {
+          if (typeof value === 'string') {
+            const filterValue = value.toLowerCase();
+            this.ontologyService.autocomplete(filterValue)
+              .subscribe(
+                result => {
+                  this.filteredDiseases = result;
+                },
+                error => {
+                  console.log(error);
+                  return [];
+                });
+          }
+        },
+        error => {
+          console.log(error);
+        }
       );
 
     // this.dar = new DARQuestions();
@@ -84,111 +89,63 @@ export class DarQsComponent implements OnInit {
       });
   }
 
+  submitDarForm() {
+    this.darFormReady.emit(this.darForm.value);
+  }
+
   clearOntologies() {
     this.ontologyMap = new Object();
     this.ontologiesSelectedLabels = [];
-    // this.dar.ontologies = [];
-    // this.submitDarForm();
-    // this.asyncSelected = '';
   }
-
-  // clearAsyncSelected() {
-  //   this.asyncSelected = '';
-  // }
 
   getOntologyFromMap(k) {
     return this.ontologyMap[k];
   }
 
-  // getContext() {
-  //   return this;
-  // }
 
   clear() {
-    // this.dar = new DARQuestions();
-    // this.submitDarForm();
   }
 
   getValues() {
     return this.darForm.value;
   }
 
-  // submitDarForm() {
-  //   if (this.dar.gender !== 'NG') {
-  //     this.dar.onegender = true;
-  //   }
-  //   if (!this.isEmpty(this.dar.othertext)) {
-  //     this.dar.other = true;
-  //   } else {
-  //     this.dar.other = false;
-  //   }
-  //   this.darService.getUseRestriction(JSON.stringify(this.dar))
-  //     .subscribe(
-  //       data => {
-  //         this.darFormReady.emit(data.json());
-  //       },
-  //       err => {
-  //         this.darFormReady.emit(err._body);
-  //       }
-  //     );
-
-  //   this.darFormReady.emit(this.dar);
-  // }
-
   isEmpty(val) {
     return (val === undefined || val == null || val.length <= 0 || val.trim().length === 0) ? true : false;
   }
 
   ngOnInit() {
-    // this.dar = new DARQuestions();
-    // this.dar.forProfit = true;
-    // this.dar.pediatric = true;
   }
 
   add(event: MatChipInputEvent): void {
     const input = event.input;
     const value = event.value;
 
-    // Add our fruit
     if ((value || '').trim()) {
-      this.fruits.push(value.trim());
+      this.diseases.push(value.trim());
     }
 
-    // Reset the input value
     if (input) {
       input.value = '';
     }
 
-    this.fruitCtrl.setValue(null);
+    this.diseasesCtrl.setValue(null);
   }
 
   remove(fruit: string): void {
-    const index = this.fruits.indexOf(fruit);
+    const index = this.diseases.indexOf(fruit);
     if (index >= 0) {
-      this.fruits.splice(index, 1);
+      this.diseases.splice(index, 1);
+      this.processForm();
     }
+
   }
 
   selected(event: MatAutocompleteSelectedEvent): void {
-    this.fruits.push(event.option.viewValue);
+    this.diseasesCtrl.setValue(null);
+    this.diseases.push(event.option.value);
     this.fruitInput.nativeElement.value = '';
-    this.fruitCtrl.setValue(null);
-  }
-
-  private _filter(value: string): string[] {
-    console.log('dar _filter : ' + value);
-    const filterValue = value.toLowerCase();
-    this.ontologyService.autocomplete(filterValue)
-      .subscribe(
-        result => {
-          return result;
-        },
-        error => {
-          console.log(error);
-          return [];
-        });
-    return [];
-    // return this.allFruits.filter(fruit => fruit.toLowerCase().indexOf(filterValue) === 0);
+    this.processForm();
   }
 
   processForm() {
@@ -201,6 +158,14 @@ export class DarQsComponent implements OnInit {
 
     if (answers.controls === true) {
       info['controlSetOption'] = true;
+    }
+
+    if (this.diseases.length > 0) {
+      const diseasesList = [];
+      this.diseases.forEach(disease => {
+        diseasesList.push(disease.id);
+      });
+      info['diseaseRestrictions'] = diseasesList;
     }
 
     // methods: ['', Validators.required],

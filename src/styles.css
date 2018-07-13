@@ -3,7 +3,7 @@
 body {
     margin: 50px;
     font-family: Roboto, 'Helvetica Neue', sans-serif;
-    background: #eee;
+    background: rgb(225, 226, 235);
     font-size: 16px;
     line-height: 1.4;
     -webkit-font-smoothing: antialiased;

@@ -1,14 +1,14 @@
 <div fxFlex fxFlexFill fxLayout="column">
 
-  <div fxFlex="100%" fxLayout="row">
+  <div fxLayout="row">
 
-    <div fxFlex fxLayoutAlign="start">
-      <img src="../../assets/images/broad_logo.png" />
+    <div>
+      <img src="assets/images/broad_logo.png" />
     </div>
 
     <div fxFlex></div>
 
-    <div fxFlex>
+    <div>
       <h3>Data Use Restrictions | Match Tool</h3>
     </div>
 
@@ -42,7 +42,7 @@
 
   </div>
 
-  <div fxFlex="100%" fxLayout="column" fxLayoutAlign="end">
+  <div fxFlex="100%" fxLayout="column" fxLayoutAlign="end" style="padding-top: 0.5em">
     <button mat-raised-button color="primary" (click)="match()">Match !</button>
     <app-results [results]="results"></app-results>
   </div>

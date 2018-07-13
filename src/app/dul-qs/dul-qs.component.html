@@ -37,52 +37,28 @@
                             Future use is limited to research involving the following disease area(s) [DS]
                         </label>
                     </div>
-                    <!-- 
-                    <mat-form-field class="example-chip-list">
-
-                        <mat-chip-list #chipList >
-
-                            <mat-chip *ngFor="let fruit of fruits" [selectable]="selectable" [removable]="removable" (removed)="remove(fruit)">
-                                {{fruit}}
-                                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
-                            </mat-chip>
-
-                            <input placeholder="Diseases ..." #fruitInput [formControl]="fruitCtrl" [matAutocomplete]="auto" [matChipInputFor]="chipList"
-                                [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)">
-
-                        </mat-chip-list>
-
-                        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="typeaheadOnSelect($event)">
-                            <mat-option *ngFor="let fruit of filteredFruits | async" [value]="fruit">
-                                {{fruit}}
-                            </mat-option>
-                        </mat-autocomplete>
-
-                    </mat-form-field> -->
 
                     <mat-form-field class="example-chip-list">
                         <mat-chip-list #chipList>
-                            <mat-chip *ngFor="let fruit of fruits" [selectable]="selectable" [removable]="removable" (removed)="remove(fruit)">
-                                {{fruit}}
+
+                            <mat-chip *ngFor="let disease of diseases" [selectable]="selectable" [removable]="removable" (removed)="remove(disease)">
+                                {{ disease.label }}
                                 <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
                             </mat-chip>
-                            <input placeholder="Diseases..." #fruitInput [formControl]="fruitCtrl" [matAutocomplete]="auto" [matChipInputFor]="chipList"
+
+                            <input placeholder="Diseases..." #fruitInput [formControl]="diseasesCtrl" [matAutocomplete]="auto" [matChipInputFor]="chipList"
                                 [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)">
+
                         </mat-chip-list>
+
                         <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
-                            <mat-option *ngFor="let fruit of filteredFruits | async" [value]="fruit">
-                                {{fruit}}
+                            <mat-option *ngFor="let disease of filteredDiseases" [value]="disease">
+                                {{ disease.label }}
                             </mat-option>
                         </mat-autocomplete>
+
                     </mat-form-field>
 
-                    <!-- <div [hidden]="typeaheadLoading!==true">
-                        <i class="glyphicon glyphicon-refresh ng-hide" style=""></i>
-                    </div>
-
-                    <div [hidden]="typeaheadNoResults!==true" class="" style="">
-                        <i class="glyphicon glyphicon-remove"></i> No Results Found
-                    </div> -->
                 </div>
 
                 <div fxLayout="column" fxLayoutGap="0.5em">
@@ -150,31 +126,6 @@
                             <mat-radio-button value=false>No</mat-radio-button>
                         </mat-radio-group>
                     </div>
-
-                    <!-- <div class="orsp-box">
-                        <div>
-                            <label>
-                                Future use is limited to research involving a specific population [RS-POP]
-                            </label>
-                        </div>
-
-                        <mat-form-field class="example-chip-list">
-                            <mat-chip-list #chipList>
-                                <mat-chip *ngFor="let fruit of fruits" [selectable]="selectable" [removable]="removable" (removed)="remove(fruit)">
-                                    {{fruit}}
-                                    <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
-                                </mat-chip>
-                                <input placeholder="New fruit..." #fruitInput [formControl]="fruitCtrl" [matAutocomplete]="auto" [matChipInputFor]="chipList"
-                                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
-                                    (matChipInputTokenEnd)="add($event)">
-                            </mat-chip-list>
-                            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="typeaheadOnSelect($event)">
-                                <mat-option *ngFor="let fruit of filteredFruits | async" [value]="fruit">
-                                    {{fruit}}
-                                </mat-option>
-                            </mat-autocomplete>
-                        </mat-form-field>
-                    </div> -->
 
                 </div>
             </div>

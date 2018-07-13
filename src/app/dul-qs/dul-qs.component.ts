@@ -19,26 +19,19 @@ export class DulQsComponent implements OnInit {
   removable = true;
   addOnBlur = false;
   separatorKeysCodes: number[] = [ENTER, COMMA];
-  fruitCtrl = new FormControl();
-  filteredFruits: Observable<string[]>;
-  fruits: string[] = ['Lemon'];
+  diseasesCtrl = new FormControl();
+  filteredDiseases: any[];
+  diseases: any[] = [];
   allFruits: string[] = ['Apple', 'Lemon', 'Lime', 'Orange', 'Strawberry'];
 
   @ViewChild('fruitInput') fruitInput: ElementRef;
 
   @Output() dulFormReady: EventEmitter<Object>;
   dulForm: any;
-  // orsp: Orsp;
-  // gender: FormControl;
 
-  // asyncSelected = '';
-  // typeaheadLoading = false;
-  // typeaheadNoResults = false;
   ontologies: Array<string> = [];
   ontologyMap: any = new Object();
-  // _cache: any;
-  // _prevContext: any;
-  // orsp_gender: string;
+
 
   ontologiesSelectedLabels: Array<string> = [];
   filteredOntologiesMultiple: any[];
@@ -47,14 +40,27 @@ export class DulQsComponent implements OnInit {
 
   constructor(private _formBuilder: FormBuilder, private ontologyService: OntologyService, private zone: NgZone) {
 
-    this.filteredFruits = this.fruitCtrl.valueChanges
-      .pipe(
-        startWith(null),
-        map((fruit: string | null) => fruit ? this._filter(fruit) : this.allFruits.slice()
-        )
+    this.diseasesCtrl.valueChanges
+      .subscribe(
+        (value) => {
+          if (typeof value === 'string') {
+            const filterValue = value.toLowerCase();
+            this.ontologyService.autocomplete(filterValue)
+              .subscribe(
+                result => {
+                  this.filteredDiseases = result;
+                },
+                error => {
+                  console.log(error);
+                  return [];
+                });
+          }
+        },
+        error => {
+          console.log(error);
+        }
       );
 
-    // this.orsp = new Orsp();
     this.dulFormReady = new EventEmitter();
 
     this.dulForm = this._formBuilder.group({
@@ -82,46 +88,14 @@ export class DulQsComponent implements OnInit {
     this.dulFormReady.emit(this.dulForm.value);
   }
 
-  // genderChanged() {
-  //   alert('Changed');
-  // }
-
-  // setGender(gender: string) {
-  //   this.orsp.gender = gender;
-  // }
-
   clear() {
-    // this.orsp = new Orsp();
     this.dulForm.marskAsTouched();
   }
-
-  // private getAsyncData(context: any) {
-
-  //   if (!this.isEmpty(context.asyncSelected)) {
-  //     if (this.prevSelected === context.asyncSelected) {
-  //       return this.ontologies;
-  //     }
-  //     this.prevSelected = context.asyncSelected;
-  //     this.ontologyService.autocomplete(context.asyncSelected).subscribe(
-  //       (data) => {
-  //         this.ontologies = data.json();
-  //         return this.ontologies;
-  //       },
-  //       err => {
-  //         this.ontologies = err._body;
-  //         return this.ontologies;
-  //       }
-  //     );
-  //   }
-
-  // }
 
   clearOntologies() {
     this.ontologyMap = new Object();
     this.ontologiesSelectedLabels = [];
-    // this.orsp.diseaseRestrictions = [];
     this.submitConsentForm();
-    // this.asyncSelected = '';
   }
 
   getOntologyFromMap(k) {
@@ -132,33 +106,6 @@ export class DulQsComponent implements OnInit {
     return (val === undefined || val == null || val.length <= 0) ? true : false;
   }
 
-  // getContext() {
-  //   return this;
-  // }
-
-  // clearAsyncSelected() {
-  //   this.asyncSelected = '';
-  // }
-
-  // private getFilteredOntologies(event) {
-
-  //   const query = event.query;
-  //   // console.log('query: ' + query);
-  //   this.ontologyService.autocomplete(query).subscribe(
-  //     (data) => {
-  //       this.ontologies = data.json();
-  //       // console.log(JSON.stringify(this.ontologies));
-  //       return this.ontologies;
-  //     },
-  //     err => {
-  //       this.ontologies = err._body;
-  //       console.log(JSON.stringify(this.ontologies));
-  //       return this.ontologies;
-  //     }
-  //   );
-
-  // }
-
   ngOnInit() {
   }
 
@@ -166,47 +113,32 @@ export class DulQsComponent implements OnInit {
     const input = event.input;
     const value = event.value;
 
-    // Add our fruit
     if ((value || '').trim()) {
-      this.fruits.push(value.trim());
+      this.diseases.push(value.trim());
     }
 
-    // Reset the input value
     if (input) {
       input.value = '';
     }
 
-    this.fruitCtrl.setValue(null);
+    this.diseasesCtrl.setValue(null);
   }
 
   remove(fruit: string): void {
-    const index = this.fruits.indexOf(fruit);
+    const index = this.diseases.indexOf(fruit);
 
     if (index >= 0) {
-      this.fruits.splice(index, 1);
+      this.diseases.splice(index, 1);
+      this.processForm();
     }
+
   }
 
   selected(event: MatAutocompleteSelectedEvent): void {
-    this.fruits.push(event.option.viewValue);
+    this.diseasesCtrl.setValue(null);
+    this.diseases.push(event.option.value);
     this.fruitInput.nativeElement.value = '';
-    this.fruitCtrl.setValue(null);
-  }
-
-  private _filter(value: string): string[] {
-    console.log('dul _filter : ' + value);
-    const filterValue = value.toLowerCase();
-    this.ontologyService.autocomplete(filterValue)
-      .subscribe(
-        result => {
-          return result;
-        },
-        error => {
-          console.log(error);
-          return [];
-        });
-    return [];
-    // return this.allFruits.filter(fruit => fruit.toLowerCase().indexOf(filterValue) === 0);
+    this.processForm();
   }
 
   processForm() {
@@ -223,6 +155,14 @@ export class DulQsComponent implements OnInit {
 
     if (answers.controlSetOption === 'true') {
       info['controlSetOption'] = true;
+    }
+
+    if (this.diseases.length > 0) {
+      const diseasesList = [];
+      this.diseases.forEach(disease => {
+        diseasesList.push(disease.id);
+      });
+      info['diseaseRestrictions'] = diseasesList;
     }
 
     // generalUse: ['', Validators.compose([Validators.required])],
