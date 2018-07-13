@@ -19,13 +19,13 @@ function getInstallerConfig() {
 //
 
   return Promise.resolve({
-    appDirectory: path.join(basePath, 'builds/match-tool-win32-x64/'),
+    appDirectory: path.join(basePath, 'builds/MatchTool-win32-x64/'),
     authors: 'Broad Institute',
     noMsi: true,
     certificateFile: './electron.p12',
     certificatePassword: 'broad',
     outputDirectory: path.join(basePath, 'installers'),
-    exe: 'match-tool.exe',
+    exe: 'MatchTool.exe',
     setupExe: 'MatchToolInstaller.exe',
     setupMsi: 'MatchToolInstaller.msi',
     setupIcon: path.join(rootPath, 'src', 'assets', 'icons', 'win', 'firecloud-explorer.ico')
