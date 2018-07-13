@@ -135,7 +135,7 @@ export class DulQsComponent implements OnInit {
     if (field === 'generalUse') {
       if (evt.value === 'true') {
         this.diseases = [];
-        this.dulForm.patchValue({ hmbResearch: 'false', controlSetOption: 'true' });
+        this.dulForm.patchValue({ hmbResearch: 'false', controlSetOption: 'false' });
       }
     }
 
