@@ -17,3 +17,7 @@ label .mat-checkbox-layout {
     padding: 1em;
     border-radius: 0.8em;
 }
+
+.example-chip-list {
+    width: 100%;
+}

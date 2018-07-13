@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ViewChild, ElementRef, NgZone } from '@angular/core';
 import { FormControl, FormBuilder, Validators } from '@angular/forms';
 import { OntologyService } from '../services/ontology.service';
 import { Orsp } from '../models/orsp';
@@ -28,24 +28,24 @@ export class DulQsComponent implements OnInit {
 
   @Output() dulFormReady: EventEmitter<Object>;
   dulForm: any;
-  orsp: Orsp;
-  gender: FormControl;
-  ontologyService: OntologyService;
-  asyncSelected = '';
-  typeaheadLoading = false;
-  typeaheadNoResults = false;
+  // orsp: Orsp;
+  // gender: FormControl;
+
+  // asyncSelected = '';
+  // typeaheadLoading = false;
+  // typeaheadNoResults = false;
   ontologies: Array<string> = [];
   ontologyMap: any = new Object();
-  _cache: any;
-  _prevContext: any;
-  orsp_gender: string;
+  // _cache: any;
+  // _prevContext: any;
+  // orsp_gender: string;
 
   ontologiesSelectedLabels: Array<string> = [];
   filteredOntologiesMultiple: any[];
 
   prevSelected = '';
 
-  constructor(private _formBuilder: FormBuilder, ontologyService: OntologyService) {
+  constructor(private _formBuilder: FormBuilder, private ontologyService: OntologyService, private zone: NgZone) {
 
     this.filteredFruits = this.fruitCtrl.valueChanges
       .pipe(
@@ -54,9 +54,8 @@ export class DulQsComponent implements OnInit {
         )
       );
 
-    this.orsp = new Orsp();
+    // this.orsp = new Orsp();
     this.dulFormReady = new EventEmitter();
-    this.ontologyService = ontologyService;
 
     this.dulForm = this._formBuilder.group({
       generalUse: ['', Validators.compose([Validators.required])],
@@ -83,65 +82,46 @@ export class DulQsComponent implements OnInit {
     this.dulFormReady.emit(this.dulForm.value);
   }
 
-  genderChanged() {
-    alert('Changed');
-  }
+  // genderChanged() {
+  //   alert('Changed');
+  // }
 
-  setGender(gender: string) {
-    this.orsp.gender = gender;
-  }
+  // setGender(gender: string) {
+  //   this.orsp.gender = gender;
+  // }
 
   clear() {
-    this.orsp = new Orsp();
+    // this.orsp = new Orsp();
     this.dulForm.marskAsTouched();
   }
 
-  private getAsyncData(context: any) {
+  // private getAsyncData(context: any) {
 
-    if (!this.isEmpty(context.asyncSelected)) {
-      if (this.prevSelected === context.asyncSelected) {
-        return this.ontologies;
-      }
-      this.prevSelected = context.asyncSelected;
-      this.ontologyService.autocomplete(context.asyncSelected).subscribe(
-        (data) => {
-          this.ontologies = data.json();
-          return this.ontologies;
-        },
-        err => {
-          this.ontologies = err._body;
-          return this.ontologies;
-        }
-      );
-    }
+  //   if (!this.isEmpty(context.asyncSelected)) {
+  //     if (this.prevSelected === context.asyncSelected) {
+  //       return this.ontologies;
+  //     }
+  //     this.prevSelected = context.asyncSelected;
+  //     this.ontologyService.autocomplete(context.asyncSelected).subscribe(
+  //       (data) => {
+  //         this.ontologies = data.json();
+  //         return this.ontologies;
+  //       },
+  //       err => {
+  //         this.ontologies = err._body;
+  //         return this.ontologies;
+  //       }
+  //     );
+  //   }
 
-  }
-
-  changeTypeaheadLoading(e: boolean) {
-    this.typeaheadLoading = e;
-  }
-
-  changeTypeaheadNoResults(e: boolean) {
-    this.typeaheadNoResults = e;
-  }
-
-  typeaheadOnSelect(e: any) {
-    console.log(JSON.stringify(e));
-    if (this.ontologyMap[e.id] == null) {
-      this.ontologyMap[e.id] = e.label;
-      this.orsp.diseaseRestrictions.push(e.id);
-      this.ontologiesSelectedLabels.push(e.label);
-      this.submitConsentForm();
-    }
-    this.asyncSelected = '';
-  }
+  // }
 
   clearOntologies() {
     this.ontologyMap = new Object();
     this.ontologiesSelectedLabels = [];
-    this.orsp.diseaseRestrictions = [];
+    // this.orsp.diseaseRestrictions = [];
     this.submitConsentForm();
-    this.asyncSelected = '';
+    // this.asyncSelected = '';
   }
 
   getOntologyFromMap(k) {
@@ -152,32 +132,32 @@ export class DulQsComponent implements OnInit {
     return (val === undefined || val == null || val.length <= 0) ? true : false;
   }
 
-  getContext() {
-    return this;
-  }
+  // getContext() {
+  //   return this;
+  // }
 
-  clearAsyncSelected() {
-    this.asyncSelected = '';
-  }
+  // clearAsyncSelected() {
+  //   this.asyncSelected = '';
+  // }
 
-  private getFilteredOntologies(event) {
+  // private getFilteredOntologies(event) {
 
-    const query = event.query;
-    // console.log('query: ' + query);
-    this.ontologyService.autocomplete(query).subscribe(
-      (data) => {
-        this.ontologies = data.json();
-        // console.log(JSON.stringify(this.ontologies));
-        return this.ontologies;
-      },
-      err => {
-        this.ontologies = err._body;
-        console.log(JSON.stringify(this.ontologies));
-        return this.ontologies;
-      }
-    );
+  //   const query = event.query;
+  //   // console.log('query: ' + query);
+  //   this.ontologyService.autocomplete(query).subscribe(
+  //     (data) => {
+  //       this.ontologies = data.json();
+  //       // console.log(JSON.stringify(this.ontologies));
+  //       return this.ontologies;
+  //     },
+  //     err => {
+  //       this.ontologies = err._body;
+  //       console.log(JSON.stringify(this.ontologies));
+  //       return this.ontologies;
+  //     }
+  //   );
 
-  }
+  // }
 
   ngOnInit() {
   }
@@ -214,9 +194,19 @@ export class DulQsComponent implements OnInit {
   }
 
   private _filter(value: string): string[] {
+    console.log('dul _filter : ' + value);
     const filterValue = value.toLowerCase();
-
-    return this.allFruits.filter(fruit => fruit.toLowerCase().indexOf(filterValue) === 0);
+    this.ontologyService.autocomplete(filterValue)
+      .subscribe(
+        result => {
+          return result;
+        },
+        error => {
+          console.log(error);
+          return [];
+        });
+    return [];
+    // return this.allFruits.filter(fruit => fruit.toLowerCase().indexOf(filterValue) === 0);
   }
 
   processForm() {

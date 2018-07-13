@@ -1,9 +1,10 @@
-import { Component, OnInit, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ViewChild, ElementRef, NgZone } from '@angular/core';
 import { DARQuestions } from '../models/dar';
 import { OntologyService } from '../services/ontology.service';
 import { DarService } from '../services/dar.service';
 import { Validators, FormBuilder, FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
+import { startWith, map } from 'rxjs/operators';
 import { MatAutocompleteSelectedEvent, MatChipInputEvent } from '@angular/material';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 
@@ -13,6 +14,7 @@ import { COMMA, ENTER } from '@angular/cdk/keycodes';
   styleUrls: ['./dar-qs.component.css']
 })
 export class DarQsComponent implements OnInit {
+
   visible = true;
   selectable = true;
   removable = true;
@@ -26,26 +28,30 @@ export class DarQsComponent implements OnInit {
   @ViewChild('fruitInput') fruitInput: ElementRef;
 
   @Output() darFormReady: EventEmitter<Object>;
-  public darService: DarService;
-  public asyncSelected = '';
+  // public darService: DarService;
+  // public asyncSelected = '';
   darForm: any;
-  dar: DARQuestions;
-  ontologyService: OntologyService;
-  prevSelected = '';
-  typeaheadLoading = false;
-  typeaheadNoResults = false;
+  // dar: DARQuestions;
+
+  // prevSelected = '';
+  // typeaheadLoading = false;
+  // typeaheadNoResults = false;
   ontologies: Array<string> = [];
   ontologyMap: any = new Object();
-  _cache: any;
+  // _cache: any;
   ontologiesSelectedLabels: Array<string> = [];
 
+  constructor(private builder: FormBuilder, private ontologyService: OntologyService, private zone: NgZone) {
 
-  constructor(private builder: FormBuilder, darService: DarService, ontologyService: OntologyService) {
-    this.darService = darService;
-    this.dar = new DARQuestions();
-    this.ontologyService = ontologyService;
+    this.filteredFruits = this.fruitCtrl.valueChanges
+      .pipe(
+        startWith(null),
+        map((fruit: string | null) => fruit ? this._filter(fruit) : this.allFruits.slice()
+        )
+      );
+
+    // this.dar = new DARQuestions();
     this.darFormReady = new EventEmitter();
-
 
     this.darForm = builder.group({
       methods: ['', Validators.required],
@@ -58,7 +64,7 @@ export class DarQsComponent implements OnInit {
       othertext: ['', Validators.required],
       ontologies: ['', Validators.required],
       forProfit: ['', Validators.required],
-      onegender: [this.dar.onegender, Validators.required],
+      onegender: ['', Validators.required],
       gender: ['', Validators.required],
       pediatric: ['', Validators.required],
       illegalbehave: ['', Validators.required],
@@ -78,123 +84,65 @@ export class DarQsComponent implements OnInit {
       });
   }
 
-  // getAsyncData(context: any) {
-  //   if (!this.isEmpty(context.asyncSelected)) {
-  //     if (this.prevSelected === context.asyncSelected) {
-  //       return this.ontologies;
-  //     }
-  //     this.prevSelected = context.asyncSelected;
-
-  //     this.ontologyService.autocomplete(context.asyncSelected).subscribe(
-  //       (data) => {
-  //         this.ontologies = data.json();
-  //         return this.ontologies;
-  //       },
-  //       err => {
-  //         this.ontologies = err._body;
-  //         return this.ontologies;
-  //       }
-  //     );
-  //   }
-  // }
-
-  changeTypeaheadLoading(e: boolean) {
-    this.typeaheadLoading = e;
-  }
-
-  changeTypeaheadNoResults(e: boolean) {
-    this.typeaheadNoResults = e;
-  }
-
-  typeaheadOnSelect(e: any) {
-    if (this.ontologyMap[e.item.id] == null) {
-      this.ontologyMap[e.item.id] = e.item.label;
-      this.dar.ontologies.push(e.item);
-      this.ontologiesSelectedLabels.push(e.item.label);
-      this.submitDarForm();
-    }
-    this.asyncSelected = '';
-  }
-
   clearOntologies() {
     this.ontologyMap = new Object();
     this.ontologiesSelectedLabels = [];
-    this.dar.ontologies = [];
-    this.submitDarForm();
-    this.asyncSelected = '';
+    // this.dar.ontologies = [];
+    // this.submitDarForm();
+    // this.asyncSelected = '';
   }
 
-  clearAsyncSelected() {
-    this.asyncSelected = '';
-  }
+  // clearAsyncSelected() {
+  //   this.asyncSelected = '';
+  // }
 
   getOntologyFromMap(k) {
     return this.ontologyMap[k];
   }
 
-  getContext() {
-    return this;
-  }
+  // getContext() {
+  //   return this;
+  // }
 
   clear() {
-    this.dar = new DARQuestions();
-    this.submitDarForm();
-
+    // this.dar = new DARQuestions();
+    // this.submitDarForm();
   }
 
   getValues() {
     return this.darForm.value;
   }
 
-  submitDarForm() {
-    if (this.dar.gender !== 'NG') {
-      this.dar.onegender = true;
-    }
-    if (!this.isEmpty(this.dar.othertext)) {
-      this.dar.other = true;
-    } else {
-      this.dar.other = false;
-    }
-    this.darService.getUseRestriction(JSON.stringify(this.dar))
-      .subscribe(
-        data => {
-          this.darFormReady.emit(data.json());
-        },
-        err => {
-          this.darFormReady.emit(err._body);
-        }
-      );
+  // submitDarForm() {
+  //   if (this.dar.gender !== 'NG') {
+  //     this.dar.onegender = true;
+  //   }
+  //   if (!this.isEmpty(this.dar.othertext)) {
+  //     this.dar.other = true;
+  //   } else {
+  //     this.dar.other = false;
+  //   }
+  //   this.darService.getUseRestriction(JSON.stringify(this.dar))
+  //     .subscribe(
+  //       data => {
+  //         this.darFormReady.emit(data.json());
+  //       },
+  //       err => {
+  //         this.darFormReady.emit(err._body);
+  //       }
+  //     );
 
-    this.darFormReady.emit(this.dar);
-  }
+  //   this.darFormReady.emit(this.dar);
+  // }
 
   isEmpty(val) {
     return (val === undefined || val == null || val.length <= 0 || val.trim().length === 0) ? true : false;
   }
 
-  private getFilteredOntologies(event) {
-
-    const query = event.query;
-    console.log('query: ' + query);
-    this.ontologyService.autocomplete(query).subscribe(
-      (data) => {
-        this.ontologies = data.json();
-        console.log(JSON.stringify(this.ontologies));
-        return this.ontologies;
-      },
-      err => {
-        this.ontologies = err._body;
-        console.log(JSON.stringify(this.ontologies));
-        return this.ontologies;
-      }
-    );
-
-  }
-
   ngOnInit() {
-    this.dar = new DARQuestions();
-    this.dar.forProfit = true;
-    this.dar.pediatric = true;
+    // this.dar = new DARQuestions();
+    // this.dar.forProfit = true;
+    // this.dar.pediatric = true;
   }
 
   add(event: MatChipInputEvent): void {
@@ -216,7 +164,6 @@ export class DarQsComponent implements OnInit {
 
   remove(fruit: string): void {
     const index = this.fruits.indexOf(fruit);
-
     if (index >= 0) {
       this.fruits.splice(index, 1);
     }
@@ -229,9 +176,19 @@ export class DarQsComponent implements OnInit {
   }
 
   private _filter(value: string): string[] {
+    console.log('dar _filter : ' + value);
     const filterValue = value.toLowerCase();
-
-    return this.allFruits.filter(fruit => fruit.toLowerCase().indexOf(filterValue) === 0);
+    this.ontologyService.autocomplete(filterValue)
+      .subscribe(
+        result => {
+          return result;
+        },
+        error => {
+          console.log(error);
+          return [];
+        });
+    return [];
+    // return this.allFruits.filter(fruit => fruit.toLowerCase().indexOf(filterValue) === 0);
   }
 
   processForm() {
