@@ -1,9 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, ViewChild, ElementRef, NgZone } from '@angular/core';
-import { FormControl, FormBuilder, Validators } from '@angular/forms';
+import { FormControl, FormBuilder } from '@angular/forms';
 import { OntologyService } from '../services/ontology.service';
-import { Orsp } from '../models/orsp';
-import { Observable } from 'rxjs';
-import { startWith, map } from 'rxjs/operators';
 import { MatAutocompleteSelectedEvent, MatChipInputEvent } from '@angular/material';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 
@@ -22,7 +19,6 @@ export class DulQsComponent implements OnInit {
   diseasesCtrl = new FormControl();
   filteredDiseases: any[];
   diseases: any[] = [];
-  allFruits: string[] = ['Apple', 'Lemon', 'Lime', 'Orange', 'Strawberry'];
 
   @ViewChild('fruitInput') fruitInput: ElementRef;
 
@@ -31,10 +27,6 @@ export class DulQsComponent implements OnInit {
 
   ontologies: Array<string> = [];
   ontologyMap: any = new Object();
-
-
-  ontologiesSelectedLabels: Array<string> = [];
-  filteredOntologiesMultiple: any[];
 
   prevSelected = '';
 
@@ -64,24 +56,21 @@ export class DulQsComponent implements OnInit {
     this.dulFormReady = new EventEmitter();
 
     this.dulForm = this._formBuilder.group({
-      generalUse: ['', Validators.compose([Validators.required])],
-      diseaseRestrictions: ['', Validators.compose([Validators.required])],
-      commercialUse: ['', Validators.compose([Validators.required])],
-      methodsResearch: ['', Validators.compose([Validators.required])],
-      aggregateResearch: ['', Validators.compose([Validators.required])],
-      gender: ['', Validators.compose([Validators.required])],
-      controlSetOption: ['', Validators.compose([Validators.required])],
-      populationRestrictions: ['', Validators.compose([Validators.required])],
-      pediatric: ['', Validators.compose([Validators.required])],
-      dateRestriction: ['', Validators.compose([Validators.required])],
+      generalUse: [''],
+      diseaseRestrictions: [''],
+      commercialUse: [''],
+      methodsResearch: [''],
+      aggregateResearch: [''],
+      gender: [''],
+      controlSetOption: [''],
+      populationRestrictions: [''],
+      populationOriginsAncestry: [''],
+      pediatric: [''],
+      dateRestriction: [''],
       ontologiesSelectedLabels: [],
-      hmbResearch: ['', Validators.compose([Validators.required])],
+      hmbResearch: [''],
     });
 
-    this.dulForm.valueChanges
-      .subscribe(data => {
-        this.processForm();
-      });
   }
 
   submitConsentForm() {
@@ -94,7 +83,6 @@ export class DulQsComponent implements OnInit {
 
   clearOntologies() {
     this.ontologyMap = new Object();
-    this.ontologiesSelectedLabels = [];
     this.submitConsentForm();
   }
 
@@ -138,23 +126,41 @@ export class DulQsComponent implements OnInit {
     this.diseasesCtrl.setValue(null);
     this.diseases.push(event.option.value);
     this.fruitInput.nativeElement.value = '';
+    this.dulForm.patchValue({ generalUse: 'false', hmbResearch: 'false', populationOriginsAncestry: 'false' });
+    this.processForm();
+  }
+
+  change(field, evt) {
+
+    if (field === 'generalUse') {
+      if (evt.value === 'true') {
+        this.diseases = [];
+        this.dulForm.patchValue({ hmbResearch: 'false', controlSetOption: 'true' });
+      }
+    }
+
+    if (field === 'hmbResearch') {
+      if (evt.value === 'true') {
+        this.diseases = [];
+        this.dulForm.patchValue({ generalUse: 'false', populationOriginsAncestry: 'true' });
+      }
+    }
+
     this.processForm();
   }
 
   processForm() {
     const answers = this.dulForm.value;
+    console.log(JSON.stringify(answers, null, 2));
+
     const info = {};
 
     if (answers.generalUse === 'true') {
       info['generalUse'] = true;
     }
 
-    if (answers.methodsResearch === 'true') {
-      info['methodsResearch'] = true;
-    }
-
-    if (answers.controlSetOption === 'true') {
-      info['controlSetOption'] = true;
+    if (answers.hmbResearch === 'true') {
+      info['hmbResearch'] = true;
     }
 
     if (this.diseases.length > 0) {
@@ -165,54 +171,35 @@ export class DulQsComponent implements OnInit {
       info['diseaseRestrictions'] = diseasesList;
     }
 
-    // generalUse: ['', Validators.compose([Validators.required])],
-    // diseaseRestrictions: ['', Validators.compose([Validators.required])],
-    // commercialUse: ['', Validators.compose([Validators.required])],
-    // methodsResearch: ['', Validators.compose([Validators.required])],
-    // aggregateResearch: ['', Validators.compose([Validators.required])],
-    // gender: ['', Validators.compose([Validators.required])],
-    // controlSetOption: ['', Validators.compose([Validators.required])],
-    // populationRestrictions: ['', Validators.compose([Validators.required])],
-    // pediatric: ['', Validators.compose([Validators.required])],
-    // dateRestriction: ['', Validators.compose([Validators.required])],
-    // ontologiesSelectedLabels: [],
-    // hmbResearch: ['', Validators.compose([Validators.required])],
-    console.log(answers);
-    console.log(info);
-    this.dulFormReady.emit(info);
+    if (answers.populationOriginsAncestry === 'true') {
+      info['populationOriginsAncestry'] = true;
+    }
 
+    if (answers.commercialUse === 'true') {
+      info['commercialUse'] = true;
+    }
+
+    if (answers.methodsResearch === 'true') {
+      info['methodsResearch'] = true;
+    }
+
+    if (answers.aggregateResearch === 'true') {
+      info['aggregateResearch'] = true;
+    }
+
+    if (answers.controlSetOption === 'true') {
+      info['controlSetOption'] = true;
+    }
+
+    if (answers.gender === 'Female' || answers.gender === 'Male') {
+      info['gender'] = answers.gender;
+    }
+
+    if (answers.pediatric === 'true') {
+      info['pediatric'] = true;
+    }
+    this.dulFormReady.emit(info);
   }
 
 }
-
-// "gender",
-// "ethicsApprovalRequired",
-// "diseaseRestrictions",
-// "cloudStorage",
-// "stigmatizeDiseases",
-// "addiction",
-// "other",
-// "sexualDiseases",
-// "populationRestrictions",
-// "populationOriginsAncestry",
-// "recontactMay",
-// "controlSetOption",
-// "commercialUse",
-// "vulnerablePopulations",
-// "populationStructure",
-// "illegalBehavior",
-// "genomicPhenotypicData",
-// "methodsResearch",
-// "recontactMust",
-// "hmbResearch",
-// "aggregateResearch",
-// "dateRestriction",
-// "generalUse",
-// "otherRestrictions",
-// "recontactingDataSubjects",
-// "geographicalRestrictions",
-// "nonBiomedical",
-// "psychologicalTraits",
-// "pediatric"
-
 

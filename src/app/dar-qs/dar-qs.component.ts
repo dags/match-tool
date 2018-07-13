@@ -1,10 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, ViewChild, ElementRef, NgZone } from '@angular/core';
-import { DARQuestions } from '../models/dar';
 import { OntologyService } from '../services/ontology.service';
-import { DarService } from '../services/dar.service';
-import { Validators, FormBuilder, FormControl } from '@angular/forms';
-import { Observable } from 'rxjs';
-import { startWith, map } from 'rxjs/operators';
+import { FormBuilder, FormControl } from '@angular/forms';
 import { MatAutocompleteSelectedEvent, MatChipInputEvent } from '@angular/material';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 
@@ -30,7 +26,6 @@ export class DarQsComponent implements OnInit {
   darForm: any;
   ontologies: Array<string> = [];
   ontologyMap: any = new Object();
-  ontologiesSelectedLabels: Array<string> = [];
 
   constructor(private builder: FormBuilder, private ontologyService: OntologyService, private zone: NgZone) {
 
@@ -59,28 +54,27 @@ export class DarQsComponent implements OnInit {
     this.darFormReady = new EventEmitter();
 
     this.darForm = builder.group({
-      methods: ['', Validators.required],
-      diseases: ['', Validators.required],
-      controls: ['', Validators.required],
-      population: ['', Validators.required],
-      hmb: ['', Validators.required],
-      poa: ['', Validators.required],
-      other: ['', Validators.required],
-      othertext: ['', Validators.required],
-      ontologies: ['', Validators.required],
-      forProfit: ['', Validators.required],
-      onegender: ['', Validators.required],
-      gender: ['', Validators.required],
-      pediatric: ['', Validators.required],
-      illegalbehave: ['', Validators.required],
-      addiction: ['', Validators.required],
-      sexualdiseases: ['', Validators.required],
-      stigmatizediseases: ['', Validators.required],
-      vulnerablepop: ['', Validators.required],
-      popmigration: ['', Validators.required],
-      psychtraits: ['', Validators.required],
-      nothealth: ['', Validators.required],
-      ontologiesSelectedLabels: []
+      methods: [''],
+      diseases: [''],
+      controls: [''],
+      population: [''],
+      hmb: [''],
+      poa: [''],
+      other: [''],
+      othertext: [''],
+      ontologies: [''],
+      forProfit: [''],
+      onegender: [''],
+      gender: [''],
+      pediatric: [''],
+      illegalbehave: [''],
+      addiction: [''],
+      sexualdiseases: [''],
+      stigmatizediseases: [''],
+      vulnerablepop: [''],
+      popmigration: [''],
+      psychtraits: [''],
+      nothealth: ['']
     });
 
     this.darForm.valueChanges
@@ -95,13 +89,11 @@ export class DarQsComponent implements OnInit {
 
   clearOntologies() {
     this.ontologyMap = new Object();
-    this.ontologiesSelectedLabels = [];
   }
 
   getOntologyFromMap(k) {
     return this.ontologyMap[k];
   }
-
 
   clear() {
   }
@@ -148,9 +140,34 @@ export class DarQsComponent implements OnInit {
     this.processForm();
   }
 
+  change(field, evt) {
+
+    console.log('change -------------------------------------------');
+    console.log(field, evt);
+    // if (field === 'generalUse') {
+    //   if (evt.value === 'true') {
+    //     this.diseases = [];
+    //     this.darForm.patchValue({ hmbResearch: 'false', controlSetOption: 'true' });
+    //   }
+    // }
+
+    // if (field === 'hmbResearch') {
+    //   if (evt.value === 'true') {
+    //     this.diseases = [];
+    //     this.darForm.patchValue({ generalUse: 'false', populationOriginsAncestry: 'true' });
+    //   }
+    // }
+
+    this.processForm();
+  }
+
   processForm() {
     const answers = this.darForm.value;
     const info = {};
+
+    // if (answers.diseases === true) {
+    //   info['xxxx'] = true;
+    // }
 
     if (answers.methods === true) {
       info['methodsResearch'] = true;
@@ -158,6 +175,23 @@ export class DarQsComponent implements OnInit {
 
     if (answers.controls === true) {
       info['controlSetOption'] = true;
+    }
+
+    if (answers.population === true) {
+      info['populationStructure'] = true;
+    }
+
+    if (answers.hmb === true) {
+      info['hmbResearch'] = true;
+    }
+
+    if (answers.poa === true) {
+      info['populationOriginsAncestry'] = true;
+    }
+
+    if (answers.other === true) {
+      info['other'] = true;
+      info['otherRestrictions'] = answers.othertext;
     }
 
     if (this.diseases.length > 0) {
@@ -168,62 +202,61 @@ export class DarQsComponent implements OnInit {
       info['diseaseRestrictions'] = diseasesList;
     }
 
-    // methods: ['', Validators.required],
-    // diseases: ['', Validators.required],
-    // controls: ['', Validators.required],
-    // population: ['', Validators.required],
-    // hmb: ['', Validators.required],
-    // poa: ['', Validators.required],
-    // other: ['', Validators.required],
-    // othertext: ['', Validators.required],
-    // ontologies: ['', Validators.required],
-    // forProfit: ['', Validators.required],
-    // onegender: [this.dar.onegender, Validators.required],
-    // gender: ['', Validators.required],
-    // pediatric: ['', Validators.required],
-    // illegalbehave: ['', Validators.required],
-    // addiction: ['', Validators.required],
-    // sexualdiseases: ['', Validators.required],
-    // stigmatizediseases: ['', Validators.required],
-    // vulnerablepop: ['', Validators.required],
-    // popmigration: ['', Validators.required],
-    // psychtraits: ['', Validators.required],
-    // nothealth: ['', Validators.required],
-    // ontologiesSelectedLabels: []
+    if (answers.forProfit === 'true') {
+      info['commercialUse'] = true;
+    }
 
+    if (answers.forProfit === 'true') {
+      info['commercialUse'] = true;
+    }
+
+    if (answers.gender === 'M') {
+      info['gender'] = 'male';
+    }
+
+    if (answers.gender === 'F') {
+      info['gender'] = 'female';
+    }
+
+    if (answers.pediatric === 'true') {
+      info['pediatric'] = true;
+    }
+
+    if (answers.illegalbehave === 'true') {
+      info['illegalBehavior'] = true;
+    }
+
+    if (answers.addiction === 'true') {
+      info['addiction'] = true;
+    }
+
+    if (answers.sexualdiseases === 'true') {
+      info['sexualDiseases'] = true;
+    }
+
+    if (answers.stigmatizediseases === 'true') {
+      info['stigmatizeDiseases'] = true;
+    }
+
+    if (answers.vulnerablepop === 'true') {
+      info['vulnerablePopulations'] = true;
+    }
+
+    if (answers.popmigration === 'true') {
+      info['populationOriginsAncestry'] = true;
+    }
+
+    if (answers.psychtraits === 'true') {
+      info['psychologicalTraits'] = true;
+    }
+
+    if (answers.nothealth === 'true') {
+      info['nonBiomedical'] = true;
+    }
+
+    console.log(info);
     this.darFormReady.emit(info);
 
   }
-
 }
 
-
-// "gender",
-//   "ethicsApprovalRequired",
-//   "diseaseRestrictions",
-//   "cloudStorage",
-//   "stigmatizeDiseases",
-//   "addiction",
-//   "other",
-//   "sexualDiseases",
-//   "populationRestrictions",
-//   "populationOriginsAncestry",
-//   "recontactMay",
-//   "controlSetOption",
-//   "commercialUse",
-//   "vulnerablePopulations",
-//   "populationStructure",
-//   "illegalBehavior",
-//   "genomicPhenotypicData",
-//   "methodsResearch",
-//   "recontactMust",
-//   "hmbResearch",
-//   "aggregateResearch",
-//   "dateRestriction",
-//   "generalUse",
-//   "otherRestrictions",
-//   "recontactingDataSubjects",
-//   "geographicalRestrictions",
-//   "nonBiomedical",
-//   "psychologicalTraits",
-//   "pediatric"

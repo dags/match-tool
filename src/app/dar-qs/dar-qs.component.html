@@ -2,7 +2,7 @@
     <mat-expansion-panel expanded="true">
         <mat-expansion-panel-header>
             <mat-panel-title>
-                DAR | Use Restrictions Questions
+                <strong>DAR | Use Restrictions Questions</strong>
             </mat-panel-title>
             <mat-panel-description>
                 DAR Form to ask for permissions
@@ -20,7 +20,7 @@
                 </div>
 
                 <div>
-                    <mat-checkbox formControlName="diseases">
+                    <mat-checkbox formControlName="diseases" (change)="change('diseases', $event)">
                         <b>2.4.1 Disease-related studies: </b>
                     </mat-checkbox>
                     <span>
@@ -94,25 +94,25 @@
                 </div>
 
                 <mat-form-field class="example-chip-list">
-                        <mat-chip-list #chipList>
+                    <mat-chip-list #chipList>
 
-                            <mat-chip *ngFor="let disease of diseases" [selectable]="selectable" [removable]="removable" (removed)="remove(disease)">
-                                {{ disease.label }}
-                                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
-                            </mat-chip>
+                        <mat-chip *ngFor="let disease of diseases" [selectable]="selectable" [removable]="removable" (removed)="remove(disease)">
+                            {{ disease.label }}
+                            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                        </mat-chip>
 
-                            <input placeholder="Diseases..." #fruitInput [formControl]="diseasesCtrl" [matAutocomplete]="auto" [matChipInputFor]="chipList"
-                                [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)">
+                        <input placeholder="Diseases..." #fruitInput [formControl]="diseasesCtrl" [matAutocomplete]="auto" [matChipInputFor]="chipList"
+                            [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)">
 
-                        </mat-chip-list>
+                    </mat-chip-list>
 
-                        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
-                            <mat-option *ngFor="let disease of filteredDiseases" [value]="disease">
-                                {{ disease.label }}
-                            </mat-option>
-                        </mat-autocomplete>
+                    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+                        <mat-option *ngFor="let disease of filteredDiseases" [value]="disease">
+                            {{ disease.label }}
+                        </mat-option>
+                    </mat-autocomplete>
 
-                    </mat-form-field>
+                </mat-form-field>
 
             </div>
 
@@ -123,7 +123,7 @@
             <div class="duos-box">
                 <label>3.1.1 Will this data be used exclusively or partially for a commercial purpose?</label>
                 <div fxFlex></div>
-                <mat-radio-group fxLayout="row" formControlName="forProfit">
+                <mat-radio-group fxLayout="row" formControlName="forProfit" (change)="change('forProfit', $event)">
                     <mat-radio-button value=true>Yes</mat-radio-button>
                     <mat-radio-button value=false>No</mat-radio-button>
                 </mat-radio-group>
@@ -132,7 +132,7 @@
             <div class="duos-box">
                 <label>3.1.2 Please indicate if this study is limited to one gender?</label>
                 <div fxFlex></div>
-                <mat-radio-group fxLayout="row" formControlName="gender">
+                <mat-radio-group fxLayout="row" formControlName="gender" (change)="change('gender', $event)">
                     <mat-radio-button value='NG'>No</mat-radio-button>
                     <mat-radio-button value='F'>Female</mat-radio-button>
                     <mat-radio-button value='M'>Male</mat-radio-button>
@@ -142,7 +142,7 @@
             <div class="duos-box">
                 <label class="control-label rp-choice-questions">3.1.3 Please indicate if this study is restricted to a pediatric population (under the age of 18)?</label>
                 <div fxFlex></div>
-                <mat-radio-group fxLayout="row" formControlName="pediatric">
+                <mat-radio-group fxLayout="row" formControlName="pediatric" (change)="change('pediatric', $event)">
                     <mat-radio-button value=true>Yes</mat-radio-button>
                     <mat-radio-button value=false>No</mat-radio-button>
                 </mat-radio-group>
@@ -154,7 +154,7 @@
                 </label>
                 <div fxFlex></div>
 
-                <mat-radio-group fxLayout="row" formControlName="illegalbehave">
+                <mat-radio-group fxLayout="row" formControlName="illegalbehave" (change)="change('illegalbehave', $event)">
                     <mat-radio-button value=true>Yes</mat-radio-button>
                     <mat-radio-button value=false>No</mat-radio-button>
                 </mat-radio-group>
@@ -165,7 +165,7 @@
                 </label>
                 <div fxFlex></div>
 
-                <mat-radio-group fxLayout="row" formControlName="addiction">
+                <mat-radio-group fxLayout="row" formControlName="addiction" (change)="change('addiction', $event)">
                     <mat-radio-button value=true>Yes</mat-radio-button>
                     <mat-radio-button value=false>No</mat-radio-button>
                 </mat-radio-group>
@@ -175,7 +175,7 @@
                 <label class="control-label rp-choice-questions">3.1.6 Does the research aim involve the study of sexual preferences or sexually transmitted diseases?</label>
                 <div fxFlex></div>
 
-                <mat-radio-group fxLayout="row" formControlName="sexualdiseases">
+                <mat-radio-group fxLayout="row" formControlName="sexualdiseases" (change)="change('sexualdiseases', $event)">
                     <mat-radio-button value=true>Yes</mat-radio-button>
                     <mat-radio-button value=false>No</mat-radio-button>
                 </mat-radio-group>
@@ -185,7 +185,7 @@
                 <label class="control-label rp-choice-questions">3.1.7 Does the research aim involve the study of any stigmatizing illnesses?</label>
                 <div fxFlex></div>
 
-                <mat-radio-group fxLayout="row" formControlName="stigmatizediseases">
+                <mat-radio-group fxLayout="row" formControlName="stigmatizediseases" (change)="change('stigmatizediseases', $event)">
                     <mat-radio-button value=true>Yes</mat-radio-button>
                     <mat-radio-button value=false>No</mat-radio-button>
                 </mat-radio-group>
@@ -197,7 +197,7 @@
                 </label>
                 <div fxFlex></div>
 
-                <mat-radio-group fxLayout="row" formControlName="vulnerablepop">
+                <mat-radio-group fxLayout="row" formControlName="vulnerablepop" (change)="change('vulnerablepop', $event)">
                     <mat-radio-button value=true>Yes</mat-radio-button>
                     <mat-radio-button value=false>No</mat-radio-button>
                 </mat-radio-group>
@@ -207,7 +207,7 @@
                 <label class="control-label rp-choice-questions">3.1.9 Does the research aim involve the study of Population Origins/Migration patterns?</label>
                 <div fxFlex></div>
 
-                <mat-radio-group fxLayout="row" formControlName="popmigration">
+                <mat-radio-group fxLayout="row" formControlName="popmigration" (change)="change('popmigration', $event)">
                     <mat-radio-button value=true>Yes</mat-radio-button>
                     <mat-radio-button value=false>No</mat-radio-button>
                 </mat-radio-group>
@@ -219,7 +219,7 @@
                 </label>
                 <div fxFlex></div>
 
-                <mat-radio-group fxLayout="row" formControlName="psychtraits">
+                <mat-radio-group fxLayout="row" formControlName="psychtraits" (change)="change('psychtraits', $event)">
                     <mat-radio-button value=true>Yes</mat-radio-button>
                     <mat-radio-button value=false>No</mat-radio-button>
                 </mat-radio-group>
@@ -230,7 +230,7 @@
                     for purposes beyond biomedical or health-related research, or in ways that are not easily related to
                     Health? </label>
                 <div fxFlex></div>
-                <mat-radio-group fxLayout="row" formControlName="nothealth">
+                <mat-radio-group fxLayout="row" formControlName="nothealth" (change)="change('nothealth', $event)">
                     <mat-radio-button value=true>Yes</mat-radio-button>
                     <mat-radio-button value=false>No</mat-radio-button>
                 </mat-radio-group>

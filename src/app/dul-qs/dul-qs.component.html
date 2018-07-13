@@ -2,7 +2,7 @@
     <mat-expansion-panel expanded="true">
         <mat-expansion-panel-header>
             <mat-panel-title>
-                DUL | Use Restrictions Questions
+                <strong>DUL | Use Restrictions Questions</strong>
             </mat-panel-title>
             <mat-panel-description>
                 DUL Form to grant or reject permissions
@@ -16,7 +16,7 @@
                 <div class="orsp-box">
                     <label>Data is available for future general research use [GRU]</label>
                     <div fxFlex></div>
-                    <mat-radio-group fxLayout="row" formControlName="generalUse">
+                    <mat-radio-group fxLayout="row" formControlName="generalUse" (change)="change('generalUse', $event)">
                         <mat-radio-button value=true>Yes</mat-radio-button>
                         <mat-radio-button value=false>No</mat-radio-button>
                     </mat-radio-group>
@@ -25,7 +25,7 @@
                 <div class="orsp-box">
                     <label>Data is limited for health/medical/biomedical research [HMB]</label>
                     <div fxFlex></div>
-                    <mat-radio-group fxLayout="row" formControlName="hmbResearch">
+                    <mat-radio-group fxLayout="row" formControlName="hmbResearch" (change)="change('hmbResearch',$event)">
                         <mat-radio-button value=true>Yes</mat-radio-button>
                         <mat-radio-button value=false>No</mat-radio-button>
                     </mat-radio-group>
@@ -53,7 +53,14 @@
 
                         <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
                             <mat-option *ngFor="let disease of filteredDiseases" [value]="disease">
-                                {{ disease.label }}
+                                <div fxLayout="column">
+                                    <span>
+                                        <strong>{{ disease.label}}</strong>
+                                    </span>
+                                    <!-- <span>{{ disease.id }}</span>
+                                    <span>{{ disease.alias }}</span>
+                                    <span>{{ disease.definition }}</span> -->
+                                </div>
                             </mat-option>
                         </mat-autocomplete>
 
@@ -66,7 +73,7 @@
                     <div class="orsp-box">
                         <label>Future use of population origins or ancestry is prohibited [POA]</label>
                         <div fxFlex></div>
-                        <mat-radio-group fxLayout="row" formControlName="populationRestrictions">
+                        <mat-radio-group fxLayout="row" formControlName="populationOriginsAncestry" (change)="change('populationOriginsAncestry', $event)">
                             <mat-radio-button value=true>Yes</mat-radio-button>
                             <mat-radio-button value=false>No</mat-radio-button>
                         </mat-radio-group>
@@ -75,7 +82,7 @@
                     <div class="orsp-box">
                         <label>Future commercial use is prohibited [NCU]</label>
                         <div fxFlex></div>
-                        <mat-radio-group fxLayout="row" formControlName="commercialUse">
+                        <mat-radio-group fxLayout="row" formControlName="commercialUse" (change)="change('commercialUse', $event)">
                             <mat-radio-button value=true>Yes</mat-radio-button>
                             <mat-radio-button value=false>No</mat-radio-button>
                         </mat-radio-group>
@@ -84,7 +91,7 @@
                     <div class="orsp-box">
                         <label>Future use for methods research (analytic/software/technology development) is prohibited [NMDS]</label>
                         <div fxFlex></div>
-                        <mat-radio-group fxLayout="row" formControlName="methodsResearch">
+                        <mat-radio-group fxLayout="row" formControlName="methodsResearch" (change)="change('methodsResearch', $event)">
                             <mat-radio-button value=true>Yes</mat-radio-button>
                             <mat-radio-button value=false>No</mat-radio-button>
                         </mat-radio-group>
@@ -93,7 +100,7 @@
                     <div class="orsp-box">
                         <label>Future use of aggregate-level data for general research purposes is prohibited [NAGR]</label>
                         <div fxFlex></div>
-                        <mat-radio-group fxLayout="row" formControlName="aggregateResearch">
+                        <mat-radio-group fxLayout="row" formControlName="aggregateResearch" (change)="change('aggregateResearch', $event)">
                             <mat-radio-button value=true>Yes</mat-radio-button>
                             <mat-radio-button value=false>No</mat-radio-button>
                         </mat-radio-group>
@@ -102,7 +109,7 @@
                     <div class="orsp-box">
                         <label>Future as a control set for diseases other than those specified is prohibited [CTRL]</label>
                         <div fxFlex></div>
-                        <mat-radio-group fxLayout="row" formControlName="controlSetOption">
+                        <mat-radio-group fxLayout="row" formControlName="controlSetOption" (change)="change('controlSetOption', $event)">
                             <mat-radio-button value=true>Yes</mat-radio-button>
                             <mat-radio-button value=false>No</mat-radio-button>
                         </mat-radio-group>
@@ -111,7 +118,7 @@
                     <div class="orsp-box">
                         <label>Future use is limited to research involving a particular gender [RS-M] / [RS-FM]</label>
                         <div fxFlex></div>
-                        <mat-radio-group fxLayout="row" formControlName="gender">
+                        <mat-radio-group fxLayout="row" formControlName="gender" (change)="change('gender', $event)">
                             <mat-radio-button value="Male">Male</mat-radio-button>
                             <mat-radio-button value="Female">Female</mat-radio-button>
                             <mat-radio-button value="NA">N/A</mat-radio-button>
@@ -121,7 +128,7 @@
                     <div class="orsp-box">
                         <label>Future use is limited to pediatric research [RS-PD]</label>
                         <div fxFlex></div>
-                        <mat-radio-group fxLayout="row" formControlName="pediatric">
+                        <mat-radio-group fxLayout="row" formControlName="pediatric" (change)="change('pediatric', $event)">
                             <mat-radio-button value=true>Yes</mat-radio-button>
                             <mat-radio-button value=false>No</mat-radio-button>
                         </mat-radio-group>
