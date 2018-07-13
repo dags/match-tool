@@ -172,23 +172,23 @@ export class DulQsComponent implements OnInit {
     }
 
     if (answers.populationOriginsAncestry === 'true') {
-      info['populationOriginsAncestry'] = true;
+      info['populationOriginsAncestry'] = false;
     }
 
     if (answers.commercialUse === 'true') {
-      info['commercialUse'] = true;
+      info['commercialUse'] = false;
     }
 
     if (answers.methodsResearch === 'true') {
-      info['methodsResearch'] = true;
+      info['methodsResearch'] = false;
     }
 
     if (answers.aggregateResearch === 'true') {
-      info['aggregateResearch'] = true;
+      info['aggregateResearch'] = false;
     }
 
     if (answers.controlSetOption === 'true') {
-      info['controlSetOption'] = true;
+      info['controlSetOption'] = false;
     }
 
     if (answers.gender === 'Female' || answers.gender === 'Male') {
