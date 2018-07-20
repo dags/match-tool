@@ -13,62 +13,64 @@
 
             <div fxFlex fxLayout="column wrap" fxLayoutGap="1em">
 
-                <div class="orsp-box">
-                    <label>Data is available for future general research use [GRU]</label>
-                    <div fxFlex></div>
-                    <mat-radio-group fxLayout="row" formControlName="generalUse" (change)="change('generalUse', $event)">
-                        <mat-radio-button value=true>Yes</mat-radio-button>
-                        <mat-radio-button value=false>No</mat-radio-button>
-                    </mat-radio-group>
-                </div>
+                <div fxLayout="column" fxLayoutGap="0.5em" style="border: 3px solid blue; padding: 0.3em">
 
-                <div class="orsp-box">
-                    <label>Data is limited for health/medical/biomedical research [HMB]</label>
-                    <div fxFlex></div>
-                    <mat-radio-group fxLayout="row" formControlName="hmbResearch" (change)="change('hmbResearch',$event)">
-                        <mat-radio-button value=true>Yes</mat-radio-button>
-                        <mat-radio-button value=false>No</mat-radio-button>
-                    </mat-radio-group>
-                </div>
-
-                <div class="orsp-box">
-                    <div>
-                        <label class="control-label rp-choice-questions">
-                            Future use is limited to research involving the following disease area(s) [DS]
-                        </label>
+                    <div class="orsp-box">
+                        <label>Data is available for future general research use [GRU]</label>
+                        <div fxFlex></div>
+                        <mat-radio-group fxLayout="row" formControlName="generalUse" (change)="change('generalUse', $event)">
+                            <mat-radio-button value=true>Yes</mat-radio-button>
+                            <mat-radio-button value=false>No</mat-radio-button>
+                        </mat-radio-group>
                     </div>
 
-                    <mat-form-field class="example-chip-list">
-                        <mat-chip-list #chipList>
+                    <div class="orsp-box">
+                        <label>Data is limited for health/medical/biomedical research [HMB]</label>
+                        <div fxFlex></div>
+                        <mat-radio-group fxLayout="row" formControlName="hmbResearch" (change)="change('hmbResearch',$event)">
+                            <mat-radio-button value=true>Yes</mat-radio-button>
+                            <mat-radio-button value=false>No</mat-radio-button>
+                            <mat-radio-button value="NA">N/A</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
 
-                            <mat-chip *ngFor="let disease of diseases" [selectable]="selectable" [removable]="removable" (removed)="remove(disease)">
-                                {{ disease.label }}
-                                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
-                            </mat-chip>
+                    <div class="orsp-box">
+                        <div>
+                            <label class="control-label rp-choice-questions">
+                                Future use is limited to research involving the following disease area(s) [DS]
+                            </label>
+                        </div>
 
-                            <input placeholder="Diseases..." #fruitInput [formControl]="diseasesCtrl" [matAutocomplete]="auto" [matChipInputFor]="chipList"
-                                [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)">
+                        <mat-form-field class="example-chip-list">
+                            <mat-chip-list #chipList>
 
-                        </mat-chip-list>
+                                <mat-chip *ngFor="let disease of diseases" [selectable]="selectable" [removable]="removable" (removed)="remove(disease)">
+                                    {{ disease.label }}
+                                    <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                                </mat-chip>
 
-                        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
-                            <mat-option *ngFor="let disease of filteredDiseases" [value]="disease">
-                                <div fxLayout="column">
-                                    <span>
-                                        <strong>{{ disease.label}}</strong>
-                                    </span>
-                                    <!-- <span>{{ disease.id }}</span>
+                                <input placeholder="Diseases..." #fruitInput [formControl]="diseasesCtrl" [matAutocomplete]="auto" [matChipInputFor]="chipList"
+                                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+                                    (matChipInputTokenEnd)="add($event)">
+
+                            </mat-chip-list>
+
+                            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+                                <mat-option *ngFor="let disease of filteredDiseases" [value]="disease">
+                                    <div fxLayout="column">
+                                        <span>
+                                            <strong>{{ disease.label}}</strong>
+                                        </span>
+                                        <!-- <span>{{ disease.id }}</span>
                                     <span>{{ disease.alias }}</span>
                                     <span>{{ disease.definition }}</span> -->
-                                </div>
-                            </mat-option>
-                        </mat-autocomplete>
+                                    </div>
+                                </mat-option>
+                            </mat-autocomplete>
 
-                    </mat-form-field>
+                        </mat-form-field>
 
-                </div>
-
-                <div fxLayout="column" fxLayoutGap="0.5em">
+                    </div>
 
                     <div class="orsp-box">
                         <label>Future use of population origins or ancestry is prohibited [POA]</label>
@@ -76,8 +78,12 @@
                         <mat-radio-group fxLayout="row" formControlName="populationOriginsAncestry" (change)="change('populationOriginsAncestry', $event)">
                             <mat-radio-button value=true>Yes</mat-radio-button>
                             <mat-radio-button value=false>No</mat-radio-button>
+                            <mat-radio-button value="NA">N/A</mat-radio-button>
                         </mat-radio-group>
                     </div>
+                </div>
+
+                <div fxLayout="column" fxLayoutGap="0.5em" style="border: 3px solid green; padding: 0.3em">
 
                     <div class="orsp-box">
                         <label>Future commercial use is prohibited [NCU]</label>
@@ -85,6 +91,7 @@
                         <mat-radio-group fxLayout="row" formControlName="commercialUse" (change)="change('commercialUse', $event)">
                             <mat-radio-button value=true>Yes</mat-radio-button>
                             <mat-radio-button value=false>No</mat-radio-button>
+                            <mat-radio-button value="NA">N/A</mat-radio-button>
                         </mat-radio-group>
                     </div>
 
@@ -94,8 +101,12 @@
                         <mat-radio-group fxLayout="row" formControlName="methodsResearch" (change)="change('methodsResearch', $event)">
                             <mat-radio-button value=true>Yes</mat-radio-button>
                             <mat-radio-button value=false>No</mat-radio-button>
+                            <mat-radio-button value="NA">N/A</mat-radio-button>
                         </mat-radio-group>
                     </div>
+                </div>
+
+                <div fxLayout="column" fxLayoutGap="0.5em" style="border: 3px solid red; padding: 0.3em">
 
                     <div class="orsp-box">
                         <label>Future use of aggregate-level data for general research purposes is prohibited [NAGR]</label>
@@ -103,6 +114,7 @@
                         <mat-radio-group fxLayout="row" formControlName="aggregateResearch" (change)="change('aggregateResearch', $event)">
                             <mat-radio-button value=true>Yes</mat-radio-button>
                             <mat-radio-button value=false>No</mat-radio-button>
+                            <mat-radio-button value="NA">N/A</mat-radio-button>
                         </mat-radio-group>
                     </div>
 
@@ -112,6 +124,7 @@
                         <mat-radio-group fxLayout="row" formControlName="controlSetOption" (change)="change('controlSetOption', $event)">
                             <mat-radio-button value=true>Yes</mat-radio-button>
                             <mat-radio-button value=false>No</mat-radio-button>
+                            <mat-radio-button value="NA">N/A</mat-radio-button>
                         </mat-radio-group>
                     </div>
 
@@ -131,6 +144,7 @@
                         <mat-radio-group fxLayout="row" formControlName="pediatric" (change)="change('pediatric', $event)">
                             <mat-radio-button value=true>Yes</mat-radio-button>
                             <mat-radio-button value=false>No</mat-radio-button>
+                            <mat-radio-button value="NA">N/A</mat-radio-button>
                         </mat-radio-group>
                     </div>
 

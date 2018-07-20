@@ -3,6 +3,7 @@ import { OntologyService } from '../services/ontology.service';
 import { ConsentService } from '../services/consent.service';
 import { OrspService } from '../services/orsp.service';
 import { Orsp } from '../models/orsp';
+import { RestrictionBuilderService } from '../services/restriction-builder.service';
 
 @Component({
   selector: 'app-home',
@@ -23,6 +24,7 @@ export class HomeComponent implements OnInit {
   darInfo = '';
 
   constructor(private ontologyService: OntologyService,
+    private restrictionBuilderService: RestrictionBuilderService,
     private zone: NgZone) {
   }
 
@@ -45,8 +47,8 @@ export class HomeComponent implements OnInit {
 
   processDulInfoChange(evt) {
     this.zone.run(() => {
-    this.dulInfo = JSON.stringify(evt, null, 2);
-    this.translate_dul();
+      this.dulInfo = JSON.stringify(evt, null, 2);
+      this.translate_dul();
     });
   }
 
@@ -69,7 +71,7 @@ export class HomeComponent implements OnInit {
   }
 
   translate_dar() {
-    this.ontologyService.translate_dar(this.darInfo)
+    this.restrictionBuilderService.translateDar(this.darInfo)
       .subscribe(
         result => {
           this.darJson = JSON.stringify(result, null, 2);
@@ -77,10 +79,19 @@ export class HomeComponent implements OnInit {
         error => {
           this.darJson = JSON.stringify(error, null, 2);
         });
+
+    // this.ontologyService.translate_dar(this.darInfo)
+    //   .subscribe(
+    //     result => {
+    //       this.darJson = JSON.stringify(result, null, 2);
+    //     },
+    //     error => {
+    //       this.darJson = JSON.stringify(error, null, 2);
+    //     });
   }
 
   translate_dul() {
-    this.ontologyService.translate_dul(this.dulInfo)
+    this.restrictionBuilderService.translateDul(this.dulInfo)
       .subscribe(
         result => {
           this.consentJson = JSON.stringify(result, null, 2);
@@ -88,6 +99,15 @@ export class HomeComponent implements OnInit {
         error => {
           this.consentJson = JSON.stringify(error, null, 2);
         });
+
+    // this.ontologyService.translate_dul(this.dulInfo)
+    //   .subscribe(
+    //     result => {
+    //       this.consentJson = JSON.stringify(result, null, 2);
+    //     },
+    //     error => {
+    //       this.consentJson = JSON.stringify(error, null, 2);
+    //     });
   }
 
   match() {
