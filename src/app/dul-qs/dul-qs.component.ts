@@ -58,7 +58,7 @@ export class DulQsComponent implements OnInit {
     this.dulForm = this._formBuilder.group({
       generalUse: [''],
       diseaseRestrictions: [''],
-      commercialUse: [''],
+      notForProfit: [''],
       methodsResearch: [''],
       aggregateResearch: [''],
       gender: [''],
@@ -161,6 +161,8 @@ export class DulQsComponent implements OnInit {
 
     if (answers.hmbResearch === 'true') {
       info['hmbResearch'] = true;
+    } else {
+      info['hmbResearch'] = false;
     }
 
     if (this.diseases.length > 0) {
@@ -173,13 +175,19 @@ export class DulQsComponent implements OnInit {
 
     if (answers.populationOriginsAncestry === 'true') {
       info['populationOriginsAncestry'] = false;
+    } else {
+      info['populationOriginsAncestry'] = true;
     }
 
-    if (answers.commercialUse === 'true') {
-      info['commercialUse'] = false;
+    if (answers.notForProfit === 'true') {
+      info['notForProfit'] = true;
+    } else {
+      info['notForProfit'] = false;
     }
 
-    if (answers.methodsResearch === 'true') {
+    if (answers.methodsResearch === 'true' || answers.methodsResearch === 'NA') {
+      info['methodsResearch'] = true;
+    } else {
       info['methodsResearch'] = false;
     }
 

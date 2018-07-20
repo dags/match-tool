@@ -29,31 +29,28 @@
                     </span>
                 </div>
 
-                <div>
+                <div fxLayout="column" fxLayoutGap="0.5em" style="border: 3px solid yellow; padding: 0.3em">
                     <mat-checkbox formControlName="methods">
                         <b>2.4.2 Methods development and validation studies: </b>
                     </mat-checkbox>
-                    <span>The primary purpose of the research is to develop and/or validate new methods for analyzing or interpreting
-                        data (e.g., developing more powerful methods to detect epistatic, gene-environment, or other types
-                        of complex interactions in genome-wide association studies). Data will be used for developing and/or
-                        validating new methods.
-                    </span>
+                    <span>Data use includes methods development research (e.g., development of software or algorithms) <b>OUTSIDE</b> the bounds of other Use Limitations. </span>
                 </div>
 
-                <div>
+                <div fxLayout="column" fxLayoutGap="0.5em" style="border: 3px solid green; padding: 0.3em">
                     <mat-checkbox formControlName="controls">
                         <b>2.4.3 Controls: </b>
                     </mat-checkbox>
-                    <span>The reason for this request is to increase the number of controls available for a comparison group (e.g.,
-                        a case-control study).
+                    <span>Data will be used as a control set <b>for diseases other than those specified</b>.
                     </span>
                 </div>
+
+            <div fxLayout="column" fxLayoutGap="0.5em" style="border: 3px solid blue; padding: 0.3em">
 
                 <div>
                     <mat-checkbox formControlName="population">
                         <b>2.4.4 Population structure or normal variation studies: </b>
                     </mat-checkbox>
-                    <span>The primary purpose of the research is to understand variation in the general population (e.g., genetic
+                    <span> The primary purpose of the research is to understand variation in the general population (e.g., genetic
                         substructure of a population).
                     </span>
                 </div>
@@ -62,7 +59,7 @@
                     <mat-checkbox formControlName="hmb">
                         <b>2.4.5 Health/medical/biomedical research: </b>
                     </mat-checkbox>
-                    <span>The primary purpose of the study is to investigate a health/medical/biomedical (or biological) phenomenon
+                    <span> Data use includes investigate a health/medical/biomedical (or biological) phenomenon
                         or condition.
                     </span>
                 </div>
@@ -76,17 +73,19 @@
                     </span>
                 </div>
 
+            </div>
+            <div fxLayout="column" fxLayoutGap="0.5em" style="border: 3px solid red; padding: 0.3em">
                 <mat-checkbox formControlName="other">
                     <b>2.4.7 Other</b>
                 </mat-checkbox>
-
+            
                 <mat-form-field *ngIf="darForm.get('other').value===true">
                     <input matInput formControlName="othertext" #othertext placeholder="If selected, please specify.">
                 </mat-form-field>
-
+            </div>
             </div>
 
-            <div class="duos-box">
+            <div fxLayout="column" fxLayoutGap="0.5em" style="border: 3px solid blue; padding: 0.3em" class="duos-box">
 
                 <div>
                     <label class="control-label rp-choice-questions">2.5 Please state the disease area(s) this study focus on
@@ -120,6 +119,8 @@
                 <label>3. Research Purpose Statement</label>
             </div>
 
+        <div fxLayout="column" fxLayoutGap="0.5em" style="border: 3px solid green; padding: 0.3em">
+
             <div class="duos-box">
                 <label>3.1.1 Will this data be used exclusively or partially for a commercial purpose?</label>
                 <div fxFlex></div>
@@ -148,6 +149,8 @@
                 </mat-radio-group>
             </div>
 
+        </div>
+        <div fxLayout="column" fxLayoutGap="0.5em" style="border: 3px solid red; padding: 0.3em">
             <div class="duos-box">
                 <label class="control-label rp-choice-questions">3.1.4 Does the research aim involve the study of illegal behaviors (violence, domestic abuse, prostitution,
                     sexual victimization)?
@@ -235,6 +238,7 @@
                     <mat-radio-button value=false>No</mat-radio-button>
                 </mat-radio-group>
             </div>
+        </div>
 
         </form>
 

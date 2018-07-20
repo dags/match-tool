@@ -88,15 +88,17 @@
                     <div class="orsp-box">
                         <label>Future commercial use is prohibited [NCU]</label>
                         <div fxFlex></div>
-                        <mat-radio-group fxLayout="row" formControlName="commercialUse" (change)="change('commercialUse', $event)">
+                        <mat-radio-group fxLayout="row" formControlName="notForProfit" (change)="change('notForProfit', $event)">
                             <mat-radio-button value=true>Yes</mat-radio-button>
                             <mat-radio-button value=false>No</mat-radio-button>
                             <mat-radio-button value="NA">N/A</mat-radio-button>
                         </mat-radio-group>
                     </div>
+                </div>    
+                <div fxLayout="column" fxLayoutGap="0.5em" style="border: 3px solid yellow; padding: 0.3em">
 
                     <div class="orsp-box">
-                        <label>Future use for methods research (analytic/software/technology development) is prohibited [NMDS]</label>
+                        <label>Future use includes methods development research (e.g., development of software or algorithms) <b>OUTSIDE</b> the bounds of other Use Limitations is prohibited [NMDS]</label>
                         <div fxFlex></div>
                         <mat-radio-group fxLayout="row" formControlName="methodsResearch" (change)="change('methodsResearch', $event)">
                             <mat-radio-button value=true>Yes</mat-radio-button>
@@ -117,9 +119,12 @@
                             <mat-radio-button value="NA">N/A</mat-radio-button>
                         </mat-radio-group>
                     </div>
+                    
+                </div>
 
+                <div fxLayout="column" fxLayoutGap="0.5em" style="border: 3px solid green; padding: 0.3em">   
                     <div class="orsp-box">
-                        <label>Future as a control set for diseases other than those specified is prohibited [CTRL]</label>
+                        <label>Future use as a control set for diseases other than those specified is prohibited [CTRL]</label>
                         <div fxFlex></div>
                         <mat-radio-group fxLayout="row" formControlName="controlSetOption" (change)="change('controlSetOption', $event)">
                             <mat-radio-button value=true>Yes</mat-radio-button>
@@ -147,7 +152,6 @@
                             <mat-radio-button value="NA">N/A</mat-radio-button>
                         </mat-radio-group>
                     </div>
-
                 </div>
             </div>
         </form>

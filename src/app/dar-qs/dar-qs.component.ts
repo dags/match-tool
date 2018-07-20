@@ -170,6 +170,8 @@ export class DarQsComponent implements OnInit {
     // }
 
     if (answers.methods === true) {
+      info['methodsResearch'] = false;
+    } else {
       info['methodsResearch'] = true;
     }
 
@@ -183,10 +185,14 @@ export class DarQsComponent implements OnInit {
 
     if (answers.hmb === true) {
       info['hmbResearch'] = true;
+    } else {
+      info['hmbResearch'] = false;
     }
 
     if (answers.poa === true) {
       info['populationOriginsAncestry'] = true;
+    } else {
+      info['populationOriginsAncestry'] = false;
     }
 
     if (answers.other === true) {
@@ -203,11 +209,9 @@ export class DarQsComponent implements OnInit {
     }
 
     if (answers.forProfit === 'true') {
-      info['commercialUse'] = true;
-    }
-
-    if (answers.forProfit === 'true') {
-      info['commercialUse'] = true;
+      info['notForProfit'] = false;
+    } else {
+      info['notForProfit'] = true;
     }
 
     if (answers.gender === 'M') {
