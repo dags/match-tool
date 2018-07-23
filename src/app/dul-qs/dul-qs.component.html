@@ -51,7 +51,7 @@
 
                                 <input placeholder="Diseases..." #fruitInput [formControl]="diseasesCtrl" [matAutocomplete]="auto" [matChipInputFor]="chipList"
                                     [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
-                                    (matChipInputTokenEnd)="add($event)">
+                                    (matChipInputTokenEnd)="add($event)" (change)="change('diseases',$event)">
 
                             </mat-chip-list>
 
@@ -98,7 +98,7 @@
                 <div fxLayout="column" fxLayoutGap="0.5em" style="border: 3px solid yellow; padding: 0.3em">
 
                     <div class="orsp-box">
-                        <label>Future use includes methods development research (e.g., development of software or algorithms) <b>OUTSIDE</b> the bounds of other Use Limitations is prohibited [NMDS]</label>
+                        <label>Future use including methods development research (e.g., development of software or algorithms) <b>OUTSIDE</b> the bounds of other Use Limitations is prohibited [NMDS]</label>
                         <div fxFlex></div>
                         <mat-radio-group fxLayout="row" formControlName="methodsResearch" (change)="change('methodsResearch', $event)">
                             <mat-radio-button value=true>Yes</mat-radio-button>
