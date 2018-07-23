@@ -126,7 +126,7 @@ export class DulQsComponent implements OnInit {
     this.diseasesCtrl.setValue(null);
     this.diseases.push(event.option.value);
     this.fruitInput.nativeElement.value = '';
-    this.dulForm.patchValue({ generalUse: 'false', hmbResearch: 'false', populationOriginsAncestry: 'false' });
+    this.dulForm.patchValue({ generalUse: 'false', hmbResearch: 'false', populationOriginsAncestry: 'true' });
     this.processForm();
   }
 
@@ -161,8 +161,6 @@ export class DulQsComponent implements OnInit {
 
     if (answers.hmbResearch === 'true') {
       info['hmbResearch'] = true;
-    } else {
-      info['hmbResearch'] = false;
     }
 
     if (this.diseases.length > 0) {
@@ -175,14 +173,10 @@ export class DulQsComponent implements OnInit {
 
     if (answers.populationOriginsAncestry === 'true') {
       info['populationOriginsAncestry'] = false;
-    } else {
-      info['populationOriginsAncestry'] = true;
     }
 
     if (answers.notForProfit === 'true') {
       info['notForProfit'] = true;
-    } else {
-      info['notForProfit'] = false;
     }
 
     if (answers.methodsResearch === 'true' || answers.methodsResearch === 'NA') {
