@@ -51,7 +51,7 @@
 
                                 <input placeholder="Diseases..." #fruitInput [formControl]="diseasesCtrl" [matAutocomplete]="auto" [matChipInputFor]="chipList"
                                     [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
-                                    (matChipInputTokenEnd)="add($event)" (change)="change('diseases',$event)">
+                                    (matChipInputTokenEnd)="add($event)">
 
                             </mat-chip-list>
 
