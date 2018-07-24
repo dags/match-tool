@@ -24,9 +24,10 @@ const NON_PROFIT = 'http://purl.obolibrary.org/obo/DUO_0000018';
 const DATASET_USAGE = 'http://www.broadinstitute.org/ontologies/DUOS/dataset_usage';
 const CONTROL = 'http://www.broadinstitute.org/ontologies/DUOS/control';
 
-/* Population Structure is a subclass of DUO Primary Category*/
+/* POA and HMB are subclasses of DUO Primary Category*/
 const DUO_PRIMARY_CATEGORY = 'http://purl.obolibrary.org/obo/DUO_0000002';
-const POPULATION_STRUCTURE = 'http://purl.obolibrary.org/obo/DUO_0000011';
+const POPULATION_ORIGINS = 'http://purl.obolibrary.org/obo/DUO_0000011';
+const HEALTH_MEDICAL_BIOMEDICAL = 'http://purl.obolibrary.org/obo/DUO_0000006';
 
 /* Aggregate Research is a subclass of Research Type */
 const RESEARCH_TYPE = 'http://www.broadinstitute.org/ontologies/DUOS/research_type';
@@ -61,23 +62,25 @@ export class RestrictionBuilderService {
     //    Research related entries
     //
     const methodsList = [];
-    if (darInfo.methodsResearch === true) {
-      methodsList.push(new Named(METHODS_RESEARCH));
-    } else {
-      methodsList.push(new Not(new Named(METHODS_RESEARCH)));
+   
+    //DATA USE FOR POPULATION STRUCTURE OR POA
+    if (darInfo.populationStructure === true || darInfo.populationOriginsAncestry === true) {
+      methodsList.push(new Named(POPULATION_ORIGINS));
     }
 
-    if (darInfo.populationStructure === true) {
-      methodsList.push(new Named(POPULATION_STRUCTURE));
-    } else {
-      methodsList.push(new Not(new Named(POPULATION_STRUCTURE)));
+    //DATA USE FOR HMB
+    if (darInfo.hmbResearch === true) {
+      methodsList.push(new Named(HEALTH_MEDICAL_BIOMEDICAL));
+    }
+
+    //DATA USE FOR METHODS RESEARCH
+    if (darInfo.methodsResearch === true) {
+      methodsList.push(new Named(METHODS_RESEARCH));
     }
 
     if (darInfo.controlSetOption === true) {
       methodsList.push(new Named(CONTROL));
-    } else {
-      methodsList.push(new Not(new Named(CONTROL)));
-    }
+    } else 
 
     if (methodsList.length > 0) {
       operandList.push(this.buildAndRestriction(methodsList));
@@ -109,8 +112,6 @@ export class RestrictionBuilderService {
 
     if (darInfo.notForProfit === false) {
       purposesList.push(new Not(new Named(NON_PROFIT)));
-    } else {
-      purposesList.push(new Named(NON_PROFIT));
     }
 
     //
@@ -124,102 +125,6 @@ export class RestrictionBuilderService {
 
   }
 
-  // translateDul(dulInfoTxt): Observable<any> {
-  //   // return of({ modo: 'everything dul' });
-
-  //   const dulInfo = JSON.parse(dulInfoTxt);
-  //   console.log(JSON.stringify(dulInfo, null, 2));
-
-  //   const categoryRestrictions: UseRestriction[] = [];
-  //   const useRestriction = {};
-  //   let restriction: UseRestriction;
-
-  //   // Self explanatory
-  //   // if (!dulInfo.getDiseaseRestrictions().isEmpty()) {
-  //   //     categoryRestrictions.add(
-  //   //         buildORRestrictionFromClasses(dulInfo.getDiseaseRestrictions())
-  //   //     );
-  //   // }
-
-  //   // Self explanatory
-  //   // if (!dulInfo.getPopulationRestrictions().isEmpty()) {
-  //   //     categoryRestrictions.add(
-  //   //         buildORRestrictionFromClasses(dulInfo.getPopulationRestrictions())
-  //   //     );
-  //   // }
-
-  //   // FALSE: Future commercial use is prohibited getOrElseFalse
-
-  //   const notForProfit = new Not(new Named(NON_PROFIT));
-  //   // console.log('notForProfit', JSON.stringify(notForProfit, null, 2));
-
-
-  //   if (dulInfo.notForProfit === false) {
-  //     categoryRestrictions.push(new Not(new Named(NON_PROFIT)));
-  //   }
-  //   // else {
-  //   //   categoryRestrictions.push(new Named(NON_PROFIT));
-  //   // }
-
-  //   if (dulInfo.gender === 'Male' && dulInfo.pediatric === true) {
-  //     console.log('-------------------BOYS-----------------------------');
-  //     categoryRestrictions.push(new Named(BOYS));
-  //   } else if (dulInfo.gender === 'Female' && dulInfo.pediatric === true) {
-  //     console.log('-------------------GIRLS-----------------------------');
-  //     categoryRestrictions.push(new Named(GIRLS));
-  //   } else if (dulInfo.gender === 'Male' && dulInfo.pediatric === false) {
-  //     console.log('-------------------MALE-----------------------------');
-  //     categoryRestrictions.push(new Named(MALE));
-  //   } if (dulInfo.gender === 'Female' && dulInfo.pediatric === false) {
-  //     console.log('-------------------FEMALE-----------------------------');
-  //     categoryRestrictions.push(new Named(FEMALE));
-  //   } if (dulInfo.gender === 'NA' && dulInfo.pediatric === true) {
-  //     console.log('-------------------PEDIATRIC-----------------------------');
-  //     categoryRestrictions.push(new Named(PEDIATRIC));
-  //   }
-
-  //   // // GAWB-3210: In the case where GRU is sent in combination with other sub-conditions,
-  //   // // ignore GRU and apply those other restrictions instead.
-  //   if (dulInfo.generalUse && dulInfo.generalUse === true
-  //     && categoryRestrictions.length === 0
-  //     && !dulInfo.methodsResearch
-  //     && !dulInfo.controlSetOption) {
-  //     return of(new Everything());
-  //   }
-
-  //   // // This builds up the basic restriction before the MR and CS are applied.
-  //   // if (categoryRestrictions.isEmpty()) {
-  //   //   restriction = new Everything();
-  //   // } else if (categoryRestrictions.size() == 1) {
-  //   //   restriction = categoryRestrictions.get(0);
-  //   // } else {
-
-  //   restriction = new And(categoryRestrictions);
-  //   // }
-
-  //   // // Apply Methods Research Logic
-  //   // // TRUE: Future use for methods research (analytic/software/technology development) is prohibited
-  //   // getOrElseTrue
-  //   if (dulInfo.methodsResearch === true) {
-  //     restriction = new Or([new Named(METHODS_RESEARCH), restriction]);
-  //   } else {
-  //     restriction = new Or([new And([restriction, new Not(new Named(METHODS_RESEARCH))]), restriction]);
-  //   }
-
-  //   // // Apply Control Set Logic
-  //   // if (isPresent(dulInfo.getControlSetOption()) && dulInfo.getControlSetOption().equalsIgnoreCase('Yes')) {
-  //   //   restriction = new Or(
-  //   //     restriction,
-  //   //     new And(restriction, new Named(CONTROL))
-  //   //   );
-  //   // }
-
-  //   console.log('-------------------------------- categoryRestrictions ----------------------------------------');
-  //   console.log(JSON.stringify(categoryRestrictions, null, 2));
-  //   // restriction['dul'] = categoryRestrictions;
-
-  //   return of(restriction);
-  // }
 
   buildAndRestriction(ops) {
     return new And(ops);
@@ -246,18 +151,28 @@ export class RestrictionBuilderService {
     let restriction: UseRestriction;
 
     // Self explanatory
-    if (dulInfo.diseaseRestrictions && dulInfo.diseaseRestrictions.lenght > 0) {
+    if (dulInfo.diseaseRestrictions !== undefined && dulInfo.diseaseRestrictions.length > 0) {
       categoryRestrictions.push(this.buildORRestrictionFromClasses(dulInfo.diseaseRestrictions));
     }
 
     // Self explanatory
-    if (dulInfo.populationRestrictions && dulInfo.populationRestrictions.lenght > 0) {
+    if (dulInfo.populationRestrictions && dulInfo.populationRestrictions.length > 0) {
       categoryRestrictions.push(this.buildORRestrictionFromClasses(dulInfo.populationRestrictions));
     }
 
     // FALSE: Future commercial use is prohibited
     if (dulInfo.notForProfit === false) {
       categoryRestrictions.push(new Not(new Named(NON_PROFIT)));
+    }
+
+    // HMB TRUE: Data is limited to HMB (NOT POA)
+    if (dulInfo.hmbResearch === true) {
+      categoryRestrictions.push(new Named(HEALTH_MEDICAL_BIOMEDICAL));
+    }
+
+    // POA FALSE: Data is limited to POA (Not Prohibited)
+    if (dulInfo.populationOriginsAncestry === false) {
+      categoryRestrictions.push(new Not(new Named(POPULATION_ORIGINS)));
     }
 
     // Gender/Pediatric checks.
@@ -279,9 +194,9 @@ export class RestrictionBuilderService {
 
     // GAWB-3210: In the case where GRU is sent in combination with other sub-conditions,
     // ignore GRU and apply those other restrictions instead.
-    if (dulInfo.generalUse && dulInfo.generalUse === true
+    if (dulInfo.generalUse === true
       && categoryRestrictions.length === 0
-      && !dulInfo.methodsResearch
+      && !dulInfo.methodsResearch 
       && !dulInfo.controlSetOption) {
       return of(new Everything());
     }
@@ -297,15 +212,13 @@ export class RestrictionBuilderService {
 
     // Apply Methods Research Logic
     // TRUE: Future use for methods research (analytic/software/technology development) is prohibited
-    if (dulInfo.methodsResearch) {
+    if (dulInfo.methodsResearch === true) {
       restriction = new Or([new Named(METHODS_RESEARCH), restriction]);
-    } else {
-      restriction = new Or([new And([restriction, new Not(new Named(METHODS_RESEARCH))]), restriction]);
     }
 
     // Apply Control Set Logic
-    if (dulInfo.controlSetOption && dulInfo.controlSetOption === true) {
-      restriction = new Or([restriction, new And([restriction, new Named(CONTROL)])]
+    if (dulInfo.controlSetOption === false) {
+      restriction = new Or([restriction, new And([restriction, new Not(new Named(CONTROL))])]
       );
     }
 

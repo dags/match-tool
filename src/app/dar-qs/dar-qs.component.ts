@@ -177,9 +177,9 @@ export class DarQsComponent implements OnInit {
       info['controlSetOption'] = true;
     }
 
-    /* if (answers.population === true) {
+    if (answers.population === true) {
       info['populationStructure'] = true;
-    } */
+    }
 
     if (answers.hmb === true) {
       info['hmbResearch'] = true;
