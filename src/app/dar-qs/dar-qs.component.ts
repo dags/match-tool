@@ -187,6 +187,8 @@ export class DarQsComponent implements OnInit {
 
     if (answers.poa === true) {
       info['populationOriginsAncestry'] = true;
+    } else {
+      info['populationOriginsAncestry'] = false;
     }
 
     if (answers.other === true) {
@@ -204,7 +206,10 @@ export class DarQsComponent implements OnInit {
 
     if (answers.forProfit === 'true') {
       info['notForProfit'] = false;
+    } else {
+      info['notForProfit'] = true;
     }
+
 
     if (answers.gender === 'M') {
       info['gender'] = 'male';

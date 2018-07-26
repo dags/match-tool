@@ -36,6 +36,8 @@ const RESEARCH_TYPE = 'http://www.broadinstitute.org/ontologies/DUOS/research_ty
 const DUO_SECONDARY_CATEGORY = 'http://purl.obolibrary.org/obo/DUO_0000003';
 const METHODS_RESEARCH = 'http://purl.obolibrary.org/obo/DUO_0000015';
 
+/* All diseases are sub-classes of DS specific */
+const DISEASE = 'http://purl.obolibrary.org/obo/DOID_4';
 
 @Injectable({
   providedIn: 'root'
@@ -66,6 +68,8 @@ export class RestrictionBuilderService {
     //DATA USE FOR POPULATION STRUCTURE OR POA
     if (darInfo.populationStructure === true || darInfo.populationOriginsAncestry === true) {
       methodsList.push(new Named(POPULATION_ORIGINS));
+    } else if (darInfo.populationOriginsAncestry === false) {
+      methodsList.push(new Not(new Named(POPULATION_ORIGINS)));
     }
 
     //DATA USE FOR HMB
@@ -112,6 +116,8 @@ export class RestrictionBuilderService {
 
     if (darInfo.notForProfit === false) {
       purposesList.push(new Not(new Named(NON_PROFIT)));
+    } else {
+      purposesList.push(new Named(NON_PROFIT));
     }
 
     //
@@ -161,13 +167,13 @@ export class RestrictionBuilderService {
     }
 
     // FALSE: Future commercial use is prohibited
-    if (dulInfo.notForProfit === false) {
-      categoryRestrictions.push(new Not(new Named(NON_PROFIT)));
+    if (dulInfo.notForProfit === true) {
+      categoryRestrictions.push(new Named(NON_PROFIT));
     }
 
     // HMB TRUE: Data is limited to HMB (NOT POA)
     if (dulInfo.hmbResearch === true) {
-      categoryRestrictions.push(new Named(HEALTH_MEDICAL_BIOMEDICAL));
+      categoryRestrictions.push(new Or([new Named(DISEASE), new Named(HEALTH_MEDICAL_BIOMEDICAL)]));
     }
 
     // POA FALSE: Data is limited to POA (Not Prohibited)
